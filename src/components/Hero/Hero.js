@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { useRef } from "react";
 // MUI
 import { Box, Button, IconButton, Typography } from "@mui/material";
 // image
@@ -8,15 +8,17 @@ import bg from "../../assets/img/hero.jpg";
 import { HiChevronDown } from "react-icons/hi";
 
 function Hero() {
+  const heroRef = useRef(null);
   return (
     <Box
       component="section"
+      id="hero"
+      ref={heroRef}
       sx={{
         position: "relative",
         width: "100%",
         height: "100vh",
         boxSizing: "border-box",
-
         // background
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
@@ -49,6 +51,12 @@ function Hero() {
           left: "50%",
           bottom: "10%",
           transform: "translate(-50%, -50%)",
+        }}
+        onClick={() => {
+          window.scrollTo({
+            top: heroRef.current.clientHeight - 50,
+            behavior: "smooth",
+          });
         }}
       >
         Calculate Now

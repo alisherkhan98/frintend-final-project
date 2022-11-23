@@ -97,15 +97,16 @@ function Calculator() {
             passengers: details.passengers,
             legs: [
               {
-                departure_airport: details.departure_airport,
-                destination_airport: details.destination_airport,
+                departure_airport: details.departure_airport.code,
+                destination_airport: details.destination_airport.code,
+
                 cabin_class: details.cabin_class,
               },
             ],
           },
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data.data.attributes);
         })
         .catch(function (error) {
           if (error.response) {
@@ -162,7 +163,7 @@ function Calculator() {
               sx={{ minWidth: "120px", width: "30%" }}
             >
               <MenuItem value={"economy"}>Economy</MenuItem>
-              <MenuItem value={"first class"}>First class</MenuItem>
+              <MenuItem value={"premium"}>First class</MenuItem>
             </Select>
 
             {/* passengers */}
@@ -193,7 +194,7 @@ function Calculator() {
               onChange={(e, newValue) => {
                 setDetails((prev) => ({
                   ...prev,
-                  departure_airport: newValue ? newValue?.code : "",
+                  departure_airport: newValue,
                 }));
               }}
               renderInput={(params) => (
@@ -221,7 +222,7 @@ function Calculator() {
               onChange={(e, newValue) => {
                 setDetails((prev) => ({
                   ...prev,
-                  destination_airport: newValue ? newValue?.code : "",
+                  destination_airport: newValue,
                 }));
               }}
               renderInput={(params) => (

@@ -17,9 +17,21 @@ const drawerWidth = "66vw";
 const navItems = ["Home", "About", "Contact"];
 
 function Navbar(props) {
-  const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [show, setShow] = React.useState(false);
 
+  // listener for scroll
+  React.useEffect(() => {
+    function navTransition() {
+      if (window.scrollY > 150) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+    }
+    window.addEventListener("scroll", navTransition);
+    return () => window.removeEventListener("scroll", navTransition);
+  }, []);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -42,24 +54,32 @@ function Navbar(props) {
     </Box>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar component="nav" color="transparent" elevation={0}>
+      <AppBar
+        component="nav"
+        color={show ? "neutral" : "transparent"}
+        elevation={0}
+        sx={{
+          opacity: 0.95,
+          transition: "all .3s ease",
+        }}
+      >
         <Toolbar>
           <Typography
             variant="h5"
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            color="white"
+            color={show ? "primary" : "white"}
           >
             LOGO
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
+              <Button
+                key={item}
+                sx={{ color: `${show ? "primary" : "white"}` }}
+              >
                 {item}
               </Button>
             ))}
@@ -77,7 +97,6 @@ function Navbar(props) {
       </AppBar>
       <Box component="nav">
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
