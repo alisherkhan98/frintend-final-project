@@ -30,6 +30,15 @@ let theme = createTheme({
         root: {
           borderRadius: "2rem",
           width: "fit-content",
+          textTransform: "unset",
+          fontSize: "1rem",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
         },
       },
     },

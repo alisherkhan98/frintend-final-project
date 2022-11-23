@@ -47,7 +47,7 @@ function Navbar(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar component="nav" color="transparent">
+      <AppBar component="nav" color="transparent" elevation={0}>
         <Toolbar>
           <Typography
             variant="h5"
