@@ -45,7 +45,7 @@ function Hero() {
       </Typography>
       <Button
         variant="outlined"
-        color="neutral"
+        color="hero"
         sx={{
           position: "absolute",
           left: "50%",
@@ -69,7 +69,7 @@ function Hero() {
           transform: "translate(-50%, 1.5rem)",
         }}
         disableRipple
-        color="neutral"
+        color="hero"
       >
         <HiChevronDown />
       </IconButton>

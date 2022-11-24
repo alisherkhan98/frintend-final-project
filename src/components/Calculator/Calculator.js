@@ -52,8 +52,8 @@ function Calculator() {
   }
 
   return (
-    <Container>
-      <Box component="form" py={3}>
+    <Box sx={{ backgroundColor: "neutral.main" }}>
+      <Container component="form" sx={{ py: 3 }}>
         <Paper
           sx={{
             padding: " 40px 32px",
@@ -174,8 +174,8 @@ function Calculator() {
             </Button>
           </Stack>
         </Paper>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 }
 
