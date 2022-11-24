@@ -17,19 +17,16 @@ import {
   Stack,
 } from "@mui/material";
 import axios from "axios";
-
-const options = {
-  method: "GET",
-  url: "https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json",
-};
+import UseLoadList from "../../custom hooks/UseLoadList";
+import UseFetchFootprint from "../../custom hooks/UseFetchFootprint";
 
 function Calculator() {
   // states
   const [isFetching, setIsFetching] = React.useState(false);
-  const [airportsList, setAirportsList] = React.useState([]);
   // autocomplete inputs
   const [isFromOpen, setIsFromOpen] = React.useState(false);
   const [isToOpen, setIsToOpen] = React.useState(false);
+
   // controlled components
   const [details, setDetails] = React.useState({
     departure_airport: null,
@@ -38,7 +35,12 @@ function Calculator() {
     roundTrip: "one_way",
     passengers: 1,
   });
-  console.log(details);
+
+  // load airports list with api call
+  const airportsList = UseLoadList();
+
+  // fetch carbon emission data
+  UseFetchFootprint(details, isFetching, setIsFetching);
 
   // function to handle changes of inputs
   function handleChange(e) {
@@ -49,102 +51,6 @@ function Calculator() {
     }));
   }
 
-  // useEffect to fetch all the Iata codes
-  React.useEffect(() => {
-    axios
-      .request(options)
-      .then((res) =>
-        res.data.map((item) => {
-          // creating the strings displayed in the autocomplete inputs
-          const string =
-            item?.name +
-            ", " +
-            item?.city +
-            ", " +
-            item?.state +
-            ", " +
-            item?.country +
-            " (" +
-            item?.code +
-            ")";
-
-          const obj = {
-            label: string,
-            code: item.code,
-            name: item.name,
-            city: item.city,
-          };
-          return obj;
-        })
-      )
-      .then((res) => {
-        setAirportsList(res);
-      })
-      .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-      });
-  }, []);
-
-  // UseEffect to make api call to calculate distance and co2 emission in kg
-  React.useEffect(() => {
-    if (isFetching) {
-      axios
-        .request({
-          url: "https://www.carboninterface.com/api/v1/estimates",
-          method: "POST",
-          headers: {
-            Authorization: "Bearer yUP5UARh3BLQQRlDtgvA2w",
-            "Content-Type": "application/json",
-          },
-          data: {
-            type: "flight",
-            passengers: details.passengers,
-            legs: [
-              {
-                departure_airport: details.departure_airport.code,
-                destination_airport: details.destination_airport.code,
-                cabin_class: details.cabin_class,
-              },
-            ],
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data.attributes);
-        })
-        .catch(function (error) {
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-          console.log(error.config);
-        });
-      setIsFetching(false);
-    }
-  }, [isFetching]);
   return (
     <Container>
       <Box component="form" py={3}>
@@ -210,7 +116,6 @@ function Calculator() {
                 } else setIsFromOpen(false);
               }}
               onChange={(e, newValue) => {
-                console.log(newValue);
                 setDetails((prev) => ({
                   ...prev,
                   departure_airport: newValue,
