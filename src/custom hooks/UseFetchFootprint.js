@@ -2,10 +2,31 @@
 import React from "react";
 // axios
 import axios from "axios";
+// redux
+import { useDispatch } from "react-redux";
+import { setFlightDetails } from "../redux/features/flightDataSlice";
 
 function UseFetchFootprint(details, isFetching, setIsFetching) {
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
     if (isFetching) {
+      const legs = [
+        {
+          departure_airport: details.departureAirport.code,
+          destination_airport: details.destinationAirport.code,
+          cabin_class: details.cabinClass,
+        },
+      ];
+
+      // adding return leg if round trip
+      if (details.roundTrip === "round_trip") {
+        legs.push({
+          departure_airport: details.destinationAirport.code,
+          destination_airport: details.departureAirport.code,
+          cabin_class: details.cabinClass,
+        });
+      }
       axios
         .request({
           url: "https://www.carboninterface.com/api/v1/estimates",
@@ -17,17 +38,13 @@ function UseFetchFootprint(details, isFetching, setIsFetching) {
           data: {
             type: "flight",
             passengers: details.passengers,
-            legs: [
-              {
-                departure_airport: details.departure_airport.code,
-                destination_airport: details.destination_airport.code,
-                cabin_class: details.cabin_class,
-              },
-            ],
+            legs,
           },
         })
         .then((response) => {
-          console.log(response.data.data.attributes);
+          // save data in redux state
+          const responseDetails = response.data.data.attributes;
+          dispatch(setFlightDetails(responseDetails));
         })
         .catch(function (error) {
           if (error.response) {
@@ -49,7 +66,7 @@ function UseFetchFootprint(details, isFetching, setIsFetching) {
         });
     }
     setIsFetching(false);
-  });
+  }, [isFetching]);
   return;
 }
 

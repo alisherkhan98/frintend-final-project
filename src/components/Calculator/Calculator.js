@@ -21,17 +21,17 @@ import UseLoadList from "../../custom hooks/UseLoadList";
 import UseFetchFootprint from "../../custom hooks/UseFetchFootprint";
 
 function Calculator() {
-  // states
+  // state for api call on button press
   const [isFetching, setIsFetching] = React.useState(false);
   // autocomplete inputs
   const [isFromOpen, setIsFromOpen] = React.useState(false);
   const [isToOpen, setIsToOpen] = React.useState(false);
 
-  // controlled components
+  // state for controlled components
   const [details, setDetails] = React.useState({
-    departure_airport: null,
-    destination_airport: null,
-    cabin_class: "economy",
+    departureAirport: null,
+    destinationAirport: null,
+    cabinClass: "economy",
     roundTrip: "one_way",
     passengers: 1,
   });
@@ -79,8 +79,8 @@ function Calculator() {
 
             {/* select class */}
             <Select
-              value={details.cabin_class}
-              name="cabin_class"
+              value={details.cabinClass}
+              name="cabinClass"
               onChange={handleChange}
               sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
             >
@@ -103,7 +103,7 @@ function Calculator() {
             {/* from */}
             <Autocomplete
               disablePortal
-              value={details.departure_airport}
+              value={details.departureAirport}
               options={airportsList}
               getOptionLabel={(option) => option && option.label}
               sx={{ width: "100%" }}
@@ -118,7 +118,7 @@ function Calculator() {
               onChange={(e, newValue) => {
                 setDetails((prev) => ({
                   ...prev,
-                  departure_airport: newValue,
+                  departureAirport: newValue,
                 }));
               }}
               renderInput={(params) => (
@@ -133,7 +133,7 @@ function Calculator() {
             {/* to */}
             <Autocomplete
               disablePortal
-              value={details.destination_airport}
+              value={details.destinationAirport}
               options={airportsList}
               getOptionLabel={(option) => option && option.label}
               sx={{ width: "100%" }}
@@ -148,7 +148,7 @@ function Calculator() {
               onChange={(e, newValue) => {
                 setDetails((prev) => ({
                   ...prev,
-                  destination_airport: newValue,
+                  destinationAirport: newValue,
                 }));
               }}
               renderInput={(params) => (
