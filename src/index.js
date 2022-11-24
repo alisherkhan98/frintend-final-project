@@ -7,20 +7,16 @@ import { store } from "./redux/store";
 // css
 import "./index.css";
 // MUI
-import { ThemeProvider } from "@mui/material";
-import theme from "./theme";
+import theme from "./Theme";
 // components
 import App from "./App";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-
 root.render(
-  <ThemeProvider theme={theme}>
+  <Provider store={store}>
     <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <App />
     </React.StrictMode>
-  </ThemeProvider>
+  </Provider>
 );

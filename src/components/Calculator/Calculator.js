@@ -32,8 +32,8 @@ function Calculator() {
   const [isToOpen, setIsToOpen] = React.useState(false);
   // controlled components
   const [details, setDetails] = React.useState({
-    departure_airport: "",
-    destination_airport: "",
+    departure_airport: null,
+    destination_airport: null,
     cabin_class: "economy",
     roundTrip: "one_way",
     passengers: 1,
@@ -48,12 +48,14 @@ function Calculator() {
       [target.name]: target.value,
     }));
   }
+
   // useEffect to fetch all the Iata codes
   React.useEffect(() => {
     axios
       .request(options)
       .then((res) =>
         res.data.map((item) => {
+          // creating the strings displayed in the autocomplete inputs
           const string =
             item?.name +
             ", " +
@@ -69,6 +71,8 @@ function Calculator() {
           const obj = {
             label: string,
             code: item.code,
+            name: item.name,
+            city: item.city,
           };
           return obj;
         })
@@ -77,7 +81,20 @@ function Calculator() {
         setAirportsList(res);
       })
       .catch(function (error) {
-        console.error(error);
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
       });
   }, []);
 
@@ -99,7 +116,6 @@ function Calculator() {
               {
                 departure_airport: details.departure_airport.code,
                 destination_airport: details.destination_airport.code,
-
                 cabin_class: details.cabin_class,
               },
             ],
@@ -134,7 +150,7 @@ function Calculator() {
       <Box component="form" py={3}>
         <Paper
           sx={{
-            padding: { xs: 3, sm: 5 },
+            padding: " 40px 32px",
             borderRadius: 5,
             boxShadow: "0 0 15px rgba(0,0,0,0.3)",
           }}
@@ -149,10 +165,10 @@ function Calculator() {
               value={details.roundTrip}
               name="roundTrip"
               onChange={handleChange}
-              sx={{ minWidth: "120px", width: "30%" }}
+              sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
             >
               <MenuItem value={"one_way"}>One way</MenuItem>
-              <MenuItem value={"return"}>Return</MenuItem>
+              <MenuItem value={"round_trip"}>Round trip</MenuItem>
             </Select>
 
             {/* select class */}
@@ -160,7 +176,7 @@ function Calculator() {
               value={details.cabin_class}
               name="cabin_class"
               onChange={handleChange}
-              sx={{ minWidth: "120px", width: "30%" }}
+              sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
             >
               <MenuItem value={"economy"}>Economy</MenuItem>
               <MenuItem value={"premium"}>First class</MenuItem>
@@ -173,7 +189,7 @@ function Calculator() {
               name="passengers"
               onChange={handleChange}
               label="Passengers"
-              sx={{ minWidth: "120px", width: "30%" }}
+              sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
             />
           </Stack>
 
@@ -181,7 +197,9 @@ function Calculator() {
             {/* from */}
             <Autocomplete
               disablePortal
+              value={details.departure_airport}
               options={airportsList}
+              getOptionLabel={(option) => option && option.label}
               sx={{ width: "100%" }}
               // open component only if you typed three letters
               open={isFromOpen}
@@ -192,6 +210,7 @@ function Calculator() {
                 } else setIsFromOpen(false);
               }}
               onChange={(e, newValue) => {
+                console.log(newValue);
                 setDetails((prev) => ({
                   ...prev,
                   departure_airport: newValue,
@@ -209,7 +228,9 @@ function Calculator() {
             {/* to */}
             <Autocomplete
               disablePortal
+              value={details.destination_airport}
               options={airportsList}
+              getOptionLabel={(option) => option && option.label}
               sx={{ width: "100%" }}
               // open component only if you typed three letters
               open={isToOpen}
