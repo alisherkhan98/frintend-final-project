@@ -16,28 +16,30 @@ function UseLoadList() {
     axios
       .request(options)
       .then((res) =>
-        res.data.map((item) => {
-          // creating the strings displayed in the autocomplete inputs
-          const string =
-            item?.name +
-            ", " +
-            item?.city +
-            ", " +
-            item?.state +
-            ", " +
-            item?.country +
-            " (" +
-            item?.code +
-            ")";
+        res.data
+          .filter((item) => item.type === "Airports")
+          .map((item) => {
+            // creating the strings displayed in the autocomplete inputs
+            const string =
+              item?.name +
+              ", " +
+              item?.city +
+              ", " +
+              item?.state +
+              ", " +
+              item?.country +
+              " (" +
+              item?.code +
+              ")";
 
-          const obj = {
-            label: string,
-            code: item.code,
-            name: item.name,
-            city: item.city,
-          };
-          return obj;
-        })
+            const obj = {
+              label: string,
+              code: item.code,
+              name: item.name,
+              city: item.city,
+            };
+            return obj;
+          })
       )
       .then((res) => {
         setAirportsList(res);

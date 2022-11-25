@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // state initialization
 const initialState = {
-  footprintDetails: {},
+  footprintDetails: undefined,
 };
 export const flightDataSlice = createSlice({
   name: "flightData",

@@ -7,9 +7,10 @@ import Calculator from "./components/Calculator/Calculator";
 import Theme from "./Theme";
 // redux
 import { useSelector } from "react-redux";
+import ResultCards from "./components/ResultCards";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = React.useState(true);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
   const { footprintDetails } = useSelector((state) => state.flightData);
   console.log(footprintDetails);
 
@@ -18,6 +19,7 @@ function App() {
       <Navbar />
       <Hero />
       <Calculator />
+      {footprintDetails && <ResultCards />}
     </Theme>
   );
 }

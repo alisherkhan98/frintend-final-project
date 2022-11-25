@@ -13,18 +13,18 @@ function UseFetchFootprint(details, isFetching, setIsFetching) {
     if (isFetching) {
       const legs = [
         {
-          departure_airport: details.departureAirport.code,
-          destination_airport: details.destinationAirport.code,
-          cabin_class: details.cabinClass,
+          departure_airport: details?.departureAirport?.code,
+          destination_airport: details?.destinationAirport?.code,
+          cabin_class: details?.cabinClass,
         },
       ];
 
       // adding return leg if round trip
       if (details.roundTrip === "round_trip") {
         legs.push({
-          departure_airport: details.destinationAirport.code,
-          destination_airport: details.departureAirport.code,
-          cabin_class: details.cabinClass,
+          departure_airport: details?.destinationAirport?.code,
+          destination_airport: details?.departureAirport?.code,
+          cabin_class: details?.cabinClass,
         });
       }
       axios
