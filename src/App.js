@@ -1,9 +1,9 @@
 // react
 import React from "react";
 // components
-import Navbar from "./components/Navbar/Navbar";
-import Hero from "./components/Hero/Hero";
-import Calculator from "./components/Calculator/Calculator";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Calculator from "./components/Calculator";
 import Theme from "./Theme";
 // redux
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <Theme isDarkMode={isDarkMode}>
-      <Navbar />
+      <Navbar setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
       <Hero />
       <Calculator />
       {footprintDetails && <ResultCards />}

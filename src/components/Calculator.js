@@ -6,26 +6,34 @@ import {
   Paper,
   Box,
   Typography,
-  Grid,
   TextField,
   Autocomplete,
   Button,
   Select,
   MenuItem,
-  InputLabel,
-  FormControl,
   Stack,
 } from "@mui/material";
-import axios from "axios";
-import UseLoadList from "../../custom hooks/UseLoadList";
-import UseFetchFootprint from "../../custom hooks/UseFetchFootprint";
+// custom hooks
+import UseLoadList from "../custom hooks/UseLoadList";
+import UseFetchFootprint from "../custom hooks/UseFetchFootprint";
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { setIsFetchingFootprint } from "../redux/features/flightDataSlice";
 
 function Calculator() {
+  const dispatch = useDispatch();
   // state for api call on button press
-  const [isFetching, setIsFetching] = React.useState(false);
+  const { isFetchingFootprint } = useSelector((state) => state.flightData);
+
   // autocomplete inputs
-  const [isFromOpen, setIsFromOpen] = React.useState(false);
-  const [isToOpen, setIsToOpen] = React.useState(false);
+  const [isDepartureOpen, setIsDepartureOpen] = React.useState(false);
+  const [isDestinationOpen, setisDestinationOpen] = React.useState(false);
+  // error handling
+  const [formError, setFormError] = React.useState({
+    passengers: false,
+    departure: false,
+    destination: false,
+  });
 
   // state for controlled components
   const [details, setDetails] = React.useState({
@@ -40,7 +48,7 @@ function Calculator() {
   const airportsList = UseLoadList();
 
   // fetch carbon emission data
-  UseFetchFootprint(details, isFetching, setIsFetching);
+  UseFetchFootprint(details);
 
   // function to handle changes of inputs
   function handleChange(e) {
@@ -49,6 +57,55 @@ function Calculator() {
       ...prev,
       [target.name]: target.value,
     }));
+  }
+  // function to handle submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    // temporary error variable
+    let error = false;
+    //client side error handling
+    if (isNaN(+details.passengers) || +details.passengers < 1) {
+      setFormError((prev) => ({
+        ...prev,
+        passengers: true,
+      }));
+      error = true;
+    } else {
+      setFormError((prev) => ({
+        ...prev,
+        passengers: false,
+      }));
+    }
+    if (details.departureAirport === null) {
+      setFormError((prev) => ({
+        ...prev,
+        departure: true,
+      }));
+      error = true;
+    } else {
+      setFormError((prev) => ({
+        ...prev,
+        departure: false,
+      }));
+    }
+    if (details.destinationAirport === null) {
+      setFormError((prev) => ({
+        ...prev,
+        destination: true,
+      }));
+      error = true;
+    } else {
+      setFormError((prev) => ({
+        ...prev,
+        destination: false,
+      }));
+    }
+    console.log(error);
+    if (error) {
+      return;
+    }
+
+    dispatch(setIsFetchingFootprint(true));
   }
 
   return (
@@ -65,7 +122,13 @@ function Calculator() {
             Enter details of your flight
           </Typography>
 
-          <Stack direction="row" flexWrap="wrap" gap={3} mb={3}>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            gap={3}
+            mb={3}
+            alignItems="flex-start"
+          >
             {/* select if return or one way */}
             <Select
               value={details.roundTrip}
@@ -96,67 +159,85 @@ function Calculator() {
               onChange={handleChange}
               label="Passengers"
               sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
+              // in case of error
+              error={formError.passengers}
+              helperText={formError.passengers && "Please enter a number > 0"}
             />
           </Stack>
 
           <Stack sx={{ flexDirection: { sm: "row" } }} gap={3} mb={5}>
-            {/* from */}
+            {/* Departure */}
             <Autocomplete
               disablePortal
-              value={details.departureAirport}
               options={airportsList}
               getOptionLabel={(option) => option && option.label}
               sx={{ width: "100%" }}
               // open component only if you typed three letters
-              open={isFromOpen}
-              onClose={() => setIsFromOpen(false)}
+              open={isDepartureOpen}
+              onClose={() => setIsDepartureOpen(false)}
               onInputChange={(e, value) => {
                 if (value.length > 2) {
-                  setIsFromOpen(true);
-                } else setIsFromOpen(false);
+                  setIsDepartureOpen(true);
+                } else setIsDepartureOpen(false);
               }}
+              // controlled component
+              value={details.departureAirport}
               onChange={(e, newValue) => {
                 setDetails((prev) => ({
                   ...prev,
                   departureAirport: newValue,
                 }));
               }}
+              // input render
               renderInput={(params) => (
                 <TextField
                   {...params}
                   label="Departure"
                   placeholder="Enter at least 3 letters"
+                  // in case of error
+                  error={formError.departure}
+                  helperText={
+                    formError.departure && "Please select a departure airport"
+                  }
                 />
               )}
             />
 
-            {/* to */}
+            {/* Destination */}
             <Autocomplete
               disablePortal
-              value={details.destinationAirport}
               options={airportsList}
               getOptionLabel={(option) => option && option.label}
               sx={{ width: "100%" }}
               // open component only if you typed three letters
-              open={isToOpen}
-              onClose={() => setIsToOpen(false)}
+              open={isDestinationOpen}
+              onClose={() => setisDestinationOpen(false)}
               onInputChange={(e, value) => {
                 if (value.length > 2) {
-                  setIsToOpen(true);
-                } else setIsToOpen(false);
+                  setisDestinationOpen(true);
+                } else setisDestinationOpen(false);
               }}
+              // controlled component
+              value={details.destinationAirport}
               onChange={(e, newValue) => {
                 setDetails((prev) => ({
                   ...prev,
                   destinationAirport: newValue,
                 }));
               }}
+              // input render
               renderInput={(params) => (
                 <TextField
                   {...params}
                   label="Destination"
                   name="destination"
                   placeholder="Enter at least 3 letters"
+                  // in case of error
+                  error={formError.destination}
+                  helperText={
+                    formError.destination &&
+                    "Please select a destination airport"
+                  }
                 />
               )}
             />
@@ -165,10 +246,7 @@ function Calculator() {
             <Button
               type="submit"
               variant="contained"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsFetching(true);
-              }}
+              onClick={(e) => handleSubmit(e)}
             >
               Calculate my footprint
             </Button>

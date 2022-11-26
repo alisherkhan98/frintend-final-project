@@ -22,7 +22,7 @@ import { FaBars } from "react-icons/fa";
 const drawerWidth = "66vw";
 const navItems = ["Home", "About", "Contact"];
 
-function Navbar(props) {
+function Navbar({ setIsDarkMode, isDarkMode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
 
@@ -80,11 +80,15 @@ function Navbar(props) {
           >
             LOGO
           </Typography>
+
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button
                 key={item}
                 sx={{ color: `${show ? "primary" : "white"}` }}
+                onClick={() => {
+                  setIsDarkMode(!isDarkMode);
+                }}
               >
                 {item}
               </Button>

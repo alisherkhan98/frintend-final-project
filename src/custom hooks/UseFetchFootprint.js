@@ -3,14 +3,17 @@ import React from "react";
 // axios
 import axios from "axios";
 // redux
-import { useDispatch } from "react-redux";
-import { setFlightDetails } from "../redux/features/flightDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setFlightDetails,
+  setIsFetchingFootprint,
+} from "../redux/features/flightDataSlice";
 
-function UseFetchFootprint(details, isFetching, setIsFetching) {
+function UseFetchFootprint(details) {
   const dispatch = useDispatch();
-
+  const { isFetchingFootprint } = useSelector((state) => state.flightData);
   React.useEffect(() => {
-    if (isFetching) {
+    if (isFetchingFootprint) {
       const legs = [
         {
           departure_airport: details?.departureAirport?.code,
@@ -65,8 +68,8 @@ function UseFetchFootprint(details, isFetching, setIsFetching) {
           console.log(error.config);
         });
     }
-    setIsFetching(false);
-  }, [isFetching]);
+    dispatch(setIsFetchingFootprint(false));
+  }, [isFetchingFootprint]);
   return;
 }
 

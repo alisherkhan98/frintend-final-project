@@ -17,7 +17,7 @@ function UseLoadList() {
       .request(options)
       .then((res) =>
         res.data
-          .filter((item) => item.type === "Airports")
+          .filter((item) => item.type === "Airports") //filtering only airports
           .map((item) => {
             // creating the strings displayed in the autocomplete inputs
             const string =

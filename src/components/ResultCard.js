@@ -1,17 +1,17 @@
-import React from "react";
-import {
-  Box,
-  Grid,
-  Card,
-  Container,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, Card, Typography, useTheme } from "@mui/material";
 
 import { BsFillCircleFill } from "react-icons/bs";
 
 function ResultCard({ title, value, children }) {
+  const [opacity, setOpacity] = React.useState(0);
   const theme = useTheme();
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setOpacity(1);
+    }, 500);
+  }, []);
 
   return (
     <Card
@@ -19,9 +19,12 @@ function ResultCard({ title, value, children }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        opacity: opacity,
+        transition: "opacity .5s ease",
+        py: 3,
       }}
     >
-      <Typography variant="subtitle1" textAlign="center" mb="1rem">
+      <Typography variant="body1" textAlign="center" mb="1rem">
         {title}
       </Typography>
       <Box
@@ -36,7 +39,7 @@ function ResultCard({ title, value, children }) {
             top: "50%",
             left: "50%",
             transform: "translate(-50%,-50%)",
-            color: "#565656",
+            color: "icons.main",
           },
         }}
       >

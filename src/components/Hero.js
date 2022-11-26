@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 // MUI
 import { Box, Button, IconButton, Typography } from "@mui/material";
 // image
-import bg from "../../assets/img/hero.jpg";
+import bg from "../assets/img/hero.jpg";
 // icons
 import { HiChevronDown } from "react-icons/hi";
 
