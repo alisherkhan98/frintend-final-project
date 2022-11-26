@@ -55,7 +55,7 @@ function ResultCards() {
             </ResultCard>
           </Grid>
           <Grid item xs={12} sm={4} sx={{ padding: 2 }}>
-            <ResultCard title="Total emissions" value={distance}>
+            <ResultCard title="Total emissions" value={totalEmissions}>
               <ImAirplane className="card-icon" />
             </ResultCard>
           </Grid>
