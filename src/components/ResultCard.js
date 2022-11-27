@@ -50,7 +50,7 @@ function ResultCard({ title, value, children, timeout }) {
         />
         {children}
       </Box>
-      <Typography variant="body1" fontWeight={600} textAlign="center" mt="1rem">
+      <Typography variant="body1" fontWeight={700} textAlign="center" mt="1rem">
         {value}
       </Typography>
     </Card>
