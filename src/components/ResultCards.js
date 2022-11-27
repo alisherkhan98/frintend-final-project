@@ -34,6 +34,15 @@ function ResultCards() {
   return (
     <Box sx={{ backgroundColor: "neutral.main" }}>
       <Container>
+        <Typography
+          color="primary"
+          variant="h4"
+          textAlign="center"
+          fontWeight={700}
+          py={3}
+        >
+          Your Emissions
+        </Typography>
         <Grid container justifyContent="center">
           <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
             <ResultCard title="Distance" value={distance} timeout={500}>
