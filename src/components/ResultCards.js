@@ -36,19 +36,27 @@ function ResultCards() {
       <Container>
         <Grid container justifyContent="center">
           <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
-            <ResultCard title="Distance" value={distance}>
+            <ResultCard title="Distance" value={distance} timeout={500}>
               <GiPathDistance className="card-icon" />
             </ResultCard>
           </Grid>
 
           <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
-            <ResultCard title="CO&#8322; per passenger" value={emissionPerPax}>
+            <ResultCard
+              title="CO&#8322; per passenger"
+              value={emissionPerPax}
+              timeout={750}
+            >
               <VscPerson className="card-icon" />
             </ResultCard>
           </Grid>
 
           <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
-            <ResultCard title="Total emissions" value={totalEmissions}>
+            <ResultCard
+              title="Total emissions"
+              value={totalEmissions}
+              timeout={1000}
+            >
               <FaCloud className="card-icon" />
               <Typography
                 sx={{
@@ -73,6 +81,7 @@ function ResultCards() {
                 </span>
               }
               value={trees}
+              timeout={1250}
             >
               <GiPineTree className="card-icon" />
             </ResultCard>

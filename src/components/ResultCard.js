@@ -3,14 +3,14 @@ import { Box, Card, Typography, useTheme } from "@mui/material";
 
 import { BsFillCircleFill } from "react-icons/bs";
 
-function ResultCard({ title, value, children }) {
+function ResultCard({ title, value, children, timeout }) {
   const [opacity, setOpacity] = React.useState(0);
   const theme = useTheme();
 
   React.useEffect(() => {
     setTimeout(() => {
       setOpacity(1);
-    }, 500);
+    }, timeout);
   }, []);
 
   return (
