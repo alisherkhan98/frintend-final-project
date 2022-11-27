@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { useRef } from "react";
 // MUI
 import {
   Container,
@@ -22,9 +22,8 @@ import { setIsFetchingFootprint } from "../redux/features/flightDataSlice";
 
 function Calculator() {
   const dispatch = useDispatch();
-  // state for api call on button press
-  const { isFetchingFootprint } = useSelector((state) => state.flightData);
-
+  // useRef fo scrolling down if emissions are calculated (passed as prop to useFetchFootprint)
+  const calculatorRef = useRef(null);
   // autocomplete inputs
   const [isDepartureOpen, setIsDepartureOpen] = React.useState(false);
   const [isDestinationOpen, setisDestinationOpen] = React.useState(false);
@@ -48,7 +47,7 @@ function Calculator() {
   const airportsList = UseLoadList();
 
   // fetch carbon emission data
-  UseFetchFootprint(details);
+  UseFetchFootprint(details, calculatorRef);
 
   // function to handle changes of inputs
   function handleChange(e) {
@@ -109,7 +108,7 @@ function Calculator() {
   }
 
   return (
-    <Box sx={{ backgroundColor: "neutral.main", py: 5 }}>
+    <Box sx={{ backgroundColor: "neutral.main", py: 5 }} ref={calculatorRef}>
       <Container component="form">
         <Paper
           sx={{

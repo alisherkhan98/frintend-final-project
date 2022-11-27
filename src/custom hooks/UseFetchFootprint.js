@@ -9,7 +9,7 @@ import {
   setIsFetchingFootprint,
 } from "../redux/features/flightDataSlice";
 
-function UseFetchFootprint(details) {
+function UseFetchFootprint(details, calculatorRef) {
   const dispatch = useDispatch();
   const { isFetchingFootprint } = useSelector((state) => state.flightData);
   React.useEffect(() => {
@@ -48,6 +48,15 @@ function UseFetchFootprint(details) {
           // save data in redux state
           const responseDetails = response.data.data.attributes;
           dispatch(setFlightDetails(responseDetails));
+        })
+        .then((res) => {
+          window.scrollTo({
+            top:
+              window.pageYOffset +
+              calculatorRef.current.getBoundingClientRect().bottom -
+              50,
+            behavior: "smooth",
+          });
         })
         .catch(function (error) {
           if (error.response) {
