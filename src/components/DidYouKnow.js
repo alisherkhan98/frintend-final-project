@@ -16,10 +16,13 @@ import forest from "../assets/img/forest.jpg";
 function DidYouKnow() {
   const theme = useTheme();
   return (
-    <Box sx={{ backgroundColor: "primary.main", py: 5 }} component="section">
+    <Box
+      sx={{ backgroundColor: "background.section", py: 5 }}
+      component="section"
+    >
       <Container>
         <Typography
-          color="text.contrast"
+          color="#f7f7f7"
           variant="h4"
           textAlign="center"
           fontWeight={700}
@@ -31,7 +34,7 @@ function DidYouKnow() {
           <Grid item xs={12} sm={7} px={2}>
             <Typography
               variant="body1"
-              color="text.contrast"
+              color="#f7f7f7"
               mb={2}
               textAlign="justify"
             >
@@ -41,7 +44,7 @@ function DidYouKnow() {
             </Typography>
             <Typography
               variant="body1"
-              color="text.contrast"
+              color="#f7f7f7"
               mb={2}
               textAlign="justify"
             >
@@ -52,13 +55,23 @@ function DidYouKnow() {
             </Typography>
             <Typography
               variant="body1"
-              color="text.contrast"
+              color="#f7f7f7"
               mb={2}
               textAlign="justify"
             >
               This means that we’d need to plant 40 billion trees annually to
               offset the emissions created. Even if this were possible, land
               space would be significantly reduced.
+            </Typography>
+            <Typography
+              variant="body1"
+              color="#f7f7f7"
+              mb={2}
+              textAlign="justify"
+            >
+              What can you do to help? We certainly can't do miracles but the
+              least we can do is contribute with little actions that may help,
+              like planting new trees. Press on the button below to start now!
             </Typography>
             <Stack
               sx={{
@@ -81,7 +94,7 @@ function DidYouKnow() {
               </Button>
               <Button
                 variant="outlined"
-                color="neutral"
+                color="hero"
                 sx={{
                   width: { xs: "90%", sm: "fit-content" },
                   m: 2,
@@ -98,9 +111,9 @@ function DidYouKnow() {
                 height: { xs: "250px", sm: 1 },
 
                 width: 1,
-                borderRadius: 5,
+                borderRadius: 3,
                 overflow: "hidden",
-                boxShadow: theme.shadows[7],
+                boxShadow: theme.shadows[5],
               }}
             >
               <img
@@ -108,10 +121,9 @@ function DidYouKnow() {
                 alt=""
                 style={{
                   objectFit: "cover",
-                  // maxHeight: "300px",
                   width: "100%",
                   height: "100%",
-                  opacity: 0.8,
+                  opacity: 0.9,
                 }}
               />
             </Box>
