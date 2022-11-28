@@ -14,6 +14,7 @@ import {
   Button,
   Typography,
   Toolbar,
+  Container,
 } from "@mui/material";
 // icons
 import { FaBars } from "react-icons/fa";
@@ -76,40 +77,43 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
           transition: "all .3s ease",
         }}
       >
-        <Toolbar>
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            color={show ? "primary" : "white"}
-          >
-            LOGO
-          </Typography>
+        <Container>
+          <Toolbar>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+              color={show ? "primary" : "white"}
+            >
+              LOGO
+            </Typography>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button
-                key={item}
-                sx={{ color: `${show ? "primary" : "white"}` }}
-                onClick={() => {
-                  setIsDarkMode(!isDarkMode);
-                }}
-              >
-                {item}
-              </Button>
-            ))}
-          </Box>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <FaBars />
-          </IconButton>
-        </Toolbar>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item}
+                  sx={{ color: `${show ? "primary" : "white"}` }}
+                  onClick={() => {
+                    setIsDarkMode(!isDarkMode);
+                  }}
+                >
+                  {item}
+                </Button>
+              ))}
+            </Box>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <FaBars />
+            </IconButton>
+          </Toolbar>
+        </Container>
       </AppBar>
+
       <Box component="nav">
         <Drawer
           variant="temporary"

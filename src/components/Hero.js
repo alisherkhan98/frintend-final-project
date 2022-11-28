@@ -1,7 +1,7 @@
 // react
 import React, { useRef } from "react";
 // MUI
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography, Container } from "@mui/material";
 // image
 import bg from "../assets/img/hero.jpg";
 // icons
@@ -28,51 +28,53 @@ function Hero() {
         backgroundBlendMode: "multiply",
       }}
     >
-      <Typography
-        variant="h3"
-        color="#f7f7f7"
-        textAlign="center"
-        fontWeight={700}
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          width: "90%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        Estimate your next flight's carbon footprint
-      </Typography>
-      <Button
-        variant="outlined"
-        color="hero"
-        sx={{
-          position: "absolute",
-          left: "50%",
-          bottom: "10%",
-          transform: "translate(-50%, -50%)",
-        }}
-        onClick={() => {
-          window.scrollTo({
-            top: heroRef.current.clientHeight - 50,
-            behavior: "smooth",
-          });
-        }}
-      >
-        Calculate Now
-      </Button>
-      <IconButton
-        sx={{
-          position: "absolute",
-          left: "50%",
-          bottom: "10%",
-          transform: "translate(-50%, 1.5rem)",
-        }}
-        disableRipple
-        color="hero"
-      >
-        <HiChevronDown />
-      </IconButton>
+      <Container>
+        <Typography
+          variant="h3"
+          color="#f7f7f7"
+          textAlign="center"
+          fontWeight={700}
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "90%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          Estimate your next flight's carbon footprint
+        </Typography>
+        <Button
+          variant="outlined"
+          color="hero"
+          sx={{
+            position: "absolute",
+            left: "50%",
+            bottom: "10%",
+            transform: "translate(-50%, -50%)",
+          }}
+          onClick={() => {
+            window.scrollTo({
+              top: heroRef.current.clientHeight - 50,
+              behavior: "smooth",
+            });
+          }}
+        >
+          Calculate Now
+        </Button>
+        <IconButton
+          sx={{
+            position: "absolute",
+            left: "50%",
+            bottom: "10%",
+            transform: "translate(-50%, 1.5rem)",
+          }}
+          disableRipple
+          color="hero"
+        >
+          <HiChevronDown />
+        </IconButton>
+      </Container>
     </Box>
   );
 }
