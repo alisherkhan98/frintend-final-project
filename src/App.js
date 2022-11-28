@@ -23,25 +23,7 @@ function App() {
       <Hero />
       <Calculator />
       {footprintDetails && !isFetchingFootprint && <ResultCards />}
-      <DidYouKnow></DidYouKnow>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
-      <h1>hello</h1>
+      <DidYouKnow />
     </Theme>
   );
 }

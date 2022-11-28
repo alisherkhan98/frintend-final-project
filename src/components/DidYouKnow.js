@@ -1,20 +1,29 @@
 // react
 import React from "react";
 // MUI
-import { Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 // image
 import forest from "../assets/img/forest.jpg";
 
 function DidYouKnow() {
+  const theme = useTheme();
   return (
-    <Box sx={{ backgroundColor: "primary.main", py: 5 }}>
+    <Box sx={{ backgroundColor: "primary.main", py: 5 }} component="section">
       <Container>
         <Typography
           color="text.contrast"
           variant="h4"
           textAlign="center"
           fontWeight={700}
-          pb={3}
+          mb={4}
         >
           Did You Know?
         </Typography>
@@ -51,16 +60,61 @@ function DidYouKnow() {
               offset the emissions created. Even if this were possible, land
               space would be significantly reduced.
             </Typography>
+            <Stack
+              sx={{
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: "center",
+              }}
+            >
+              <Button
+                href="https://www.viessmann.co.uk/en/heating-advice/boilers/how-much-co2-does-tree-absorb.html"
+                variant="contained"
+                color="neutral"
+                sx={{
+                  color: "icons.main",
+                  width: { xs: "90%", sm: "fit-content" },
+                  marginLeft: { xs: 2, sm: 0 },
+                  m: 2,
+                }}
+              >
+                Read More
+              </Button>
+              <Button
+                variant="outlined"
+                color="neutral"
+                sx={{
+                  width: { xs: "90%", sm: "fit-content" },
+                  m: 2,
+                  marginLeft: { xs: 2, sm: 0 },
+                }}
+              >
+                Support
+              </Button>{" "}
+            </Stack>
           </Grid>
           <Grid item xs={12} sm={5} p={3}>
             <Box
               sx={{
-                backgroundImage: `url(${forest})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
+                height: { xs: "250px", sm: 1 },
+
+                width: 1,
+                borderRadius: 5,
+                overflow: "hidden",
+                boxShadow: theme.shadows[7],
               }}
-            ></Box>
+            >
+              <img
+                src={forest}
+                alt=""
+                style={{
+                  objectFit: "cover",
+                  // maxHeight: "300px",
+                  width: "100%",
+                  height: "100%",
+                  opacity: 0.8,
+                }}
+              />
+            </Box>
           </Grid>
         </Grid>
       </Container>
