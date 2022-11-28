@@ -51,7 +51,12 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemButton
+              onClick={() => {
+                setIsDarkMode(!isDarkMode);
+              }}
+              sx={{ textAlign: "center" }}
+            >
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
@@ -65,9 +70,9 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
       <AppBar
         component="nav"
         color={show ? "neutral" : "transparent"}
-        elevation={0}
+        elevation={show ? 5 : 0}
         sx={{
-          opacity: 0.95,
+          opacity: 0.9,
           transition: "all .3s ease",
         }}
       >
@@ -110,9 +115,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
+          ModalProps={{}}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
