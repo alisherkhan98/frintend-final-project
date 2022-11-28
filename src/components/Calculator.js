@@ -12,6 +12,10 @@ import {
   Select,
   MenuItem,
   Stack,
+  InputAdornment,
+  FormControl,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 // custom hooks
 import UseLoadList from "../custom hooks/UseLoadList";
@@ -19,6 +23,8 @@ import UseFetchFootprint from "../custom hooks/UseFetchFootprint";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { setIsFetchingFootprint } from "../redux/features/flightDataSlice";
+// icons
+import { TbHelp } from "react-icons/tb";
 
 function Calculator() {
   const dispatch = useDispatch();
@@ -42,6 +48,7 @@ function Calculator() {
     roundTrip: "one_way",
     passengers: 1,
   });
+  const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
   // load airports list with api call
   const airportsList = UseLoadList();
@@ -151,13 +158,38 @@ function Calculator() {
             </Select>
 
             {/* passengers */}
+
             <TextField
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Tooltip
+                      title="The average aircraft has 138 seats"
+                      open={tooltipOpen}
+                    >
+                      <IconButton
+                        onClick={() => {
+                          setTooltipOpen(true);
+                          setTimeout(() => {
+                            setTooltipOpen(false);
+                          }, 1500);
+                        }}
+                      >
+                        <TbHelp size="1.2rem" />
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                ),
+              }}
               value={details.passengers}
               name="passengers"
               onChange={handleChange}
               label="Passengers"
-              sx={{ minWidth: "120px", width: "30%", maxWidth: "250px" }}
               // in case of error
               error={formError.passengers}
               helperText={formError.passengers && "Please enter a number > 0"}
