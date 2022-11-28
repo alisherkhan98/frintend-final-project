@@ -35,7 +35,7 @@ function UseFetchFootprint(details, calculatorRef) {
           url: "https://www.carboninterface.com/api/v1/estimates",
           method: "POST",
           headers: {
-            Authorization: "Bearer yUP5UARh3BLQQRlDtgvA2w",
+            Authorization: "Bearer M0XbSRtXiAfnQ4c1jAvCQ",
             "Content-Type": "application/json",
           },
           data: {
