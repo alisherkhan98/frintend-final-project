@@ -1,20 +1,12 @@
 // react
 import React from "react";
 // MUI
-import {
-  Box,
-  Grid,
-  Card,
-  Container,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, Container, Typography, useTheme } from "@mui/material";
 // redux
 import { useSelector } from "react-redux";
 // icons
 import { GiPathDistance, GiPineTree } from "react-icons/gi";
 import { FaCloud } from "react-icons/fa";
-import { ImAirplane } from "react-icons/im";
 import { VscPerson } from "react-icons/vsc";
 
 // components
@@ -32,25 +24,25 @@ function ResultCards() {
   const totalEmissions = Math.round(footprintDetails.carbon_kg) + " kg";
   const trees = Math.round(footprintDetails.carbon_kg / 21) + " trees";
   return (
-    <Box sx={{ backgroundColor: "neutral.main" }}>
+    <Box sx={{ backgroundColor: "neutral.main", py: 5 }}>
       <Container>
         <Typography
           color="primary"
           variant="h4"
           textAlign="center"
           fontWeight={700}
-          py={3}
+          pb={3}
         >
           Your Emissions
         </Typography>
         <Grid container justifyContent="center">
-          <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
+          <Grid item xs={12} sm={4} sx={{ padding: 2 }}>
             <ResultCard title="Distance" value={distance} timeout={500}>
               <GiPathDistance className="card-icon" />
             </ResultCard>
           </Grid>
 
-          <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
+          <Grid item xs={12} sm={4} sx={{ padding: 2 }}>
             <ResultCard
               title="CO&#8322; per passenger"
               value={emissionPerPax}
@@ -60,7 +52,7 @@ function ResultCards() {
             </ResultCard>
           </Grid>
 
-          <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
+          <Grid item xs={12} sm={4} sx={{ padding: 2 }}>
             <ResultCard
               title="Total emissions"
               value={totalEmissions}
@@ -81,7 +73,7 @@ function ResultCards() {
             </ResultCard>
           </Grid>
 
-          <Grid item xs={10} sm={4} sx={{ padding: 2 }}>
+          <Grid item xs={12} sm={4} sx={{ padding: 2 }}>
             <ResultCard
               title={
                 <span>

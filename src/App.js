@@ -11,7 +11,9 @@ import ResultCards from "./components/ResultCards";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const { footprintDetails } = useSelector((state) => state.flightData);
+  const { footprintDetails, isFetchingFootprint } = useSelector(
+    (state) => state.flightData
+  );
   console.log(footprintDetails);
 
   return (
@@ -19,7 +21,25 @@ function App() {
       <Navbar setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
       <Hero />
       <Calculator />
-      {footprintDetails && <ResultCards />}
+      {footprintDetails && !isFetchingFootprint && <ResultCards />}
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
+      <h1>hello</h1>
     </Theme>
   );
 }
