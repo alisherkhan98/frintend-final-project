@@ -4,6 +4,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Calculator from "./components/Calculator";
+import DidYouKnow from "./components/DidYouKnow";
 import Theme from "./Theme";
 // redux
 import { useSelector } from "react-redux";
@@ -22,6 +23,7 @@ function App() {
       <Hero />
       <Calculator />
       {footprintDetails && !isFetchingFootprint && <ResultCards />}
+      <DidYouKnow></DidYouKnow>
       <h1>hello</h1>
       <h1>hello</h1>
       <h1>hello</h1>

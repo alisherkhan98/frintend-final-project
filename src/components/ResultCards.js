@@ -88,17 +88,6 @@ function ResultCards() {
             </ResultCard>
           </Grid>
         </Grid>
-        {/* <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Box width="33%" padding={2}>
-           
-          </Box>
-        </Box> */}
       </Container>
     </Box>
   );

@@ -31,13 +31,16 @@ function Theme({ children, isDarkMode }) {
         main: isDarkMode ? "#21ab7d69" : "#429a2f1a",
       },
       neutral: {
-        main: isDarkMode ? "#282828" : "#f7f7f7",
+        main: isDarkMode ? "#2b2b2b" : "#f7f7f7",
       },
       hero: {
         main: "#f7f7f7",
       },
       icons: {
         main: isDarkMode ? "#f7f7f7" : "#565656",
+      },
+      text: {
+        contrast: isDarkMode ? "#000000" : "#f7f7f7",
       },
     },
 
