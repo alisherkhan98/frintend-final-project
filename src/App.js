@@ -12,11 +12,10 @@ import ResultCards from "./components/ResultCards";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const { footprintDetails, isFetchingFootprint } = useSelector(
+  const { footprintDetails, isFetchingFootprint, fetchError } = useSelector(
     (state) => state.flightData
   );
-  console.log(footprintDetails);
-
+  console.log(fetchError);
   return (
     <Theme isDarkMode={isDarkMode}>
       <Navbar setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />

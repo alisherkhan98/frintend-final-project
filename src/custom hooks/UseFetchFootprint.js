@@ -5,13 +5,16 @@ import axios from "axios";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setError,
   setFlightDetails,
   setIsFetchingFootprint,
 } from "../redux/features/flightDataSlice";
 
 function UseFetchFootprint(details, calculatorRef) {
   const dispatch = useDispatch();
-  const { isFetchingFootprint } = useSelector((state) => state.flightData);
+  const { isFetchingFootprint, fetchError } = useSelector(
+    (state) => state.flightData
+  );
   React.useEffect(() => {
     if (isFetchingFootprint) {
       const legs = [
@@ -60,21 +63,49 @@ function UseFetchFootprint(details, calculatorRef) {
         })
         .catch(function (error) {
           if (error.response) {
+            console.log(error.response);
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            if (error.response.status === 404) {
+              dispatch(
+                setError({
+                  message: "Page not found",
+                  status: error.response.status,
+                })
+              );
+            } else if (error.response.status === 401) {
+              dispatch(
+                setError({
+                  message: "API Key not valid. Try with a different key",
+                  status: error.response.status,
+                })
+              );
+            } else {
+              dispatch(
+                setError({
+                  message: error.response.data.message,
+                  status: error.response.status,
+                })
+              );
+            }
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
-            console.log(error.request);
+            console.log("====================================");
+            console.log("request error");
+            console.log("====================================");
+            dispatch(
+              setError({
+                message: "The request was made but no response was received",
+                status: undefined,
+              })
+            );
           } else {
             // Something happened in setting up the request that triggered an Error
             console.log("Error", error.message);
           }
-          console.log(error.config);
+          dispatch(setFlightDetails(undefined));
         });
     }
     dispatch(setIsFetchingFootprint(false));

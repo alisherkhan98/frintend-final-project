@@ -106,7 +106,6 @@ function Calculator() {
         destination: false,
       }));
     }
-    console.log(error);
     if (error) {
       return;
     }
