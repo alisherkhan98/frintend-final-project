@@ -115,8 +115,9 @@ function Calculator() {
 
   return (
     <Box sx={{ backgroundColor: "neutral.main", py: 5 }} ref={calculatorRef}>
-      <Container component="form">
+      <Container>
         <Paper
+          component="form"
           sx={{
             padding: " 40px 32px",
             borderRadius: 5,

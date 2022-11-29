@@ -5,6 +5,7 @@ import axios from "axios";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
+  removeError,
   setError,
   setFlightDetails,
   setIsFetchingFootprint,
@@ -12,9 +13,7 @@ import {
 
 function UseFetchFootprint(details, calculatorRef) {
   const dispatch = useDispatch();
-  const { isFetchingFootprint, fetchError } = useSelector(
-    (state) => state.flightData
-  );
+  const { isFetchingFootprint } = useSelector((state) => state.flightData);
   React.useEffect(() => {
     if (isFetchingFootprint) {
       const legs = [
@@ -52,18 +51,9 @@ function UseFetchFootprint(details, calculatorRef) {
           const responseDetails = response.data.data.attributes;
           dispatch(setFlightDetails(responseDetails));
         })
-        .then((res) => {
-          window.scrollTo({
-            top:
-              window.pageYOffset +
-              calculatorRef.current.getBoundingClientRect().bottom -
-              50,
-            behavior: "smooth",
-          });
-        })
+
         .catch(function (error) {
           if (error.response) {
-            console.log(error.response);
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             if (error.response.status === 404) {
@@ -106,6 +96,15 @@ function UseFetchFootprint(details, calculatorRef) {
             console.log("Error", error.message);
           }
           dispatch(setFlightDetails(undefined));
+        })
+        .then((res) => {
+          window.scrollTo({
+            top:
+              window.pageYOffset +
+              calculatorRef.current.getBoundingClientRect().bottom -
+              60,
+            behavior: "smooth",
+          });
         });
     }
     dispatch(setIsFetchingFootprint(false));

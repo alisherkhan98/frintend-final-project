@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   footprintDetails: undefined,
   isFetchingFootprint: false,
-  fetchError: {},
+  footprintError: undefined,
 };
 export const flightDataSlice = createSlice({
   name: "flightData",
@@ -17,13 +17,19 @@ export const flightDataSlice = createSlice({
       state.isFetchingFootprint = action.payload;
     },
     setError: (state, action) => {
-      state.fetchError.message = action.payload.message;
-      state.fetchError.status = action.payload.status;
+      state.footprintError = action.payload;
+    },
+    removeError: (state) => {
+      state.footprintError = undefined;
     },
   },
 });
 
-export const { setFlightDetails, setIsFetchingFootprint, setError } =
-  flightDataSlice.actions;
+export const {
+  setFlightDetails,
+  setIsFetchingFootprint,
+  setError,
+  removeError,
+} = flightDataSlice.actions;
 
 export default flightDataSlice.reducer;
