@@ -22,6 +22,11 @@ function Footer() {
               color="text.secondary"
               sx={{
                 mx: 3,
+                transition: "transform .2s ease",
+                "&:hover": {
+                  color: "primary.main",
+                  transform: "scale(1.2)",
+                },
               }}
               href="https://www.linkedin.com/in/ali-sher-khan-1331a8205/"
               target="_blank"
@@ -32,6 +37,11 @@ function Footer() {
               color="text.secondary"
               sx={{
                 mx: 3,
+                transition: "transform .2s ease",
+                "&:hover": {
+                  color: "primary.main",
+                  transform: "scale(1.2)",
+                },
               }}
               href="https://discordapp.com/users/Metaxa#5113"
               target="_blank"
@@ -41,6 +51,11 @@ function Footer() {
             <Link
               sx={{
                 mx: 3,
+                transition: "transform .2s ease",
+                "&:hover": {
+                  color: "primary.main",
+                  transform: "scale(1.2)",
+                },
               }}
               color="text.secondary"
               href="https://github.com/alisherkhan98"
@@ -51,6 +66,11 @@ function Footer() {
             <Link
               sx={{
                 mx: 3,
+                transition: "transform .2s ease",
+                "&:hover": {
+                  color: "primary.main",
+                  transform: "scale(1.2)",
+                },
               }}
               color="text.secondary"
               href="https://twitter.com/AliSher03212351"
