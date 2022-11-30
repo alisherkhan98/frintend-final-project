@@ -6,7 +6,6 @@ import {
   Button,
   Container,
   Grid,
-  Stack,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -63,53 +62,26 @@ function DidYouKnow() {
               offset the emissions created. Even if this were possible, land
               space would be significantly reduced.
             </Typography>
-            <Typography
-              variant="body1"
-              color="#f7f7f7"
-              mb={2}
-              textAlign="justify"
-            >
+            <Typography variant="body1" color="#f7f7f7" textAlign="justify">
               What can you do to help? We certainly can't do miracles but the
               least we can do is contribute with little actions that may help,
               like planting new trees. Press on the button below to start now!
             </Typography>
-            <Stack
-              sx={{
-                flexDirection: { xs: "column", sm: "row" },
-                alignItems: "center",
-              }}
-            >
-              <Button
-                href="https://www.viessmann.co.uk/en/heating-advice/boilers/how-much-co2-does-tree-absorb.html"
-                variant="contained"
-                color="neutral"
-                sx={{
-                  color: "icons.main",
-                  width: { xs: "90%", sm: "fit-content" },
-                  marginLeft: { xs: 2, sm: 0 },
-                  m: 2,
-                }}
-              >
-                Read More
-              </Button>
-              <Button
-                variant="outlined"
-                color="hero"
-                sx={{
-                  width: { xs: "90%", sm: "fit-content" },
-                  m: 2,
-                  marginLeft: { xs: 2, sm: 0 },
-                }}
-              >
-                Support
-              </Button>{" "}
-            </Stack>
           </Grid>
-          <Grid item xs={12} sm={5} p={3}>
+          <Grid
+            item
+            xs={12}
+            sm={5}
+            p={3}
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              alignItems: "center",
+            }}
+          >
             <Box
               sx={{
                 height: { xs: "250px", sm: 1 },
-
+                maxHeight: 350,
                 width: 1,
                 borderRadius: 3,
                 overflow: "hidden",
@@ -123,10 +95,39 @@ function DidYouKnow() {
                   objectFit: "cover",
                   width: "100%",
                   height: "100%",
+                  maxHeight: "350px",
                   opacity: 0.9,
                 }}
               />
             </Box>
+          </Grid>
+          <Grid item xs={12} px={2} mt={6}>
+            <Button
+              href="https://www.viessmann.co.uk/en/heating-advice/boilers/how-much-co2-does-tree-absorb.html"
+              target="_blank"
+              variant="contained"
+              color="neutral"
+              sx={{
+                color: "icons.main",
+                width: { xs: "100%", sm: "fit-content" },
+                mb: { xs: 3, sm: 0 },
+                borderWidth: "1px",
+                borderColor: "neutral.main",
+                borderStyle: "solid",
+              }}
+            >
+              Read More
+            </Button>
+            <Button
+              variant="outlined"
+              color="hero"
+              sx={{
+                width: { xs: "100%", sm: "fit-content" },
+                marginLeft: { sm: 3 },
+              }}
+            >
+              Support
+            </Button>
           </Grid>
         </Grid>
       </Container>
