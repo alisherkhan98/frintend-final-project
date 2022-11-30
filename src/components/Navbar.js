@@ -102,7 +102,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               ))}
             </Box>
             <IconButton
-              color="inherit"
+              color={show ? "primary" : "white"}
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
