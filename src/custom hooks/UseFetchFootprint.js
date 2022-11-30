@@ -80,20 +80,20 @@ function UseFetchFootprint(details, calculatorRef) {
             }
           } else if (error.request) {
             // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log("====================================");
-            console.log("request error");
-            console.log("====================================");
             dispatch(
               setError({
                 message: "The request was made but no response was received",
-                status: undefined,
+                status: "unknown",
               })
             );
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            dispatch(
+              setError({
+                message: error.message,
+                status: "unknown",
+              })
+            );
           }
           dispatch(setFlightDetails(undefined));
         })

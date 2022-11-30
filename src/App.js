@@ -24,7 +24,15 @@ function App() {
       <Calculator />
       {/* alert for errors */}
       {footprintError && !footprintDetails && (
-        <MyAlert text={footprintError.message} />
+        <MyAlert
+          text={
+            "Error code: " +
+            footprintError.status +
+            ". " +
+            footprintError.message
+          }
+          severity="error"
+        />
       )}
       {footprintDetails && !isFetchingFootprint && <ResultCards />}
       <DidYouKnow />

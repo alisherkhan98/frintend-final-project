@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 // MUI
 import { Alert, Box, Container, Fade } from "@mui/material";
 
-function MyAlert({ text }) {
+function MyAlert({ text, severity }) {
   const [isOpen, setIsOpen] = React.useState(false);
   useEffect(() => {
     setTimeout(() => {
@@ -14,7 +14,7 @@ function MyAlert({ text }) {
     <Box sx={{ backgroundColor: "neutral.main", pb: 5 }}>
       <Container>
         <Fade in={isOpen}>
-          <Alert severity="error" sx={{}}>
+          <Alert severity={severity} sx={{}}>
             {text}
           </Alert>
         </Fade>

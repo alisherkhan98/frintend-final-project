@@ -42,6 +42,9 @@ function Theme({ children, isDarkMode }) {
       text: {
         contrast: isDarkMode ? "#000000" : "#f7f7f7",
       },
+      background: {
+        section: isDarkMode ? "#0c402f" : "#156d4f",
+      },
     },
 
     components: {
@@ -68,7 +71,7 @@ function Theme({ children, isDarkMode }) {
             borderRadius: "20px",
             height: "100%",
             padding: "1rem",
-            boxShadow: "0 0 15px rgba(0,0,0,0.3)",
+
             boxSizing: "border-box",
           },
         },
@@ -83,6 +86,7 @@ function Theme({ children, isDarkMode }) {
     },
   });
   theme = responsiveFontSizes(theme);
+  theme.components.MuiCard.styleOverrides.root.boxShadow = theme.shadows[7];
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
 
