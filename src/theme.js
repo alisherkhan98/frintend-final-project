@@ -25,7 +25,7 @@ function Theme({ children, isDarkMode }) {
     palette: {
       mode: isDarkMode ? "dark" : "light",
       primary: {
-        main: isDarkMode ? "#21ab7d" : "#156d4f",
+        main: isDarkMode ? "#20c58e" : "#156d4f",
       },
       secondary: {
         main: isDarkMode ? "#21ab7d69" : "#429a2f1a",
@@ -86,7 +86,7 @@ function Theme({ children, isDarkMode }) {
     },
   });
   theme = responsiveFontSizes(theme);
-  theme.components.MuiCard.styleOverrides.root.boxShadow = theme.shadows[7];
+  theme.components.MuiCard.styleOverrides.root.boxShadow = theme.shadows[5];
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
 

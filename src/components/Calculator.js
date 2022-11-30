@@ -13,7 +13,6 @@ import {
   MenuItem,
   Stack,
   InputAdornment,
-  FormControl,
   Tooltip,
   IconButton,
 } from "@mui/material";
@@ -21,7 +20,7 @@ import {
 import UseLoadList from "../custom hooks/UseLoadList";
 import UseFetchFootprint from "../custom hooks/UseFetchFootprint";
 // redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setIsFetchingFootprint } from "../redux/features/flightDataSlice";
 // icons
 import { TbHelp } from "react-icons/tb";

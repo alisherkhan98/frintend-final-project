@@ -5,7 +5,6 @@ import axios from "axios";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
-  removeError,
   setError,
   setFlightDetails,
   setIsFetchingFootprint,
