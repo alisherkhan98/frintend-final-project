@@ -11,9 +11,12 @@ import Footer from "./components/Footer";
 // redux
 import { useSelector } from "react-redux";
 import ResultCards from "./components/ResultCards";
+// MUI
+import { useMediaQuery } from "@mui/material";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const initialMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [isDarkMode, setIsDarkMode] = React.useState(initialMode);
   const { footprintDetails, isFetchingFootprint, footprintError } = useSelector(
     (state) => state.flightData
   );
