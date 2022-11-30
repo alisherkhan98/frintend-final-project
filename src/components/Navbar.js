@@ -15,9 +15,11 @@ import {
   Typography,
   Toolbar,
   Container,
+  useTheme,
 } from "@mui/material";
 // icons
 import { FaBars } from "react-icons/fa";
+import { MdOutlineDarkMode, MdOutlineWbSunny } from "react-icons/md";
 
 // constants
 const drawerWidth = "66vw";
@@ -26,6 +28,7 @@ const navItems = ["Home", "About", "Contact"];
 function Navbar({ setIsDarkMode, isDarkMode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
+  const theme = useTheme();
 
   // listener for scroll
   React.useEffect(() => {
@@ -39,29 +42,54 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
     window.addEventListener("scroll", navTransition);
     return () => window.removeEventListener("scroll", navTransition);
   }, []);
+
+  // function to toggle drawer
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  // function to toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  // icon for dark mode changes if toggled
+  const darkModeIcon = isDarkMode ? (
+    <IconButton
+      sx={{ mr: 2 }}
+      onClick={toggleDarkMode}
+      edge="end"
+      aria-label="dark-mode"
+      color={show ? theme.palette.text.secondary : "#f7f7f7"}
+    >
+      <MdOutlineWbSunny />
+    </IconButton>
+  ) : (
+    <IconButton
+      sx={{ mr: 2 }}
+      onClick={toggleDarkMode}
+      edge="end"
+      aria-label="dark-mode"
+    >
+      <MdOutlineDarkMode
+        color={show ? theme.palette.text.secondary : "#f7f7f7"}
+      />
+    </IconButton>
+  );
+
+  // drawer for mobiles
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        LOGO
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                setIsDarkMode(!isDarkMode);
-              }}
-              sx={{ textAlign: "center" }}
-            >
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding secondaryAction={darkModeIcon}>
+          <ListItemButton onClick={toggleDarkMode} sx={{ textAlign: "center" }}>
+            <ListItemText primary={"Dark mode"} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -89,6 +117,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
             </Typography>
 
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {darkModeIcon}
               {navItems.map((item) => (
                 <Button
                   key={item}
