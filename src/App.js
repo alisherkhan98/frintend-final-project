@@ -7,6 +7,7 @@ import Calculator from "./components/Calculator";
 import DidYouKnow from "./components/DidYouKnow";
 import Theme from "./Theme";
 import MyAlert from "./components/MyAlert";
+import Footer from "./components/Footer";
 // redux
 import { useSelector } from "react-redux";
 import ResultCards from "./components/ResultCards";
@@ -36,6 +37,7 @@ function App() {
       )}
       {footprintDetails && !isFetchingFootprint && <ResultCards />}
       <DidYouKnow />
+      <Footer />
     </Theme>
   );
 }
