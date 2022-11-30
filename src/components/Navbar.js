@@ -23,7 +23,6 @@ import { MdOutlineDarkMode, MdOutlineWbSunny } from "react-icons/md";
 
 // constants
 const drawerWidth = "66vw";
-const navItems = ["Home", "About", "Contact"];
 
 function Navbar({ setIsDarkMode, isDarkMode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -55,26 +54,9 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
 
   // icon for dark mode changes if toggled
   const darkModeIcon = isDarkMode ? (
-    <IconButton
-      sx={{ mr: 2 }}
-      onClick={toggleDarkMode}
-      edge="end"
-      aria-label="dark-mode"
-      color={show ? theme.palette.text.secondary : "#f7f7f7"}
-    >
-      <MdOutlineWbSunny />
-    </IconButton>
+    <MdOutlineWbSunny />
   ) : (
-    <IconButton
-      sx={{ mr: 2 }}
-      onClick={toggleDarkMode}
-      edge="end"
-      aria-label="dark-mode"
-    >
-      <MdOutlineDarkMode
-        color={show ? theme.palette.text.secondary : "#f7f7f7"}
-      />
-    </IconButton>
+    <MdOutlineDarkMode />
   );
 
   // drawer for mobiles
@@ -85,7 +67,20 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
       </Typography>
       <Divider />
       <List>
-        <ListItem disablePadding secondaryAction={darkModeIcon}>
+        <ListItem
+          disablePadding
+          secondaryAction={
+            <IconButton
+              sx={{ mr: 2 }}
+              onClick={toggleDarkMode}
+              edge="end"
+              aria-label="dark-mode"
+              color={theme.palette.text.secondary}
+            >
+              {darkModeIcon}{" "}
+            </IconButton>
+          }
+        >
           <ListItemButton onClick={toggleDarkMode} sx={{ textAlign: "center" }}>
             <ListItemText primary={"Dark mode"} />
           </ListItemButton>
@@ -101,8 +96,8 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         color={show ? "neutral" : "transparent"}
         elevation={show ? 5 : 0}
         sx={{
-          opacity: 0.9,
-          transition: "all .3s ease",
+          opacity: 0.95,
+          transition: "all .5s ease",
         }}
       >
         <Container>
@@ -116,19 +111,28 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               LOGO
             </Typography>
 
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              {darkModeIcon}
-              {navItems.map((item) => (
-                <Button
-                  key={item}
-                  sx={{ color: `${show ? "primary" : "white"}` }}
-                  onClick={() => {
-                    setIsDarkMode(!isDarkMode);
-                  }}
-                >
-                  {item}
-                </Button>
-              ))}
+            <Box
+              sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center" }}
+            >
+              <IconButton
+                sx={{ mr: 2 }}
+                onClick={toggleDarkMode}
+                edge="end"
+                aria-label="dark-mode"
+                color={show ? theme.palette.text.secondary : "hero"}
+              >
+                {darkModeIcon}
+              </IconButton>
+              <Button color={show ? "primary" : "hero"} sx={{ mx: 2 }}>
+                Home
+              </Button>
+              <Button
+                variant="contained"
+                color={show ? "primary" : "hero"}
+                sx={{ ml: 2 }}
+              >
+                Support
+              </Button>
             </Box>
             <IconButton
               color={show ? "primary" : "white"}
