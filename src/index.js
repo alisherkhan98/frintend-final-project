@@ -6,8 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 // css
 import "./index.css";
-// MUI
-import theme from "./Theme";
+
 // components
 import App from "./App";
 
