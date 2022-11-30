@@ -50,6 +50,16 @@ function UseFetchFootprint(details, calculatorRef) {
           const responseDetails = response.data.data.attributes;
           dispatch(setFlightDetails(responseDetails));
         })
+        // scroll to cards if success
+        .then((res) => {
+          window.scrollTo({
+            top:
+              window.pageYOffset +
+              calculatorRef.current.getBoundingClientRect().bottom -
+              60,
+            behavior: "smooth",
+          });
+        })
 
         .catch(function (error) {
           if (error.response) {
@@ -95,13 +105,11 @@ function UseFetchFootprint(details, calculatorRef) {
             );
           }
           dispatch(setFlightDetails(undefined));
-        })
-        .then((res) => {
           window.scrollTo({
             top:
               window.pageYOffset +
               calculatorRef.current.getBoundingClientRect().bottom -
-              60,
+              200,
             behavior: "smooth",
           });
         });
