@@ -177,7 +177,7 @@ function Calculator() {
                           setTooltipOpen(true);
                           setTimeout(() => {
                             setTooltipOpen(false);
-                          }, 1500);
+                          }, 2000);
                         }}
                       >
                         <TbHelp size="1.2rem" />
