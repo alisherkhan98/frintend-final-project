@@ -127,11 +127,14 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               >
                 {darkModeIcon}
               </IconButton>
-              <Button color={show ? "primary" : "hero"} sx={{ mx: 2 }}>
+              <Button color={show ? "primary" : "hero"} sx={{ mr: 2 }}>
                 Home
               </Button>
-              <Button variant="contained" color="primary" sx={{ ml: 2 }}>
+              <Button color={show ? "primary" : "hero"} sx={{ mr: 2 }}>
                 Support
+              </Button>
+              <Button variant="contained" color="primary" sx={{}}>
+                Login
               </Button>
             </Box>
             <IconButton

@@ -55,6 +55,10 @@ function Theme({ children, isDarkMode }) {
             width: "fit-content",
             textTransform: "unset",
             fontSize: "1rem",
+            transition: "all .3s ease",
+            "&:hover": {
+              transform: "scale(1.02)",
+            },
           },
         },
       },

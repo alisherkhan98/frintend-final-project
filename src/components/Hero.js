@@ -52,6 +52,9 @@ function Hero() {
             left: "50%",
             bottom: "10%",
             transform: "translate(-50%, -50%)",
+            "&:hover": {
+              transform: "translate(-50%, -50%) scale(1.05)",
+            },
           }}
           onClick={() => {
             window.scrollTo({
