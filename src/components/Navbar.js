@@ -61,7 +61,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
 
   // drawer for mobiles
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         LOGO
       </Typography>
@@ -81,7 +81,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
             </IconButton>
           }
         >
-          <ListItemButton onClick={toggleDarkMode} sx={{ textAlign: "center" }}>
+          <ListItemButton
+            disableRipple
+            onClick={toggleDarkMode}
+            sx={{ textAlign: "center" }}
+          >
             <ListItemText primary={"Dark mode"} />
           </ListItemButton>
         </ListItem>
@@ -126,11 +130,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               <Button color={show ? "primary" : "hero"} sx={{ mx: 2 }}>
                 Home
               </Button>
-              <Button
-                variant="contained"
-                color={show ? "primary" : "hero"}
-                sx={{ ml: 2 }}
-              >
+              <Button variant="contained" color="primary" sx={{ ml: 2 }}>
                 Support
               </Button>
             </Box>
@@ -150,9 +150,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
       <Box component="nav">
         <Drawer
           variant="temporary"
+          ModalProps={{
+            keepMounted: true,
+          }}
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{}}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
