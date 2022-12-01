@@ -16,7 +16,7 @@ function DidYouKnow() {
   const theme = useTheme();
   return (
     <Box
-      sx={{ backgroundColor: "background.section", py: 5 }}
+      sx={{ backgroundColor: "background.section", py: 8 }}
       component="section"
     >
       <Container>
@@ -25,7 +25,7 @@ function DidYouKnow() {
           variant="h4"
           textAlign="center"
           fontWeight={700}
-          mb={4}
+          mb={6}
         >
           Did You Know?
         </Typography>

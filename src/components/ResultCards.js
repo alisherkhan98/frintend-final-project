@@ -24,7 +24,7 @@ function ResultCards() {
   const totalEmissions = Math.round(footprintDetails.carbon_kg) + " kg";
   const trees = Math.round(footprintDetails.carbon_kg / 21) + " trees";
   return (
-    <Box sx={{ backgroundColor: "neutral.main", py: 5 }}>
+    <Box sx={{ backgroundColor: "neutral.main", pt: 3, pb: 8 }}>
       <Container>
         <Typography
           color="primary"

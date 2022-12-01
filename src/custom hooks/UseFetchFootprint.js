@@ -15,7 +15,6 @@ function UseFetchFootprint(details, calculatorRef) {
   const { isFetchingFootprint } = useSelector((state) => state.flightData);
   React.useEffect(() => {
     if (isFetchingFootprint) {
-      console.log(process.env.REACT_APP_API_KEY);
       const legs = [
         {
           departure_airport: details?.departureAirport?.code,

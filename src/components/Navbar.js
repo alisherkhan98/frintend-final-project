@@ -20,6 +20,8 @@ import {
 // icons
 import { FaBars } from "react-icons/fa";
 import { MdOutlineDarkMode, MdOutlineWbSunny } from "react-icons/md";
+// router
+import { useLocation, useNavigate } from "react-router-dom";
 
 // constants
 const drawerWidth = "66vw";
@@ -28,6 +30,8 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
   const theme = useTheme();
+  const navigate = useNavigate();
+  let location = useLocation();
 
   // listener for scroll
   React.useEffect(() => {
@@ -38,9 +42,15 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         setShow(false);
       }
     }
-    window.addEventListener("scroll", navTransition);
-    return () => window.removeEventListener("scroll", navTransition);
-  }, []);
+
+    if (location.pathname === "/signIn") {
+      setShow(true);
+    } else {
+      setShow(false);
+      window.addEventListener("scroll", navTransition);
+      return () => window.removeEventListener("scroll", navTransition);
+    }
+  }, [location.pathname]);
 
   // function to toggle drawer
   const handleDrawerToggle = () => {
@@ -101,7 +111,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         elevation={show ? 5 : 0}
         sx={{
           opacity: 0.95,
-          transition: "all .5s ease",
+          transition: "all .3s ease",
         }}
       >
         <Container>
@@ -127,14 +137,22 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               >
                 {darkModeIcon}
               </IconButton>
-              <Button color={show ? "primary" : "hero"} sx={{ mr: 2 }}>
+              <Button
+                color={show ? "primary" : "hero"}
+                sx={{ mr: 2 }}
+                onClick={() => navigate("/")}
+              >
                 Home
               </Button>
               <Button color={show ? "primary" : "hero"} sx={{ mr: 2 }}>
                 Support
               </Button>
-              <Button variant="contained" color="primary" sx={{}}>
-                Login
+              <Button
+                variant="outlined"
+                color={show ? "primary" : "hero"}
+                onClick={() => navigate("/signIn")}
+              >
+                Sign In
               </Button>
             </Box>
             <IconButton

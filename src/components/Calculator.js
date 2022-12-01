@@ -113,7 +113,7 @@ function Calculator() {
   }
 
   return (
-    <Box sx={{ backgroundColor: "neutral.main", py: 5 }} ref={calculatorRef}>
+    <Box sx={{ backgroundColor: "neutral.main", py: 8 }} ref={calculatorRef}>
       <Container>
         <Paper
           component="form"
