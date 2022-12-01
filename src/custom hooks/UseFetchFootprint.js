@@ -15,6 +15,7 @@ function UseFetchFootprint(details, calculatorRef) {
   const { isFetchingFootprint } = useSelector((state) => state.flightData);
   React.useEffect(() => {
     if (isFetchingFootprint) {
+      console.log(process.env.REACT_APP_API_KEY);
       const legs = [
         {
           departure_airport: details?.departureAirport?.code,
@@ -36,7 +37,7 @@ function UseFetchFootprint(details, calculatorRef) {
           url: "https://www.carboninterface.com/api/v1/estimates",
           method: "POST",
           headers: {
-            Authorization: "Bearer M0XbSRtXiAfnQ4c1jAvCQ",
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
             "Content-Type": "application/json",
           },
           data: {
