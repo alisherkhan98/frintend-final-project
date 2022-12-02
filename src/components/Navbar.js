@@ -43,7 +43,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
       }
     }
 
-    if (location.pathname === "/signIn") {
+    if (location.pathname === "/signin" || location.pathname === "/signup") {
       setShow(true);
     } else {
       setShow(false);
@@ -150,7 +150,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               <Button
                 variant="outlined"
                 color={show ? "primary" : "hero"}
-                onClick={() => navigate("/signIn")}
+                onClick={() => navigate("/signin")}
               >
                 Sign In
               </Button>

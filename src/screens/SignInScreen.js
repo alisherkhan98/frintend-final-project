@@ -13,7 +13,7 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 // Firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 // icons
 import { AiFillHome } from "react-icons/ai";
 // redux
@@ -23,7 +23,7 @@ import wave from "../assets/img/wavebg.png";
 
 const textFieldStyle = {
   width: 250,
-  my: 1,
+  mb: 1,
 };
 
 function SignInScreen() {
@@ -34,6 +34,7 @@ function SignInScreen() {
     email: "",
     password: "",
   });
+  const [formError, setFormError] = React.useState({});
 
   //   function to make components controlled
   function handleChange(e) {
@@ -46,22 +47,33 @@ function SignInScreen() {
   //   function to handle sign in
   const signIn = (e) => {
     e.preventDefault();
+    // client side error handling
+    let isError = false;
+    for (let credential in credentials) {
+      if (credentials[credential] == "") {
+        setFormError((state) => ({
+          ...state,
+          [credential]: true,
+        }));
+        isError = true;
+      } else {
+        setFormError((prev) => ({
+          ...prev,
+          [credential]: false,
+        }));
+      }
+    }
 
-    //     let isAborted = false;
-    //     // firebase sign in
-    //     signInWithEmailAndPassword(auth, credentials.email, credentials.password)
-    //       .catch((error) => {
-    //         isAborted = true;
-    //         dispatch(openAlert({ message: error.code, severity: "error" }));
-    //         setTimeout(() => {
-    //           dispatch(closeAlert());
-    //         }, 2000);
-    //       })
-    //       .then((user) => {
-    //         if (isAborted) return;
-    //         dispatch(openLoading());
-    //         navigate("/");
-    //       });
+    if (isError) return;
+
+    // firebase sign in
+    signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+      .then((user) => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.code);
+      });
   };
   return (
     <>
@@ -90,7 +102,6 @@ function SignInScreen() {
             gap: 3,
             px: 4,
             py: 6,
-            zIndex: 10,
           }}
           component="form"
           noValidate
@@ -114,17 +125,20 @@ function SignInScreen() {
             variant="outlined"
             onChange={handleChange}
             value={credentials.email}
+            error={formError.email}
+            helperText={formError.email && "Please enter email"}
           />
           <TextField
             sx={textFieldStyle}
             name="password"
             type="password"
             color="primary"
-            placeholder="password"
             label="Password"
             variant="outlined"
             onChange={handleChange}
             value={credentials.password}
+            error={formError.password}
+            helperText={formError.password && "Please enter password"}
           />
           <Button
             variant="contained"

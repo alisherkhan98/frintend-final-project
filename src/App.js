@@ -10,6 +10,7 @@ import Theme from "./theme";
 // screens
 import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 
 function App() {
   const initialMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/signin" element={<SignInScreen />} />
+          <Route path="/signup" element={<SignUpScreen />} />
         </Routes>
       </Router>
     </Theme>
