@@ -22,13 +22,23 @@ import { FaBars } from "react-icons/fa";
 import { MdOutlineDarkMode, MdOutlineWbSunny } from "react-icons/md";
 // router
 import { useLocation, useNavigate } from "react-router-dom";
+// redux
+import { useSelector } from "react-redux";
+// firebase
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
 // constants
 const drawerWidth = "66vw";
 
 function Navbar({ setIsDarkMode, isDarkMode }) {
+  // state of drawer on mobile
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  // state to show navbar
   const [show, setShow] = React.useState(false);
+  // user
+  const { user } = useSelector((state) => state.auth);
+
   const theme = useTheme();
   const navigate = useNavigate();
   let location = useLocation();
@@ -69,6 +79,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
     <MdOutlineDarkMode />
   );
 
+  // function to handle click on sign out
+  function handleSignOut() {
+    navigate("/");
+    signOut(auth);
+  }
   // drawer for mobiles
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
@@ -147,13 +162,23 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               <Button color={show ? "primary" : "hero"} sx={{ mr: 2 }}>
                 Support
               </Button>
-              <Button
-                variant="outlined"
-                color={show ? "primary" : "hero"}
-                onClick={() => navigate("/signin")}
-              >
-                Sign In
-              </Button>
+              {user ? (
+                <Button
+                  variant="outlined"
+                  color={show ? "primary" : "hero"}
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  color={show ? "primary" : "hero"}
+                  onClick={() => navigate("/signin")}
+                >
+                  Sign In
+                </Button>
+              )}
             </Box>
             <IconButton
               color={show ? "primary" : "hero"}

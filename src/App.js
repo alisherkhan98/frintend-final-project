@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { useEffect } from "react";
 // MUI
 import { useMediaQuery } from "@mui/material";
 // router
@@ -11,11 +11,39 @@ import Theme from "./theme";
 import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "./redux/features/authSlice";
+// firebase
+import { auth } from "./firebase/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
+  const dispatch = useDispatch();
+  // dark mode
   const initialMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = React.useState(initialMode);
 
+  // user
+  const { user } = useSelector((state) => state.auth);
+  console.log("====================================");
+  console.log(user);
+  console.log("====================================");
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (newUser) => {
+      if (newUser) {
+        console.log("logged in");
+        dispatch(login({ email: newUser.email }));
+      } else {
+        console.log("logged out");
+        dispatch(logout());
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   return (
     <Theme isDarkMode={isDarkMode}>
       <Router>
