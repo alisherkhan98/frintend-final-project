@@ -16,10 +16,16 @@ import {
   Toolbar,
   Container,
   useTheme,
+  ListItemIcon,
 } from "@mui/material";
 // icons
-import { FaBars } from "react-icons/fa";
-import { MdOutlineDarkMode, MdOutlineWbSunny } from "react-icons/md";
+import { FaBars, FaHome, FaMoneyBill } from "react-icons/fa";
+import {
+  MdLogin,
+  MdLogout,
+  MdOutlineDarkMode,
+  MdOutlineWbSunny,
+} from "react-icons/md";
 // router
 import { useLocation, useNavigate } from "react-router-dom";
 // redux
@@ -27,6 +33,7 @@ import { useSelector } from "react-redux";
 // firebase
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
+import { BsCart3 } from "react-icons/bs";
 
 // constants
 const drawerWidth = "66vw";
@@ -84,6 +91,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
     navigate("/");
     signOut(auth);
   }
+
   // drawer for mobiles
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
@@ -91,27 +99,59 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         LOGO
       </Typography>
       <Divider />
-      <List>
-        <ListItem
-          disablePadding
-          secondaryAction={
-            <IconButton
-              sx={{ mr: 2 }}
-              onClick={toggleDarkMode}
-              edge="end"
-              aria-label="dark-mode"
-              color={theme.palette.text.secondary}
-            >
-              {darkModeIcon}{" "}
-            </IconButton>
-          }
-        >
-          <ListItemButton
-            disableRipple
-            onClick={toggleDarkMode}
-            sx={{ textAlign: "center" }}
-          >
-            <ListItemText primary={"Dark mode"} />
+
+      <List onClick={handleDrawerToggle}>
+        <ListItem>
+          <ListItemButton disableRipple onClick={() => navigate("/")}>
+            <ListItemIcon>
+              <FaHome />
+            </ListItemIcon>
+            <ListItemText primary={"Home"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+          <ListItemButton disableRipple onClick={() => navigate("/support")}>
+            <ListItemIcon>
+              <FaMoneyBill />
+            </ListItemIcon>
+            <ListItemText primary={"Support"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+          <ListItemButton disableRipple onClick={() => navigate("/cart")}>
+            <ListItemIcon>
+              <BsCart3 />
+            </ListItemIcon>
+            <ListItemText primary={"Cart"} />
+          </ListItemButton>
+        </ListItem>
+
+        {user ? (
+          <ListItem>
+            <ListItemButton disableRipple onClick={handleSignOut}>
+              <ListItemIcon>
+                <MdLogout />
+              </ListItemIcon>
+              <ListItemText primary={"Sign Out"} />
+            </ListItemButton>
+          </ListItem>
+        ) : (
+          <ListItem>
+            <ListItemButton disableRipple onClick={() => navigate("/signin")}>
+              <ListItemIcon>
+                <MdLogin />
+              </ListItemIcon>
+              <ListItemText primary={"Sign In"} />
+            </ListItemButton>
+          </ListItem>
+        )}
+
+        <ListItem>
+          <ListItemButton disableRipple onClick={toggleDarkMode}>
+            <ListItemIcon>{darkModeIcon}</ListItemIcon>
+            <ListItemText primary={isDarkMode ? "Light mode" : "Dark mode"} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -152,6 +192,17 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               >
                 {darkModeIcon}
               </IconButton>
+
+              <IconButton
+                sx={{ mr: 2 }}
+                onClick={() => navigate("/cart")}
+                edge="end"
+                aria-label="dark-mode"
+                color={show ? theme.palette.text.secondary : "hero"}
+              >
+                <BsCart3 />
+              </IconButton>
+
               <Button
                 color={show ? "primary" : "hero"}
                 sx={{ mr: 2 }}
