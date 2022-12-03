@@ -11,9 +11,12 @@ import {
 } from "@mui/material";
 // image
 import forest from "../assets/img/forest.jpg";
+// router
+import { useNavigate } from "react-router-dom";
 
 function DidYouKnow() {
   const theme = useTheme();
+  const navigate = useNavigate();
   return (
     <Box
       sx={{ backgroundColor: "background.section", py: 8 }}
@@ -121,12 +124,13 @@ function DidYouKnow() {
             <Button
               variant="outlined"
               color="hero"
+              onClick={() => navigate("/shop  ")}
               sx={{
                 width: { xs: "100%", sm: "fit-content" },
                 marginLeft: { sm: 3 },
               }}
             >
-              Support
+              Plant trees
             </Button>
           </Grid>
         </Grid>

@@ -2,12 +2,11 @@
 import React, { useRef } from "react";
 // MUI
 import { Box, Button, IconButton, Typography, Container } from "@mui/material";
-// image
-import bg from "../assets/img/hero.jpg";
+
 // icons
 import { HiChevronDown } from "react-icons/hi";
 
-function Hero() {
+function Hero({ bgUrl, text, buttonText }) {
   const heroRef = useRef(null);
   return (
     <Box
@@ -20,7 +19,7 @@ function Hero() {
         height: "100vh",
         boxSizing: "border-box",
         // background
-        backgroundImage: `url(${bg})`,
+        backgroundImage: `url(${bgUrl})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -42,7 +41,7 @@ function Hero() {
             transform: "translate(-50%, -50%)",
           }}
         >
-          Estimate your next flight's carbon footprint
+          {text}
         </Typography>
         <Button
           variant="outlined"
@@ -63,7 +62,7 @@ function Hero() {
             });
           }}
         >
-          Calculate Now
+          {buttonText}
         </Button>
         <IconButton
           sx={{

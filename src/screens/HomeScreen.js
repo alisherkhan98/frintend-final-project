@@ -11,6 +11,8 @@ import ResultCards from "../components/ResultCards";
 import Footer from "../components/Footer";
 // MUI
 import { Box } from "@mui/material";
+// image
+import bg from "../assets/img/hero.jpg";
 
 function HomeScreen() {
   const { footprintDetails, isFetchingFootprint, footprintError } = useSelector(
@@ -18,7 +20,11 @@ function HomeScreen() {
   );
   return (
     <>
-      <Hero />
+      <Hero
+        bgUrl={bg}
+        text="Estimate your next flight's carbon footprint"
+        buttonText="Calculate Now"
+      />
       <Calculator />
       {/* alert for errors */}
       {footprintError && !footprintDetails && (

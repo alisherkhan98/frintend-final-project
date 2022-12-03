@@ -44,6 +44,7 @@ function Theme({ children, isDarkMode }) {
       },
       background: {
         section: isDarkMode ? "#0c402f" : "#156d4f",
+        signin: isDarkMode ? "#0d0d0d" : "#f2f2f2",
       },
     },
 
@@ -65,14 +66,14 @@ function Theme({ children, isDarkMode }) {
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            borderRadius: "10px",
+            borderRadius: "5px",
           },
         },
       },
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: "20px",
+            borderRadius: "15px",
             height: "100%",
             padding: "1rem",
 

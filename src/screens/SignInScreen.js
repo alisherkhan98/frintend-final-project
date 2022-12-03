@@ -17,7 +17,7 @@ import { auth } from "../firebase/firebaseConfig";
 // redux
 import { useDispatch } from "react-redux";
 // images
-import wave from "../assets/img/wavebg.png";
+import wave from "../assets/img/hero.jpg";
 // components
 import MyAlert from "../components/MyAlert";
 
@@ -99,9 +99,11 @@ function SignInScreen() {
           boxSizing: "border-box",
           backgroundImage: `url(${wave})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "100vw 80vh",
-          backgroundPosition: "bottom",
-          backgroundColor: "neutral.main",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+
+          backgroundColor: "background.signin",
+          backgroundBlendMode: "overlay",
         }}
       >
         <Card

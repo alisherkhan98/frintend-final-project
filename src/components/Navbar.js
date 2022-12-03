@@ -111,11 +111,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         </ListItem>
 
         <ListItem>
-          <ListItemButton disableRipple onClick={() => navigate("/support")}>
+          <ListItemButton disableRipple onClick={() => navigate("/shop")}>
             <ListItemIcon>
               <FaMoneyBill />
             </ListItemIcon>
-            <ListItemText primary={"Support"} />
+            <ListItemText primary={"Shop"} />
           </ListItemButton>
         </ListItem>
 
@@ -210,8 +210,12 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               >
                 Home
               </Button>
-              <Button color={show ? "primary" : "hero"} sx={{ mr: 2 }}>
-                Support
+              <Button
+                color={show ? "primary" : "hero"}
+                sx={{ mr: 2 }}
+                onClick={() => navigate("/shop")}
+              >
+                Shop
               </Button>
               {user ? (
                 <Button

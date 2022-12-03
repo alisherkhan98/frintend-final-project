@@ -7,10 +7,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // components
 import Navbar from "./components/Navbar";
 import Theme from "./theme";
+import ScrollToTop from "./components/scrollToTop";
 // screens
 import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
+import ShopScreen from "./screens/ShopScreen";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./redux/features/authSlice";
@@ -47,11 +49,13 @@ function App() {
   return (
     <Theme isDarkMode={isDarkMode}>
       <Router>
+        <ScrollToTop />
         <Navbar setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/signin" element={<SignInScreen />} />
           <Route path="/signup" element={<SignUpScreen />} />
+          <Route path="/shop" element={<ShopScreen />} />
         </Routes>
       </Router>
     </Theme>

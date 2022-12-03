@@ -142,10 +142,6 @@ function SignUpScreen() {
           minHeight: "100vh",
           py: 10,
           boxSizing: "border-box",
-          backgroundImage: `url(${wave})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100vw 80vh",
-          backgroundPosition: "bottom",
           backgroundColor: "neutral.main",
         }}
       >
