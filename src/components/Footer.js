@@ -14,7 +14,7 @@ import { FaDiscord, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 function Footer() {
   return (
-    <Box sx={{ backgroundColor: "neutral.main" }}>
+    <Box sx={{ backgroundColor: "neutral.main", py: 2 }}>
       <Container>
         <Stack>
           <Stack direction="row" justifyContent="center" pb={2} pt={3}>
