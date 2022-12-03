@@ -9,6 +9,8 @@ import DidYouKnow from "../components/DidYouKnow";
 import MyAlert from "../components/MyAlert";
 import ResultCards from "../components/ResultCards";
 import Footer from "../components/Footer";
+// MUI
+import { Box } from "@mui/material";
 
 function HomeScreen() {
   const { footprintDetails, isFetchingFootprint, footprintError } = useSelector(
@@ -20,15 +22,14 @@ function HomeScreen() {
       <Calculator />
       {/* alert for errors */}
       {footprintError && !footprintDetails && (
-        <MyAlert
-          text={
-            "Error code: " +
-            footprintError.status +
-            ". " +
-            footprintError.message
-          }
-          severity="error"
-        />
+        <Box sx={{ backgroundColor: "neutral.main", pb: 8 }}>
+          <MyAlert severity="error">
+            {"Error code: " +
+              footprintError.status +
+              ". " +
+              footprintError.message}
+          </MyAlert>
+        </Box>
       )}
       {footprintDetails && !isFetchingFootprint && <ResultCards />}
       <DidYouKnow />
