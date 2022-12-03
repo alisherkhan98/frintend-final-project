@@ -20,11 +20,18 @@ import {
 import { useDispatch } from "react-redux";
 // images
 import wave from "../assets/img/wavebg.png";
+// components
+import MyAlert from "../components/MyAlert";
 
 const textFieldStyle = {
-  width: 250,
+  width: 1,
   mb: 1,
 };
+
+// function to change format of error string
+function authErrorFormat(text) {
+  return text.slice(5).split("-").join(" ");
+}
 
 function SignUpScreen() {
   const navigate = useNavigate();
@@ -39,13 +46,13 @@ function SignUpScreen() {
   });
 
   const [formError, setFormError] = React.useState({});
+  const [signUpError, setSignUpError] = React.useState("");
 
   // function to capitalize name
   function capitalizeWords(str) {
     var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
-      splitStr[i] =
-        splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
     }
     return splitStr.join(" ");
   }
@@ -62,7 +69,7 @@ function SignUpScreen() {
   //   function to handle submit
   function handleSubmit(e) {
     e.preventDefault();
-
+    setSignUpError("");
     // client side error handling
     let isError = false;
 
@@ -94,9 +101,7 @@ function SignUpScreen() {
         passwordsDontMatch: false,
       }));
     }
-    console.log("====================================");
-    console.log(isError);
-    console.log("====================================");
+
     if (isError) return;
 
     // create new user in firebase
@@ -117,9 +122,11 @@ function SignUpScreen() {
         navigate("/");
       })
       .catch((error) => {
-        console.log("====================================");
-        console.log(error);
-        console.log("====================================");
+        setSignUpError("Error: " + authErrorFormat(error.code));
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
   }
 
@@ -133,7 +140,7 @@ function SignUpScreen() {
           alignItems: "center",
           width: "100vw",
           minHeight: "100vh",
-          py: 8,
+          py: 10,
           boxSizing: "border-box",
           backgroundImage: `url(${wave})`,
           backgroundRepeat: "no-repeat",
@@ -154,6 +161,8 @@ function SignUpScreen() {
             gap: 3,
             px: 4,
             py: 6,
+            width: "90%",
+            maxWidth: "350px",
           }}
         >
           <Typography variant="h4">Welcome!</Typography>
@@ -240,6 +249,11 @@ function SignUpScreen() {
             </Link>
           </Typography>
         </Card>
+        {signUpError && (
+          <Box sx={{ position: "fixed", top: "100px" }}>
+            <MyAlert severity="error">{signUpError}</MyAlert>
+          </Box>
+        )}
       </Box>
     </>
   );

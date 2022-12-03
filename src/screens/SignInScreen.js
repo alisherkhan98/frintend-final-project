@@ -14,17 +14,21 @@ import { useNavigate, Link } from "react-router-dom";
 // Firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
-// icons
-import { AiFillHome } from "react-icons/ai";
 // redux
 import { useDispatch } from "react-redux";
 // images
 import wave from "../assets/img/wavebg.png";
+// components
+import MyAlert from "../components/MyAlert";
 
 const textFieldStyle = {
-  width: 250,
+  width: 1,
   mb: 1,
 };
+
+function authErrorFormat(text) {
+  return text.slice(5).split("-").join(" ");
+}
 
 function SignInScreen() {
   const theme = useTheme();
@@ -35,6 +39,7 @@ function SignInScreen() {
     password: "",
   });
   const [formError, setFormError] = React.useState({});
+  const [signInError, setSignInError] = React.useState("");
 
   //   function to make components controlled
   function handleChange(e) {
@@ -47,6 +52,7 @@ function SignInScreen() {
   //   function to handle sign in
   const signIn = (e) => {
     e.preventDefault();
+    setSignInError("");
     // client side error handling
     let isError = false;
     for (let credential in credentials) {
@@ -69,10 +75,15 @@ function SignInScreen() {
     // firebase sign in
     signInWithEmailAndPassword(auth, credentials.email, credentials.password)
       .then((user) => {
+        setSignInError("");
         navigate("/");
       })
       .catch((error) => {
-        console.log(error.code);
+        setSignInError("Error: " + authErrorFormat(error.code));
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
   };
   return (
@@ -84,7 +95,7 @@ function SignInScreen() {
           alignItems: "center",
           width: "100vw",
           minHeight: "100vh",
-          py: 8,
+          py: 10,
           boxSizing: "border-box",
           backgroundImage: `url(${wave})`,
           backgroundRepeat: "no-repeat",
@@ -102,6 +113,8 @@ function SignInScreen() {
             gap: 3,
             px: 4,
             py: 6,
+            width: "90%",
+            maxWidth: "350px",
           }}
           component="form"
           noValidate
@@ -162,6 +175,13 @@ function SignInScreen() {
             now
           </Typography>
         </Card>
+
+        {/* alert in case of error */}
+        {signInError && (
+          <Box sx={{ position: "fixed", top: "100px" }}>
+            <MyAlert severity="error">{signInError}</MyAlert>
+          </Box>
+        )}
       </Box>
     </>
   );
