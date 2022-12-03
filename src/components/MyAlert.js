@@ -1,9 +1,9 @@
 // react
 import React, { useEffect } from "react";
 // MUI
-import { Alert, Box, Container, Fade } from "@mui/material";
+import { Alert, Container, Fade } from "@mui/material";
 
-function MyAlert({ text, severity }) {
+function MyAlert({ children, severity }) {
   const [isOpen, setIsOpen] = React.useState(false);
   useEffect(() => {
     setTimeout(() => {
@@ -11,15 +11,13 @@ function MyAlert({ text, severity }) {
     }, 200);
   }, []);
   return (
-    <Box sx={{ backgroundColor: "neutral.main", pb: 5 }}>
-      <Container>
-        <Fade in={isOpen}>
-          <Alert severity={severity} sx={{}}>
-            {text}
-          </Alert>
-        </Fade>
-      </Container>
-    </Box>
+    <Container>
+      <Fade in={isOpen}>
+        <Alert severity={severity} sx={{}}>
+          {children}
+        </Alert>
+      </Fade>
+    </Container>
   );
 }
 
