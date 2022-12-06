@@ -163,8 +163,6 @@ function Calculator() {
               inputProps={{
                 inputMode: "numeric",
                 pattern: "[0-9]*",
-              }}
-              InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <Tooltip
