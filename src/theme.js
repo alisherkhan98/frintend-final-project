@@ -75,7 +75,6 @@ function Theme({ children, isDarkMode }) {
           root: {
             borderRadius: "15px",
             height: "100%",
-            padding: "1rem",
 
             boxSizing: "border-box",
           },

@@ -18,8 +18,6 @@ import {
 } from "@mui/material";
 // redux
 import { useDispatch } from "react-redux";
-// images
-import wave from "../assets/img/wavebg.png";
 // components
 import MyAlert from "../components/MyAlert";
 
