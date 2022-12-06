@@ -17,8 +17,8 @@ import {
   IconButton,
 } from "@mui/material";
 // custom hooks
-import UseLoadList from "../custom hooks/UseLoadList";
-import UseFetchFootprint from "../custom hooks/UseFetchFootprint";
+import UseLoadList from "../custom-hooks/UseLoadList";
+import UseFetchFootprint from "../custom-hooks/UseFetchFootprint";
 // redux
 import { useDispatch } from "react-redux";
 import { setIsFetchingFootprint } from "../redux/features/flightDataSlice";
