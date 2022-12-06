@@ -8,6 +8,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  CircularProgress,
   Stack,
   Typography,
 } from "@mui/material";
@@ -83,7 +84,7 @@ function ShopCard({ treeData, setIsAlertOpen, shopRef }) {
       >
         <Button
           variant="contained"
-          endIcon={isLoading ? <Loader /> : <BsCart3 />}
+          endIcon={isLoading ? <CircularProgress size={20} /> : <BsCart3 />}
           disabled={isLoading}
           color="primary"
           onClick={handleClick}

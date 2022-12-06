@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // state initialization
 const initialState = {
   cart: [],
+  totalAmount: 0,
 };
 export const shopSlice = createSlice({
   name: "shop",
@@ -10,6 +11,7 @@ export const shopSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       let itemIndex;
+      state.totalAmount++;
       const isInCart = state.cart.find((item, index) => {
         itemIndex = index;
         return item.id === action.payload.id;
@@ -23,9 +25,15 @@ export const shopSlice = createSlice({
         state.cart[itemIndex].amount++;
       }
     },
+    getTotalAmount: (state) => {
+      state.totalAmount = state.cart.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.amount,
+        0
+      );
+    },
   },
 });
 
-export const { addItem } = shopSlice.actions;
+export const { addItem, getTotalAmount } = shopSlice.actions;
 
 export default shopSlice.reducer;

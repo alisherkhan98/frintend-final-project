@@ -13,6 +13,7 @@ import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import ShopScreen from "./screens/ShopScreen";
+import CartScreen from "./screens/CartScreen";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./redux/features/authSlice";
@@ -56,6 +57,7 @@ function App() {
           <Route path="/signin" element={<SignInScreen />} />
           <Route path="/signup" element={<SignUpScreen />} />
           <Route path="/shop" element={<ShopScreen />} />
+          <Route path="/cart" element={<CartScreen />} />
         </Routes>
       </Router>
     </Theme>
