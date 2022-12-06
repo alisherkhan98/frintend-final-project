@@ -17,9 +17,12 @@ import {
   Container,
   useTheme,
   ListItemIcon,
+  Icon,
+  Badge,
 } from "@mui/material";
 // icons
 import { FaBars, FaHome, FaMoneyBill } from "react-icons/fa";
+import { BsFillCircleFill, BsCart3 } from "react-icons/bs";
 import {
   MdLogin,
   MdLogout,
@@ -33,7 +36,6 @@ import { useSelector } from "react-redux";
 // firebase
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
-import { BsCart3 } from "react-icons/bs";
 
 // constants
 const drawerWidth = "66vw";
@@ -45,6 +47,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
   const [show, setShow] = React.useState(false);
   // user
   const { user } = useSelector((state) => state.auth);
+  const { totalAmount } = useSelector((state) => state.shop);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -60,7 +63,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
       }
     }
 
-    if (location.pathname === "/signin" || location.pathname === "/signup") {
+    if (
+      location.pathname === "/signin" ||
+      location.pathname === "/signup" ||
+      location.pathname === "/cart"
+    ) {
       setShow(true);
     } else {
       setShow(false);
@@ -194,13 +201,15 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               </IconButton>
 
               <IconButton
-                sx={{ mr: 2 }}
+                sx={{ mr: 2, position: "relative" }}
                 onClick={() => navigate("/cart")}
                 edge="end"
                 aria-label="dark-mode"
                 color={show ? theme.palette.text.secondary : "hero"}
               >
-                <BsCart3 />
+                <Badge color="primary" badgeContent={totalAmount}>
+                  <BsCart3 />
+                </Badge>
               </IconButton>
 
               <Button
