@@ -4,6 +4,8 @@ import { Box, Container, Paper } from "@mui/material";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { getTotalAmount } from "../redux/features/shopSlice";
+// components
+import CartRow from "../components/CartRow";
 
 function CartScreen() {
   const { cart, totalAmount } = useSelector((state) => state.shop);
@@ -20,7 +22,6 @@ function CartScreen() {
       }}
     >
       <Container>
-        {" "}
         <Paper
           component="form"
           sx={{
@@ -29,7 +30,9 @@ function CartScreen() {
             borderRadius: 5,
             boxShadow: "0 0 15px rgba(0,0,0,0.3)",
           }}
-        ></Paper>
+        >
+          <CartRow />
+        </Paper>
       </Container>
     </Box>
   );

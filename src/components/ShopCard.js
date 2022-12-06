@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/features/shopSlice";
 // icons
 import { BsCart3 } from "react-icons/bs";
-import Loader from "./Loader";
 
 function ShopCard({ treeData, setIsAlertOpen, shopRef }) {
   const { user } = useSelector((state) => state.auth);
