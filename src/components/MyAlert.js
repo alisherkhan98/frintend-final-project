@@ -13,7 +13,7 @@ function MyAlert({ children, severity }) {
   return (
     <Container>
       <Fade in={isOpen}>
-        <Alert severity={severity} sx={{}}>
+        <Alert severity={severity} sx={{ alignItems: "center" }}>
           {children}
         </Alert>
       </Fade>
