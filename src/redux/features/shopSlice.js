@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // state initialization
 const initialState = {
   cart: [],
-  totalAmount: 0,
 };
+
 export const shopSlice = createSlice({
   name: "shop",
   initialState,
@@ -25,15 +25,23 @@ export const shopSlice = createSlice({
         state.cart[itemIndex].amount++;
       }
     },
-    getTotalAmount: (state) => {
-      state.totalAmount = state.cart.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.amount,
-        0
+    removeItem: (state, action) => {
+      let itemIndex = state.cart.findIndex(
+        (item) => item.id == action.payload.id
       );
+      if (state.cart[itemIndex].amount > 1) {
+        state.cart[itemIndex].amount--;
+      } else {
+        state.cart = state.cart.filter((item) => item.id != action.payload.id);
+      }
+    },
+    removeAll: (state, action) => {
+      state.cart = state.cart.filter((item) => item.id != action.payload.id);
     },
   },
 });
 
-export const { addItem, getTotalAmount } = shopSlice.actions;
+export const { addItem, getTotalAmount, removeAll, removeItem } =
+  shopSlice.actions;
 
 export default shopSlice.reducer;

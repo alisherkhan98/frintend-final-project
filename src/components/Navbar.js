@@ -47,7 +47,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
   const [show, setShow] = React.useState(false);
   // user
   const { user } = useSelector((state) => state.auth);
-  const { totalAmount } = useSelector((state) => state.shop);
+  const { cart } = useSelector((state) => state.shop);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -99,6 +99,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
     signOut(auth);
   }
 
+  // function to calculate total amount
+  const totalAmount = cart.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.amount,
+    0
+  );
   // drawer for mobiles
   const drawer = (
     <Box sx={{ textAlign: "center" }}>

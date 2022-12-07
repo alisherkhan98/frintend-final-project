@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 // MUI
-import { Box, Container, Paper } from "@mui/material";
+import { Box, Container, Divider, Paper } from "@mui/material";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getTotalAmount } from "../redux/features/shopSlice";
 // components
 import CartRow from "../components/CartRow";
 
 function CartScreen() {
   const { cart, totalAmount } = useSelector((state) => state.shop);
   const dispatch = useDispatch();
-  dispatch(getTotalAmount());
+
   console.log(cart);
   return (
     <Box
@@ -23,15 +22,23 @@ function CartScreen() {
     >
       <Container>
         <Paper
-          component="form"
           sx={{
-            padding: " 40px 32px",
+            px: { xs: 3, sm: 5 },
+            py: { xs: 2, sm: 3 },
             mt: 8,
             borderRadius: 5,
             boxShadow: "0 0 15px rgba(0,0,0,0.3)",
           }}
         >
-          <CartRow />
+          {cart.map((item, index) => {
+            const isLast = index == cart.length - 1;
+            return (
+              <React.Fragment key={item.id}>
+                <CartRow item={item} />
+                {!isLast && <Divider />}
+              </React.Fragment>
+            );
+          })}
         </Paper>
       </Container>
     </Box>
