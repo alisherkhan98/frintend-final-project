@@ -3,7 +3,12 @@ import React, { useEffect } from "react";
 // MUI
 import { useMediaQuery } from "@mui/material";
 // router
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 // components
 import Navbar from "./components/Navbar";
 import Theme from "./theme";
@@ -16,7 +21,7 @@ import ShopScreen from "./screens/ShopScreen";
 import CartScreen from "./screens/CartScreen";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "./redux/features/authSlice";
+import { signIn, signOut } from "./redux/features/authSlice";
 // firebase
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
@@ -29,17 +34,14 @@ function App() {
 
   // user
   const { user } = useSelector((state) => state.auth);
-  console.log("====================================");
-  console.log(user);
-  console.log("====================================");
+
+  // listener for anh change in the auth
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
       if (newUser) {
-        console.log("logged in");
-        dispatch(login({ email: newUser.email }));
+        dispatch(signIn(newUser));
       } else {
-        console.log("logged out");
-        dispatch(logout());
+        dispatch(signOut());
       }
     });
 
@@ -57,7 +59,10 @@ function App() {
           <Route path="/signin" element={<SignInScreen />} />
           <Route path="/signup" element={<SignUpScreen />} />
           <Route path="/shop" element={<ShopScreen />} />
-          <Route path="/cart" element={<CartScreen />} />
+          <Route
+            path="/cart"
+            element={user ? <CartScreen /> : <Navigate to="/signin" />}
+          />
         </Routes>
       </Router>
     </Theme>

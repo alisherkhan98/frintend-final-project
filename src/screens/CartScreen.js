@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
 // MUI
-import { Box, Container, Divider, Paper } from "@mui/material";
+import { Box, Container, Divider, Paper, Typography } from "@mui/material";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 // components
 import CartRow from "../components/CartRow";
+import MyAlert from "../components/MyAlert";
 
 function CartScreen() {
-  const { cart, totalAmount } = useSelector((state) => state.shop);
+  const { cart } = useSelector((state) => state.shop);
   const dispatch = useDispatch();
 
-  console.log(cart);
+  // calculate total amount
+  const totalAmount = cart.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.amount,
+    0
+  );
+
   return (
     <Box
       sx={{
@@ -21,25 +27,39 @@ function CartScreen() {
       }}
     >
       <Container>
-        <Paper
-          sx={{
-            px: { xs: 3, sm: 5 },
-            py: { xs: 2, sm: 3 },
-            mt: 8,
-            borderRadius: 5,
-            boxShadow: "0 0 15px rgba(0,0,0,0.3)",
-          }}
+        <Typography
+          color="primary"
+          variant="h4"
+          textAlign="center"
+          fontWeight={700}
+          mb={5}
+          mt={5}
         >
-          {cart.map((item, index) => {
-            const isLast = index == cart.length - 1;
-            return (
-              <React.Fragment key={item.id}>
-                <CartRow item={item} />
-                {!isLast && <Divider />}
-              </React.Fragment>
-            );
-          })}
-        </Paper>
+          Your Cart
+        </Typography>
+        {totalAmount ? (
+          <Paper
+            sx={{
+              px: { xs: 3, sm: 5 },
+              py: { xs: 2, sm: 3 },
+
+              borderRadius: 5,
+              boxShadow: "0 0 15px rgba(0,0,0,0.3)",
+            }}
+          >
+            {cart.map((item, index) => {
+              const isLast = index == cart.length - 1;
+              return (
+                <React.Fragment key={item.id}>
+                  <CartRow item={item} />
+                  {!isLast && <Divider />}
+                </React.Fragment>
+              );
+            })}
+          </Paper>
+        ) : (
+          <MyAlert severity="warning">Your cart is empty</MyAlert>
+        )}
       </Container>
     </Box>
   );

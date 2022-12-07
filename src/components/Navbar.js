@@ -99,7 +99,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
     signOut(auth);
   }
 
-  // function to calculate total amount
+  // calculate total amount
   const totalAmount = cart.reduce(
     (accumulator, currentValue) => accumulator + currentValue.amount,
     0
@@ -182,7 +182,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         }}
       >
         <Container>
-          <Toolbar>
+          <Toolbar sx={{ justifyContent: "space-between" }}>
             <Typography
               variant="h5"
               component="div"
@@ -249,14 +249,30 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
                 </Button>
               )}
             </Box>
+
             <IconButton
               color={show ? "primary" : "hero"}
               aria-label="open drawer"
-              edge="start"
+              edge="end"
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { sm: "none" } }}
             >
               <FaBars />
+            </IconButton>
+
+            <IconButton
+              sx={{
+                position: "relative",
+                display: { xs: "flex", sm: "none" },
+              }}
+              onClick={() => navigate("/cart")}
+              edge="start"
+              aria-label="dark-mode"
+              color={show ? theme.palette.text.secondary : "hero"}
+            >
+              <Badge color="primary" badgeContent={totalAmount}>
+                <BsCart3 />
+              </Badge>
             </IconButton>
           </Toolbar>
         </Container>

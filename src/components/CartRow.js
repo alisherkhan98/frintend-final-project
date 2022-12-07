@@ -29,15 +29,19 @@ function CartRow({ item }) {
           minWidth: 164,
         }}
       >
-        <Typography variant="subtitle2" fontWeight={600}>
+        <Typography variant="subtitle2" fontWeight={600} mb={1}>
           {item?.name}
         </Typography>
 
-        <Typography variant="body2" pl={1}>
+        <Typography variant="body2">
+          CO&#8322; absorbed: {item?.co2} kg
+        </Typography>
+
+        <Typography variant="body2">
           Price: {item?.price?.toFixed(2)} €
         </Typography>
       </Box>
-      <Stack sx={{ flexDirection: "row", alignItems: "flex-start" }}>
+      <Stack gap={1} sx={{ flexDirection: "row", alignItems: "flex-start" }}>
         <Box>
           <Button
             onClick={() => dispatch(removeItem(item))}
@@ -50,7 +54,7 @@ function CartRow({ item }) {
           >
             -
           </Button>
-          {item?.amount}
+          <span style={{ margin: "0 5px" }}>{item?.amount}</span>
           <Button
             onClick={() => dispatch(addItem(item))}
             sx={{ px: 2, minWidth: 0, verticalAlign: "baseline", fontSize: 20 }}
@@ -58,7 +62,11 @@ function CartRow({ item }) {
             +
           </Button>
         </Box>
-        <Button color="error" onClick={() => dispatch(removeAll(item))}>
+        <Button
+          sx={{ mt: "4px" }}
+          color="error"
+          onClick={() => dispatch(removeAll(item))}
+        >
           Remove
         </Button>
       </Stack>
