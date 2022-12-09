@@ -37,6 +37,7 @@ function App() {
 
   // loading
   const [isLoading, setIsLoading] = useState(true);
+
   // user
   const { user } = useSelector((state) => state.auth);
 
@@ -96,15 +97,21 @@ function App() {
 
         <Routes>
           <Route path="/" element={<HomeScreen />} />
-          <Route path="/signin" element={<SignInScreen />} />
-          <Route path="/signup" element={<SignUpScreen />} />
+          <Route
+            path="/signin"
+            element={user ? <Navigate to="/" /> : <SignInScreen />}
+          />
+          <Route
+            path="/signup"
+            element={user ? <Navigate to="/" /> : <SignUpScreen />}
+          />
           <Route path="/shop" element={<ShopScreen />} />
-          {!isLoading && (
-            <Route
-              path="/cart"
-              element={user ? <CartScreen /> : <Navigate to="/signin" />}
-            />
-          )}
+          <Route
+            path="/cart"
+            element={
+              !user && !isLoading ? <Navigate to="/signin" /> : <CartScreen />
+            }
+          />
         </Routes>
       </Router>
     </Theme>

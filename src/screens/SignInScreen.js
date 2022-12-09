@@ -75,7 +75,6 @@ function SignInScreen() {
     // firebase sign in
     signInWithEmailAndPassword(auth, credentials.email, credentials.password)
       .then((user) => {
-        setSignInError("");
         navigate("/");
       })
       .catch((error) => {
