@@ -1,7 +1,7 @@
 // react
 import React from "react";
 // firebase
-import { auth } from "../firebase/firebaseConfig";
+import { auth, db } from "../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 // Router
@@ -108,14 +108,15 @@ function SignUpScreen() {
       credentials.email,
       credentials.password
     )
-      // .then((userCredential) => {
-      //   // adding new user info in a document
-      //   console.log(userCredential);
-      //   setDoc(doc(db, "users", userCredential.user.uid), {
-      //     email: userCredential.user.email,
-      //     name: capitalizeWords(credentials.name),
-      //   });
-      // })
+      .then((userCredential) => {
+        // adding new user info in a document
+        console.log(userCredential);
+        setDoc(doc(db, "users", userCredential.user.uid), {
+          email: userCredential.user.email,
+          name: capitalizeWords(credentials.name),
+          cart: [],
+        });
+      })
       .then(() => {
         navigate("/");
       })
