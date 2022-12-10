@@ -105,13 +105,6 @@ function UseFetchFootprint(details, calculatorRef) {
             );
           }
           dispatch(setFlightDetails(undefined));
-          window.scrollTo({
-            top:
-              window.pageYOffset +
-              calculatorRef.current.getBoundingClientRect().bottom -
-              200,
-            behavior: "smooth",
-          });
         });
     }
     dispatch(setIsFetchingFootprint(false));

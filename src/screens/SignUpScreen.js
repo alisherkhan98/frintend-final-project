@@ -122,10 +122,6 @@ function SignUpScreen() {
       })
       .catch((error) => {
         setSignUpError("Error: " + authErrorFormat(error.code));
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
       });
   }
 

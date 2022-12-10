@@ -1,7 +1,7 @@
 // react
 import React, { useEffect, useState } from "react";
 // MUI
-import { useMediaQuery } from "@mui/material";
+import { Alert, Box, useMediaQuery, Container } from "@mui/material";
 // router
 import {
   BrowserRouter as Router,
@@ -13,6 +13,7 @@ import {
 import Navbar from "./components/Navbar";
 import Theme from "./theme";
 import ScrollToTop from "./components/ScrollToTop";
+import MyAlert from "./components/MyAlert";
 // screens
 import HomeScreen from "./screens/HomeScreen";
 import SignInScreen from "./screens/SignInScreen";
@@ -38,6 +39,9 @@ function App() {
   // loading
   const [isLoading, setIsLoading] = useState(true);
 
+  // alert
+  const [alertMessage, setAlertMessage] = useState("");
+
   // user
   const { user } = useSelector((state) => state.auth);
 
@@ -53,19 +57,22 @@ function App() {
           .then((docsnap) => {
             dispatch(setInitialCart(docsnap.data().cart));
           })
-          .catch((error) =>
-            console.log(
-              "There was an error retrieving the data from firestore",
-              error
-            )
-          );
+          .catch((error) => {
+            setAlertMessage(
+              "There was an error retrieving the data from firestore"
+            );
+            setTimeout(() => {
+              setAlertMessage("");
+            }, 2000);
+            console.log(error);
+          });
       } else {
         dispatch(clearCart());
         dispatch(signOut());
       }
       setTimeout(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 500);
     });
 
     return () => {
@@ -83,6 +90,12 @@ function App() {
         },
         { merge: true }
       ).catch((error) => {
+        setAlertMessage(
+          "There was an error while updating the card: " + error.code
+        );
+        setTimeout(() => {
+          setAlertMessage("");
+        }, 1500);
         console.log(error);
       });
     }
@@ -91,7 +104,23 @@ function App() {
   return (
     <Theme isDarkMode={isDarkMode}>
       <Router>
+        {/* loading */}
         {isLoading && <LoadingScreen />}
+        {/* alert in case of error */}
+        {alertMessage && (
+          <Box
+            sx={{
+              position: "fixed",
+              top: 100,
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              zIndex: 9999,
+            }}
+          >
+            <MyAlert severity="error">{alertMessage}</MyAlert>
+          </Box>
+        )}
         <ScrollToTop />
         <Navbar setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
 

@@ -79,10 +79,6 @@ function SignInScreen() {
       })
       .catch((error) => {
         setSignInError("Error: " + authErrorFormat(error.code));
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
       });
   };
   return (
