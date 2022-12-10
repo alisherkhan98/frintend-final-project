@@ -6,7 +6,7 @@ import { Box, Button, IconButton, Typography, Container } from "@mui/material";
 // icons
 import { HiChevronDown } from "react-icons/hi";
 
-function Hero({ bgUrl, text, buttonText }) {
+function Hero({ bgUrl, text, buttonText, backgroundColor }) {
   const heroRef = useRef(null);
   return (
     <Box
@@ -23,8 +23,9 @@ function Hero({ bgUrl, text, buttonText }) {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundColor: "rgba(0,0,0,0.65)",
+        backgroundColor: backgroundColor,
         backgroundBlendMode: "multiply",
+        transition: "all .5s ",
       }}
     >
       <Container>

@@ -1,5 +1,5 @@
 // react
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // MUI
 import { Box, Container, Grid, Typography, Stack, Button } from "@mui/material";
 // images
@@ -14,10 +14,23 @@ import data from "../data";
 
 function ShopScreen() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState("#262626");
   const shopRef = useRef(null);
+
+  const image = new Image();
+  image.src = bg;
+  useEffect(() => {
+    image.onload = setBackgroundColor("rgba(0,0,0,0.65)");
+  }, []);
+
   return (
     <>
-      <Hero bgUrl={bg} text="It's not too late" buttonText="Act Now" />{" "}
+      <Hero
+        bgUrl={bg}
+        text="It's not too late"
+        buttonText="Act Now"
+        backgroundColor={backgroundColor}
+      />
       <Box ref={shopRef} sx={{ backgroundColor: "neutral.main", py: 8 }}>
         <Container>
           {/* alert */}
