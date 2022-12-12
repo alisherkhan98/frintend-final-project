@@ -1,5 +1,5 @@
 // react
-import * as React from "react";
+import React, { useState } from "react";
 // MUI
 import {
   AppBar,
@@ -17,8 +17,10 @@ import {
   Container,
   useTheme,
   ListItemIcon,
-  Icon,
   Badge,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@mui/material";
 // icons
 import { FaBars, FaHome, FaMoneyBill } from "react-icons/fa";
@@ -48,6 +50,9 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
   // user
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.shop);
+
+  // dialog
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -94,9 +99,14 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
   );
 
   // function to handle click on sign out
+  function openSignOutdialog() {
+    setDialogOpen(true);
+  }
+
+  // function when clicked on sign out
   function handleSignOut() {
-    navigate("/");
-    signOut(auth);
+    setDialogOpen(false);
+    signOut(auth).then((res) => navigate("/"));
   }
 
   // calculate total amount
@@ -142,7 +152,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
 
         {user ? (
           <ListItem>
-            <ListItemButton disableRipple onClick={handleSignOut}>
+            <ListItemButton disableRipple onClick={openSignOutdialog}>
               <ListItemIcon>
                 <MdLogout />
               </ListItemIcon>
@@ -168,6 +178,33 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
         </ListItem>
       </List>
     </Box>
+  );
+
+  // sign out dialog
+  const dialog = (
+    <Dialog
+      open={dialogOpen}
+      onClose={() => setDialogOpen(false)}
+      aria-labelledby="sign-out-confirm"
+      aria-describedby="sign-out-description"
+      sx={{
+        "& .MuiPaper-root": {
+          p: 1,
+          borderRadius: 4,
+        },
+      }}
+    >
+      <DialogTitle id="sign-out-confirm">
+        {"Are you sure you want to sign out?"}
+      </DialogTitle>
+
+      <DialogActions>
+        <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+        <Button color="error" onClick={handleSignOut} autoFocus>
+          Sign Out
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 
   return (
@@ -235,7 +272,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
                 <Button
                   variant="outlined"
                   color={show ? "primary" : "hero"}
-                  onClick={handleSignOut}
+                  onClick={openSignOutdialog}
                 >
                   Sign Out
                 </Button>
@@ -297,6 +334,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
           {drawer}
         </Drawer>
       </Box>
+      {dialog}
     </Box>
   );
 }

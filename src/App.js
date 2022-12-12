@@ -1,7 +1,7 @@
 // react
 import React, { useEffect, useState } from "react";
 // MUI
-import { Alert, Box, useMediaQuery, Container } from "@mui/material";
+import { Alert, Box, useMediaQuery, Container, Button } from "@mui/material";
 // router
 import {
   BrowserRouter as Router,
@@ -29,7 +29,7 @@ import { clearCart, setInitialCart } from "./redux/features/shopSlice";
 import { auth, db } from "./firebase/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-
+import data from "./data";
 function App() {
   const dispatch = useDispatch();
   // dark mode
@@ -91,7 +91,7 @@ function App() {
         { merge: true }
       ).catch((error) => {
         setAlertMessage(
-          "There was an error while updating the card: " + error.code
+          "There was an error while updating the cart: " + error.code
         );
         setTimeout(() => {
           setAlertMessage("");
