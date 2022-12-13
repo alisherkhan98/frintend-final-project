@@ -29,7 +29,6 @@ import { clearCart, setInitialCart } from "./redux/features/shopSlice";
 import { auth, db } from "./firebase/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import data from "./data";
 function App() {
   const dispatch = useDispatch();
   // dark mode

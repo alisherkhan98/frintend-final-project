@@ -15,10 +15,25 @@ import { clearCart } from "../redux/features/shopSlice";
 import CartRow from "../components/CartRow";
 import MyAlert from "../components/MyAlert";
 import Footer from "../components/Footer";
+// fiebase
+import { auth, db } from "../firebase/firebaseConfig";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
+// custom hook
+import UseGetProducts from "../custom-hooks/UseGetProducts";
+// stripe
+import { loadStripe } from "@stripe/stripe-js";
 
 function CartScreen() {
   const { cart } = useSelector((state) => state.shop);
   const dispatch = useDispatch();
+
+  // getting list of products from stripe extension with custom hook
+  const products = UseGetProducts();
+
+  let lineItems = cart.map((item) => ({
+    price: products[item.name],
+    quantity: item.amount,
+  }));
 
   // calculate total price
   const totalPrice = cart.reduce(
@@ -33,6 +48,40 @@ function CartScreen() {
       accumulator + currentValue.amount * currentValue.co2,
     0
   );
+
+  // function to handle click on checkout
+  async function handleCheckout() {
+    console.log(lineItems);
+    const currentUser = auth.currentUser.uid;
+    let checkoutSessionsRef = collection(
+      db,
+      "customers",
+      currentUser,
+      "checkout_sessions"
+    );
+    const sessionRef = await addDoc(checkoutSessionsRef, {
+      mode: "payment",
+      line_items: lineItems,
+      success_url: window.location.origin,
+      cancel_url: window.location.origin,
+    });
+
+    // listener for changes in checkout session
+    onSnapshot(sessionRef, async (snap) => {
+      const { error, sessionId } = snap.data();
+
+      if (error) {
+        // TODO add error handling
+      }
+
+      if (sessionId) {
+        const stripe = await loadStripe(
+          "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
+        );
+        stripe.redirectToCheckout({ sessionId });
+      }
+    });
+  }
 
   return (
     <>
@@ -94,6 +143,7 @@ function CartScreen() {
                   sx={{
                     width: { xs: "90%", sm: "fit-content" },
                   }}
+                  onClick={handleCheckout}
                 >
                   Checkout
                 </Button>
