@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // MUI
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Paper,
   Stack,
@@ -27,9 +28,13 @@ function CartScreen() {
   const { cart } = useSelector((state) => state.shop);
   const dispatch = useDispatch();
 
+  // state to trigger checkout
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+
   // getting list of products from stripe extension with custom hook
   const products = UseGetProducts();
 
+  // array of items and their quantity
   let lineItems = cart.map((item) => ({
     price: products[item.name],
     quantity: item.amount,
@@ -50,38 +55,46 @@ function CartScreen() {
   );
 
   // function to handle click on checkout
-  async function handleCheckout() {
-    console.log(lineItems);
-    const currentUser = auth.currentUser.uid;
-    let checkoutSessionsRef = collection(
-      db,
-      "customers",
-      currentUser,
-      "checkout_sessions"
-    );
-    const sessionRef = await addDoc(checkoutSessionsRef, {
-      mode: "payment",
-      line_items: lineItems,
-      success_url: window.location.origin,
-      cancel_url: window.location.origin,
-    });
 
-    // listener for changes in checkout session
-    onSnapshot(sessionRef, async (snap) => {
-      const { error, sessionId } = snap.data();
+  useEffect(() => {
+    async function handleCheckout() {
+      if (!isCheckingOut) return;
 
-      if (error) {
-        // TODO add error handling
-      }
+      const currentUser = auth.currentUser.uid;
+      const checkoutSessionsRef = collection(
+        db,
+        "customers",
+        currentUser,
+        "checkout_sessions"
+      );
+      const sessionRef = await addDoc(checkoutSessionsRef, {
+        mode: "payment",
+        line_items: lineItems,
+        success_url: window.location.origin + "/shop", //in case of success or cancel retturn to homepage
+        cancel_url: window.location.href,
+      });
 
-      if (sessionId) {
-        const stripe = await loadStripe(
-          "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
-        );
-        stripe.redirectToCheckout({ sessionId });
-      }
-    });
-  }
+      // listener for changes in checkout session
+      onSnapshot(sessionRef, async (snap) => {
+        const { error, sessionId } = snap.data();
+
+        if (error) {
+          // TODO add error handling
+          setIsCheckingOut(false);
+        }
+
+        if (sessionId) {
+          const stripe = await loadStripe(
+            "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
+          );
+          console.log(stripe);
+          stripe.redirectToCheckout({ sessionId });
+        }
+      });
+    }
+
+    handleCheckout();
+  }, [isCheckingOut]);
 
   return (
     <>
@@ -140,10 +153,12 @@ function CartScreen() {
                 <Button
                   color="primary"
                   variant="contained"
+                  endIcon={isCheckingOut && <CircularProgress size={20} />}
+                  disabled={isCheckingOut}
                   sx={{
                     width: { xs: "90%", sm: "fit-content" },
                   }}
-                  onClick={handleCheckout}
+                  onClick={() => setIsCheckingOut(true)}
                 >
                   Checkout
                 </Button>
