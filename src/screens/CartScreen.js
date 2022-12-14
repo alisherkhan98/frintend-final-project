@@ -70,7 +70,7 @@ function CartScreen() {
       const sessionRef = await addDoc(checkoutSessionsRef, {
         mode: "payment",
         line_items: lineItems,
-        success_url: window.location.origin + "/shop", //in case of success or cancel retturn to homepage
+        success_url: window.location.origin + "/success",
         cancel_url: window.location.href,
       });
 

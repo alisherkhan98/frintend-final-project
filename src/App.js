@@ -21,6 +21,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 import ShopScreen from "./screens/ShopScreen";
 import CartScreen from "./screens/CartScreen";
 import LoadingScreen from "./screens/LoadingScreen";
+import SuccessScreen from "./screens/SuccessScreen";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { signIn, signOut } from "./redux/features/authSlice";
@@ -140,6 +141,7 @@ function App() {
               !user && !isLoading ? <Navigate to="/signin" /> : <CartScreen />
             }
           />
+          <Route path="/success" element={!isLoading && <SuccessScreen />} />
         </Routes>
       </Router>
     </Theme>

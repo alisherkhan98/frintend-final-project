@@ -71,6 +71,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
     if (
       location.pathname === "/signin" ||
       location.pathname === "/signup" ||
+      location.pathname === "/success" ||
       location.pathname === "/cart"
     ) {
       setShow(true);
