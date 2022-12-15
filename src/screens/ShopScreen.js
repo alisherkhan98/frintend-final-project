@@ -1,7 +1,7 @@
 // react
 import React, { useState, useRef, useEffect } from "react";
 // MUI
-import { Box, Container, Grid, Typography, Stack, Button } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 // images
 import bg from "../assets/img/hero2.jpg";
 // components
@@ -14,9 +14,10 @@ import data from "../data";
 
 function ShopScreen() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState("#262626");
   const shopRef = useRef(null);
 
+  // fade in effect when hero image is loaded
+  const [backgroundColor, setBackgroundColor] = useState("#262626");
   const image = new Image();
   image.src = bg;
   useEffect(() => {

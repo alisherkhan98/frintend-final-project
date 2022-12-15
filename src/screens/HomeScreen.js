@@ -18,8 +18,9 @@ function HomeScreen() {
   const { footprintDetails, isFetchingFootprint, footprintError } = useSelector(
     (state) => state.flightData
   );
-  const [backgroundColor, setBackgroundColor] = useState("#262626");
 
+  // fade in effect when image is loaded
+  const [backgroundColor, setBackgroundColor] = useState("#262626");
   const image = new Image();
   image.src = bg;
   useEffect(() => {

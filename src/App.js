@@ -1,7 +1,7 @@
 // react
 import React, { useEffect, useState } from "react";
 // MUI
-import { Alert, Box, useMediaQuery, Container, Button } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 // router
 import {
   BrowserRouter as Router,
@@ -48,11 +48,13 @@ function App() {
   // cart
   const { cart } = useSelector((state) => state.shop);
 
-  // listener for any change in the auth
+  // listener for any change in the authentication
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
+      // in case a user signed in
       if (newUser) {
         dispatch(signIn({ email: newUser.email, uid: newUser.uid }));
+        // grab signed in user's cart from firestore
         getDoc(doc(db, "users", newUser.uid))
           .then((docsnap) => {
             dispatch(setInitialCart(docsnap.data().cart));
@@ -67,6 +69,7 @@ function App() {
             console.log(error);
           });
       } else {
+        // in case user signed out
         dispatch(clearCart());
         dispatch(signOut());
       }

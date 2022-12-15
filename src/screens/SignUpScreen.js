@@ -8,7 +8,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 // MUI
 import {
-  IconButton,
   useTheme,
   Box,
   Typography,
@@ -16,8 +15,6 @@ import {
   Button,
   Card,
 } from "@mui/material";
-// redux
-import { useDispatch } from "react-redux";
 // components
 import MyAlert from "../components/MyAlert";
 
@@ -34,7 +31,6 @@ function authErrorFormat(text) {
 function SignUpScreen() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const dispatch = useDispatch();
 
   const [credentials, setCredentials] = React.useState({
     name: "",

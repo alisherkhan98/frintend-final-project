@@ -6,7 +6,6 @@ import {
   TextField,
   Button,
   useTheme,
-  IconButton,
   Card,
 } from "@mui/material";
 // Router
@@ -14,8 +13,6 @@ import { useNavigate, Link } from "react-router-dom";
 // Firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
-// redux
-import { useDispatch } from "react-redux";
 // images
 import wave from "../assets/img/hero.jpg";
 // components
@@ -26,13 +23,13 @@ const textFieldStyle = {
   mb: 1,
 };
 
+// function to change format of error string
 function authErrorFormat(text) {
   return text.slice(5).split("-").join(" ");
 }
 
 function SignInScreen() {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [credentials, setCredentials] = React.useState({
     email: "",
@@ -74,7 +71,7 @@ function SignInScreen() {
 
     // firebase sign in
     signInWithEmailAndPassword(auth, credentials.email, credentials.password)
-      .then((user) => {
+      .then(() => {
         navigate("/");
       })
       .catch((error) => {

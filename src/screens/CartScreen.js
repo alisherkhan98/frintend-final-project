@@ -34,7 +34,7 @@ function CartScreen() {
   // getting list of products from stripe extension with custom hook
   const products = UseGetProducts();
 
-  // array of items and their quantity
+  // array of items with their price ID and their quantity
   let lineItems = cart.map((item) => ({
     price: products[item.name],
     quantity: item.amount,
@@ -54,9 +54,8 @@ function CartScreen() {
     0
   );
 
-  // function to handle click on checkout
-
   useEffect(() => {
+    // function to handle click on checkout
     async function handleCheckout() {
       if (!isCheckingOut) return;
 
