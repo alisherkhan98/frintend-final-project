@@ -8,6 +8,13 @@ import { HiChevronDown } from "react-icons/hi";
 
 function Hero({ bgUrl, text, buttonText, backgroundColor }) {
   const heroRef = useRef(null);
+
+  const scrollDown = () => {
+    window.scrollTo({
+      top: heroRef.current.clientHeight - 50,
+      behavior: "smooth",
+    });
+  };
   return (
     <Box
       component="section"
@@ -56,12 +63,7 @@ function Hero({ bgUrl, text, buttonText, backgroundColor }) {
               transform: "translate(-50%, -50%) scale(1.05)",
             },
           }}
-          onClick={() => {
-            window.scrollTo({
-              top: heroRef.current.clientHeight - 50,
-              behavior: "smooth",
-            });
-          }}
+          onClick={scrollDown}
         >
           {buttonText}
         </Button>
@@ -72,6 +74,7 @@ function Hero({ bgUrl, text, buttonText, backgroundColor }) {
             bottom: "10%",
             transform: "translate(-50%, 1.5rem)",
           }}
+          onClick={scrollDown}
           disableRipple
           color="hero"
         >
