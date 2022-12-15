@@ -21,10 +21,12 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  SvgIcon,
 } from "@mui/material";
 // icons
 import { FaBars, FaHome, FaMoneyBill } from "react-icons/fa";
 import { BsFillCircleFill, BsCart3 } from "react-icons/bs";
+import { HiPaperAirplane } from "react-icons/hi";
 import {
   MdLogin,
   MdLogout,
@@ -119,7 +121,11 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        LOGO
+        IMP
+        <SvgIcon sx={{ position: "relative", top: 2, fontSize: "inherit" }}>
+          <HiPaperAirplane size="24px" />
+        </SvgIcon>
+        CT
       </Typography>
       <Divider />
 
@@ -227,7 +233,13 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
               color={show ? "primary" : "white"}
             >
-              LOGO
+              IMP
+              <SvgIcon
+                sx={{ position: "relative", top: 3, fontSize: "inherit" }}
+              >
+                <HiPaperAirplane size="24px" />
+              </SvgIcon>
+              CT
             </Typography>
 
             <Box
@@ -256,14 +268,14 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
               </IconButton>
 
               <Button
-                color={show ? "primary" : "hero"}
+                color={show ? "icons" : "hero"}
                 sx={{ mr: 2 }}
                 onClick={() => navigate("/")}
               >
                 Home
               </Button>
               <Button
-                color={show ? "primary" : "hero"}
+                color={show ? "icons" : "hero"}
                 sx={{ mr: 2 }}
                 onClick={() => navigate("/shop")}
               >
