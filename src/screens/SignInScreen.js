@@ -14,7 +14,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 // images
-import wave from "../assets/img/hero.jpg";
+import bg from "../assets/img/hero.jpg";
 // components
 import MyAlert from "../components/MyAlert";
 
@@ -89,12 +89,11 @@ function SignInScreen() {
           minHeight: "100vh",
           py: 10,
           boxSizing: "border-box",
-          backgroundImage: `url(${wave})`,
+          backgroundColor: "background.signin",
+          backgroundImage: `url(${bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "top",
-
-          backgroundColor: "background.signin",
           backgroundBlendMode: "overlay",
         }}
       >

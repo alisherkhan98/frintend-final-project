@@ -78,11 +78,11 @@ function CartScreen() {
         const { error, sessionId } = snap.data();
 
         if (error) {
-          // TODO add error handling
           setIsCheckingOut(false);
         }
 
         if (sessionId) {
+          // API key is publishable so it doesn't need to be set as env var
           const stripe = await loadStripe(
             "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
           );

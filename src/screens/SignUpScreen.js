@@ -17,6 +17,8 @@ import {
 } from "@mui/material";
 // components
 import MyAlert from "../components/MyAlert";
+// images
+import bg from "../assets/img/hero.jpg";
 
 const textFieldStyle = {
   width: 1,
@@ -134,6 +136,11 @@ function SignUpScreen() {
           py: 10,
           boxSizing: "border-box",
           backgroundColor: "neutral.main",
+          backgroundImage: `url(${bg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          backgroundBlendMode: "overlay",
         }}
       >
         <Card
