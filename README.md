@@ -70,6 +70,7 @@
 ## Built With
 
 - [![ReactRouter][reactrouter-shield]][reactrouter-url]
+- [![Axios][axios-shield]][axios-url]
 - [![Firebase][firebase-shield]][firebase-url]
 - [![ReactJs][react-shield]][react-url]
 - [![Material UI][mui-shield]][mui-url]
@@ -207,5 +208,5 @@ Project Link: [https://github.com/alisherkhan98/frontend-final-project](https://
 [mui-url]: https://mui.com/
 [stripe-shield]: https://img.shields.io/badge/-Stripe-635bff?style=for-the-badge&logo=stripe&logoColor=white
 [stripe-url]: https://stripe.com/
-[emailjs-shield]: https://img.shields.io/badge/-emailjs-fca253?style=for-the-badge
-[emailjs-url]: https://www.emailjs.com/
+[axios-shield]: https://img.shields.io/badge/-axios-7e3e8d?style=for-the-badge&logo=axios&logoColor=white
+[axios-url]: https://axios-http.com
