@@ -145,6 +145,7 @@ function App() {
             }
           />
           <Route path="/success" element={!isLoading && <SuccessScreen />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </Theme>
