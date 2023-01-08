@@ -8,11 +8,9 @@ function MyAlert({ children, severity }) {
   const alertRef = useRef(null);
 
   // open after a delay
-  useEffect(() => {
-    setTimeout(() => {
-      setIsOpen(true);
-    }, 200);
-  }, []);
+  setTimeout(() => {
+    setIsOpen(true);
+  }, 200);
 
   // scroll to alert every time it is rendered
   useEffect(() => {

@@ -8,7 +8,7 @@ const options = {
   url: "https://gist.githubusercontent.com/tdreyno/4278655/raw/7b0762c09b519f40397e4c3e100b097d861f5588/airports.json",
 };
 
-function UseLoadList() {
+function useLoadList() {
   const [airportsList, setAirportsList] = React.useState([]);
 
   // useEffect to fetch all the Iata codes
@@ -64,4 +64,4 @@ function UseLoadList() {
   return airportsList;
 }
 
-export default UseLoadList;
+export default useLoadList;

@@ -1,5 +1,5 @@
 // react
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 // MUI
 import { Box, Container, Grid, Typography } from "@mui/material";
 // images
@@ -16,22 +16,9 @@ function ShopScreen() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const shopRef = useRef(null);
 
-  // fade in effect when hero image is loaded
-  const [backgroundColor, setBackgroundColor] = useState("#262626");
-  const image = new Image();
-  image.src = bg;
-  useEffect(() => {
-    image.onload = setBackgroundColor("rgba(0,0,0,0.65)");
-  }, []);
-
   return (
     <>
-      <Hero
-        bgUrl={bg}
-        text="It's not too late"
-        buttonText="Act Now"
-        backgroundColor={backgroundColor}
-      />
+      <Hero bgUrl={bg} text="It's not too late" buttonText="Act Now" />
       <Box ref={shopRef} sx={{ backgroundColor: "neutral.main", py: 8 }}>
         <Container>
           {/* alert */}

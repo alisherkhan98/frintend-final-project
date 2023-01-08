@@ -1,5 +1,5 @@
 // react
-import React, { useEffect, useState } from "react";
+import React from "react";
 // redux
 import { useSelector } from "react-redux";
 // components
@@ -19,20 +19,12 @@ function HomeScreen() {
     (state) => state.flightData
   );
 
-  // fade in effect when image is loaded
-  const [backgroundColor, setBackgroundColor] = useState("#262626");
-  const image = new Image();
-  image.src = bg;
-  useEffect(() => {
-    image.onload = setBackgroundColor("rgba(0,0,0,0.65)");
-  }, []);
   return (
     <>
       <Hero
         bgUrl={bg}
         text="Estimate your next flight's carbon footprint"
         buttonText="Calculate Now"
-        backgroundColor={backgroundColor}
       />
       <Calculator />
       {/* alert for errors */}

@@ -6,7 +6,7 @@ import { Box, Button, IconButton, Typography, Container } from "@mui/material";
 // icons
 import { HiChevronDown } from "react-icons/hi";
 
-function Hero({ bgUrl, text, buttonText, backgroundColor }) {
+function Hero({ bgUrl, text, buttonText }) {
   const heroRef = useRef(null);
 
   const scrollDown = () => {
@@ -30,7 +30,7 @@ function Hero({ bgUrl, text, buttonText, backgroundColor }) {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundColor: backgroundColor,
+        backgroundColor: "rgba(0,0,0,0.65)",
         backgroundBlendMode: "multiply",
         transition: "all .5s ",
       }}

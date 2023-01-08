@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // MUI
 import {
   Box,
@@ -16,13 +16,10 @@ import { clearCart } from "../redux/features/shopSlice";
 import CartRow from "../components/CartRow";
 import MyAlert from "../components/MyAlert";
 import Footer from "../components/Footer";
-// fiebase
-import { auth, db } from "../firebase/firebaseConfig";
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
+
 // custom hook
-import UseGetProducts from "../custom-hooks/UseGetProducts";
-// stripe
-import { loadStripe } from "@stripe/stripe-js";
+import useGetProducts from "../custom-hooks/useGetProducts";
+import useCheckOut from "../custom-hooks/useCheckOut";
 
 function CartScreen() {
   const { cart } = useSelector((state) => state.shop);
@@ -32,7 +29,7 @@ function CartScreen() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   // getting list of products from stripe extension with custom hook
-  const products = UseGetProducts();
+  const products = useGetProducts();
 
   // array of items with their price ID and their quantity
   let lineItems = cart.map((item) => ({
@@ -54,46 +51,13 @@ function CartScreen() {
     0
   );
 
-  useEffect(() => {
-    // function to handle click on checkout
-    async function handleCheckout() {
-      if (!isCheckingOut) return;
+  // function to handle checkout
+  function handleCheckout() {
+    setIsCheckingOut(true);
+  }
 
-      const currentUser = auth.currentUser.uid;
-      const checkoutSessionsRef = collection(
-        db,
-        "customers",
-        currentUser,
-        "checkout_sessions"
-      );
-      const sessionRef = await addDoc(checkoutSessionsRef, {
-        mode: "payment",
-        line_items: lineItems,
-        success_url: window.location.origin + "/success",
-        cancel_url: window.location.href,
-      });
-
-      // listener for changes in checkout session
-      onSnapshot(sessionRef, async (snap) => {
-        const { error, sessionId } = snap.data();
-
-        if (error) {
-          setIsCheckingOut(false);
-        }
-
-        if (sessionId) {
-          // API key is publishable so it doesn't need to be set as env var
-          const stripe = await loadStripe(
-            "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
-          );
-          console.log(stripe);
-          stripe.redirectToCheckout({ sessionId });
-        }
-      });
-    }
-
-    handleCheckout();
-  }, [isCheckingOut]);
+  // custom hook to checkout
+  useCheckOut(isCheckingOut, setIsCheckingOut, lineItems);
 
   return (
     <>
@@ -157,7 +121,7 @@ function CartScreen() {
                   sx={{
                     width: { xs: "90%", sm: "fit-content" },
                   }}
-                  onClick={() => setIsCheckingOut(true)}
+                  onClick={handleCheckout}
                 >
                   Checkout
                 </Button>

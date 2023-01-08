@@ -1,11 +1,7 @@
 // react
-import React from "react";
-// firebase
-import { auth, db } from "../firebase/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import React, { useState } from "react";
 // Router
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // MUI
 import {
   useTheme,
@@ -19,39 +15,29 @@ import {
 import MyAlert from "../components/MyAlert";
 // images
 import bg from "../assets/img/hero.jpg";
+// custom hooks
+import useSignUp from "../custom-hooks/useSignUp";
 
 const textFieldStyle = {
   width: 1,
   mb: 1,
 };
 
-// function to change format of error string
-function authErrorFormat(text) {
-  return text.slice(5).split("-").join(" ");
-}
-
 function SignUpScreen() {
-  const navigate = useNavigate();
   const theme = useTheme();
 
-  const [credentials, setCredentials] = React.useState({
+  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [credentials, setCredentials] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const [formError, setFormError] = React.useState({});
-  const [signUpError, setSignUpError] = React.useState("");
+  const [formError, setFormError] = useState({});
+  const [signUpError, setSignUpError] = useState("");
 
-  // function to capitalize name
-  function capitalizeWords(str) {
-    var splitStr = str.toLowerCase().split(" ");
-    for (var i = 0; i < splitStr.length; i++) {
-      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].slice(1);
-    }
-    return splitStr.join(" ");
-  }
+  useSignUp(credentials, isSigningUp, setIsSigningUp, setSignUpError);
 
   //   function to make components controlled
   function handleChange(e) {
@@ -66,11 +52,13 @@ function SignUpScreen() {
   function handleSubmit(e) {
     e.preventDefault();
     setSignUpError("");
+
     // client side error handling
+
     let isError = false;
 
     for (let credential in credentials) {
-      if (credentials[credential] == "") {
+      if (credentials[credential] === "") {
         setFormError((state) => ({
           ...state,
           [credential]: true,
@@ -100,32 +88,12 @@ function SignUpScreen() {
 
     if (isError) return;
 
-    // create new user in firebase
-    createUserWithEmailAndPassword(
-      auth,
-      credentials.email,
-      credentials.password
-    )
-      .then((userCredential) => {
-        // adding new user info in a document
-        console.log(userCredential);
-        setDoc(doc(db, "users", userCredential.user.uid), {
-          email: userCredential.user.email,
-          name: capitalizeWords(credentials.name),
-          cart: [],
-        });
-      })
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        setSignUpError("Error: " + authErrorFormat(error.code));
-      });
+    // trigger sign up hook
+    setIsSigningUp(true);
   }
 
   return (
     <>
-      {" "}
       <Box
         sx={{
           display: "flex",

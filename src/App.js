@@ -22,16 +22,13 @@ import ShopScreen from "./screens/ShopScreen";
 import CartScreen from "./screens/CartScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 import SuccessScreen from "./screens/SuccessScreen";
-// redux
-import { useDispatch, useSelector } from "react-redux";
-import { signIn, signOut } from "./redux/features/authSlice";
-import { clearCart, setInitialCart } from "./redux/features/shopSlice";
-// firebase
-import { auth, db } from "./firebase/firebaseConfig";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+
+// custom hooks
+import useAuthenticate from "./custom-hooks/useAuthenticate";
+import { useSelector } from "react-redux";
+import useUpdateCart from "./custom-hooks/useUpdateCart";
+
 function App() {
-  const dispatch = useDispatch();
   // dark mode
   const initialMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkMode, setIsDarkMode] = useState(initialMode);
@@ -45,64 +42,11 @@ function App() {
   // user
   const { user } = useSelector((state) => state.auth);
 
-  // cart
-  const { cart } = useSelector((state) => state.shop);
-
-  // listener for any change in the authentication
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (newUser) => {
-      // in case a user signed in
-      if (newUser) {
-        dispatch(signIn({ email: newUser.email, uid: newUser.uid }));
-        // grab signed in user's cart from firestore
-        getDoc(doc(db, "users", newUser.uid))
-          .then((docsnap) => {
-            dispatch(setInitialCart(docsnap.data().cart));
-          })
-          .catch((error) => {
-            setAlertMessage(
-              "There was an error retrieving the data from firestore"
-            );
-            setTimeout(() => {
-              setAlertMessage("");
-            }, 2000);
-            console.log(error);
-          });
-      } else {
-        // in case user signed out
-        dispatch(clearCart());
-        dispatch(signOut());
-      }
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  // everytime the there's a change in the authentication, redux reducers are dispatched to sign in or sign out
+  useAuthenticate(setIsLoading, setAlertMessage);
 
   // update cart on firestore when changes locally
-  useEffect(() => {
-    if (user) {
-      setDoc(
-        doc(db, "users", user.uid),
-        {
-          cart: cart,
-        },
-        { merge: true }
-      ).catch((error) => {
-        setAlertMessage(
-          "There was an error while updating the cart: " + error.code
-        );
-        setTimeout(() => {
-          setAlertMessage("");
-        }, 1500);
-        console.log(error);
-      });
-    }
-  }, [cart]);
+  useUpdateCart(user, setAlertMessage);
 
   return (
     <Theme isDarkMode={isDarkMode}>

@@ -10,7 +10,7 @@ import {
   setIsFetchingFootprint,
 } from "../redux/features/flightDataSlice";
 
-function UseFetchFootprint(details, calculatorRef) {
+function useFetchFootprint(details, calculatorRef) {
   const dispatch = useDispatch();
   const { isFetchingFootprint } = useSelector((state) => state.flightData);
   React.useEffect(() => {
@@ -112,4 +112,4 @@ function UseFetchFootprint(details, calculatorRef) {
   return;
 }
 
-export default UseFetchFootprint;
+export default useFetchFootprint;

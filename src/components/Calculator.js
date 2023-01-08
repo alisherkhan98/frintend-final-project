@@ -17,8 +17,8 @@ import {
   IconButton,
 } from "@mui/material";
 // custom hooks
-import UseLoadList from "../custom-hooks/UseLoadList";
-import UseFetchFootprint from "../custom-hooks/UseFetchFootprint";
+import useLoadList from "../custom-hooks/useLoadList";
+import useFetchFootprint from "../custom-hooks/useFetchFootprint";
 // redux
 import { useDispatch } from "react-redux";
 import { setIsFetchingFootprint } from "../redux/features/flightDataSlice";
@@ -50,10 +50,10 @@ function Calculator() {
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
   // load airports list with api call
-  const airportsList = UseLoadList();
+  const airportsList = useLoadList();
 
   // fetch carbon emission data
-  UseFetchFootprint(details, calculatorRef);
+  useFetchFootprint(details, calculatorRef);
 
   // function to handle changes of inputs
   function handleChange(e) {

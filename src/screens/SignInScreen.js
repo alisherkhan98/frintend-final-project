@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // MUI
 import {
   Box,
@@ -9,35 +9,32 @@ import {
   Card,
 } from "@mui/material";
 // Router
-import { useNavigate, Link } from "react-router-dom";
-// Firebase
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
+import { Link } from "react-router-dom";
+
 // images
 import bg from "../assets/img/hero.jpg";
 // components
 import MyAlert from "../components/MyAlert";
+// custom hooks
+import useSignIn from "../custom-hooks/useSignIn";
 
 const textFieldStyle = {
   width: 1,
   mb: 1,
 };
 
-// function to change format of error string
-function authErrorFormat(text) {
-  return text.slice(5).split("-").join(" ");
-}
-
 function SignInScreen() {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const [credentials, setCredentials] = React.useState({
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-  const [formError, setFormError] = React.useState({});
-  const [signInError, setSignInError] = React.useState("");
+  const [formError, setFormError] = useState({});
+  const [signInError, setSignInError] = useState("");
 
+  // custom hook to sign in
+  useSignIn(credentials, isSigningIn, setIsSigningIn, setSignInError);
   //   function to make components controlled
   function handleChange(e) {
     const target = e.target;
@@ -53,7 +50,7 @@ function SignInScreen() {
     // client side error handling
     let isError = false;
     for (let credential in credentials) {
-      if (credentials[credential] == "") {
+      if (credentials[credential] === "") {
         setFormError((state) => ({
           ...state,
           [credential]: true,
@@ -69,14 +66,8 @@ function SignInScreen() {
 
     if (isError) return;
 
-    // firebase sign in
-    signInWithEmailAndPassword(auth, credentials.email, credentials.password)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        setSignInError("Error: " + authErrorFormat(error.code));
-      });
+    // trigger sign in
+    setIsSigningIn(true);
   };
   return (
     <>
