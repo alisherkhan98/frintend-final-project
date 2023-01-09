@@ -10,13 +10,15 @@ import {
 } from "@mui/material";
 // Router
 import { Link } from "react-router-dom";
-
 // images
 import bg from "../assets/img/hero.jpg";
 // components
 import MyAlert from "../components/MyAlert";
 // custom hooks
 import useSignIn from "../custom-hooks/useSignIn";
+// redux
+import { setIsSigningIn } from "../redux/features/authSlice";
+import { useDispatch } from "react-redux";
 
 const textFieldStyle = {
   width: 1,
@@ -25,7 +27,8 @@ const textFieldStyle = {
 
 function SignInScreen() {
   const theme = useTheme();
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const dispatch = useDispatch();
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -34,7 +37,7 @@ function SignInScreen() {
   const [signInError, setSignInError] = useState("");
 
   // custom hook to sign in
-  useSignIn(credentials, isSigningIn, setIsSigningIn, setSignInError);
+  useSignIn(credentials, setSignInError);
   //   function to make components controlled
   function handleChange(e) {
     const target = e.target;
@@ -67,7 +70,7 @@ function SignInScreen() {
     if (isError) return;
 
     // trigger sign in
-    setIsSigningIn(true);
+    dispatch(setIsSigningIn(true));
   };
   return (
     <>

@@ -17,6 +17,9 @@ import MyAlert from "../components/MyAlert";
 import bg from "../assets/img/hero.jpg";
 // custom hooks
 import useSignUp from "../custom-hooks/useSignUp";
+// redux
+import { setIsSigningUp } from "../redux/features/authSlice";
+import { useDispatch } from "react-redux";
 
 const textFieldStyle = {
   width: 1,
@@ -25,8 +28,8 @@ const textFieldStyle = {
 
 function SignUpScreen() {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
-  const [isSigningUp, setIsSigningUp] = useState(false);
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -37,7 +40,7 @@ function SignUpScreen() {
   const [formError, setFormError] = useState({});
   const [signUpError, setSignUpError] = useState("");
 
-  useSignUp(credentials, isSigningUp, setIsSigningUp, setSignUpError);
+  useSignUp(credentials, setSignUpError);
 
   //   function to make components controlled
   function handleChange(e) {
@@ -89,7 +92,7 @@ function SignUpScreen() {
     if (isError) return;
 
     // trigger sign up hook
-    setIsSigningUp(true);
+    dispatch(setIsSigningUp(true));
   }
 
   return (

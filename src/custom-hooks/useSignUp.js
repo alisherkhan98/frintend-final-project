@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 // firebase
 import { auth, db } from "../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 // router
 import { useNavigate } from "react-router-dom";
+// redux
+import { setIsSigningUp } from "../redux/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // function to capitalize name
 function capitalizeWords(str) {
@@ -19,29 +23,40 @@ function authErrorFormat(text) {
   return text.slice(5).split("-").join(" ");
 }
 
-function useSignUp(credentials, isSigningUp, setIsSigningUp, setSignUpError) {
+function useSignUp(credentials, setSignUpError) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  if (!isSigningUp) return;
+  const { isSigningUp } = useSelector((state) => state.auth);
 
-  // create new user in firebase
-  createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
-    .then((userCredential) => {
-      // adding new user info in a document
-      console.log(userCredential);
-      setDoc(doc(db, "users", userCredential.user.uid), {
-        email: userCredential.user.email,
-        name: capitalizeWords(credentials.name),
-        cart: [],
+  useEffect(() => {
+    if (!isSigningUp) return;
+
+    // create new user in firebase
+    createUserWithEmailAndPassword(
+      auth,
+      credentials.email,
+      credentials.password
+    )
+      .then((userCredential) => {
+        // adding new user info in a document
+        setDoc(doc(db, "users", userCredential.user.uid), {
+          email: userCredential.user.email,
+          name: capitalizeWords(credentials.name),
+          cart: [],
+        });
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        alert(error.code);
+        setSignUpError("Error: " + authErrorFormat(error.code));
       });
-    })
-    .then(() => {
-      navigate("/");
-    })
-    .catch((error) => {
-      setSignUpError("Error: " + authErrorFormat(error.code));
-    })
-    .then(() => setIsSigningUp(false));
+
+    dispatch(setIsSigningUp(false));
+  }, [isSigningUp]);
+
   return;
 }
 
