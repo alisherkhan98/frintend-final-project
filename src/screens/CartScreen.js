@@ -11,22 +11,18 @@ import {
 } from "@mui/material";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../redux/features/shopSlice";
+import { clearCart, startCheckout } from "../redux/features/shopSlice";
 // components
 import CartRow from "../components/CartRow";
 import MyAlert from "../components/MyAlert";
 import Footer from "../components/Footer";
-
-// custom hook
+// custom hooks
 import useGetProducts from "../custom-hooks/useGetProducts";
 import useCheckOut from "../custom-hooks/useCheckOut";
 
 function CartScreen() {
-  const { cart } = useSelector((state) => state.shop);
+  const { cart, isCheckingOut } = useSelector((state) => state.shop);
   const dispatch = useDispatch();
-
-  // state to trigger checkout
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   // getting list of products from stripe extension with custom hook
   const products = useGetProducts();
@@ -53,11 +49,11 @@ function CartScreen() {
 
   // function to handle checkout
   function handleCheckout() {
-    setIsCheckingOut(true);
+    dispatch(startCheckout());
   }
 
   // custom hook to checkout
-  useCheckOut(isCheckingOut, setIsCheckingOut, lineItems);
+  useCheckOut(lineItems);
 
   return (
     <>

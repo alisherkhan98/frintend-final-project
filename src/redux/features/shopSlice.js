@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // state initialization
 const initialState = {
   cart: [],
+  isCheckingOut: false,
 };
 
 export const shopSlice = createSlice({
@@ -43,10 +44,23 @@ export const shopSlice = createSlice({
     setInitialCart: (state, action) => {
       state.cart = action.payload;
     },
+    startCheckout: (state) => {
+      state.isCheckingOut = true;
+    },
+    stopCheckout: (state) => {
+      state.isCheckingOut = false;
+    },
   },
 });
 
-export const { addItem, removeAll, removeItem, clearCart, setInitialCart } =
-  shopSlice.actions;
+export const {
+  addItem,
+  removeAll,
+  removeItem,
+  clearCart,
+  setInitialCart,
+  startCheckout,
+  stopCheckout,
+} = shopSlice.actions;
 
 export default shopSlice.reducer;

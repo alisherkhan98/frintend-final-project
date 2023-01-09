@@ -4,8 +4,14 @@ import { auth, db } from "../firebase/firebaseConfig";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 // stripe
 import { loadStripe } from "@stripe/stripe-js";
+// redux
+import { stopCheckout } from "../redux/features/shopSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-function useCheckOut(isCheckingOut, setIsCheckingOut, lineItems) {
+function useCheckOut(lineItems) {
+  const { isCheckingOut } = useSelector((state) => state.shop);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // function to handle click on checkout
     async function handleCheckout() {
@@ -30,7 +36,7 @@ function useCheckOut(isCheckingOut, setIsCheckingOut, lineItems) {
         const { error, sessionId } = snap.data();
 
         if (error) {
-          setIsCheckingOut(false);
+          dispatch(stopCheckout());
         }
 
         if (sessionId) {
