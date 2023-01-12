@@ -5,10 +5,12 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 // images
 import bg from "../assets/img/hero2.jpg";
 // components
+import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import ShopCard from "../components/ShopCard";
 import Footer from "../components/Footer";
 import MyAlert from "../components/MyAlert";
+import ScrollToTop from "../components/ScrollToTop";
 // data
 import data from "../data";
 
@@ -18,6 +20,8 @@ function ShopScreen() {
 
   return (
     <>
+      <ScrollToTop />
+      <Navbar />
       <Hero bgUrl={bg} text="It's not too late" buttonText="Act Now" />
       <Box ref={shopRef} sx={{ backgroundColor: "neutral.main", py: 8 }}>
         <Container>

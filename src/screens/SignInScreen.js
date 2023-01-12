@@ -13,7 +13,9 @@ import { Link } from "react-router-dom";
 // images
 import bg from "../assets/img/hero.jpg";
 // components
+import Navbar from "../components/Navbar";
 import MyAlert from "../components/MyAlert";
+import ScrollToTop from "../components/ScrollToTop";
 // custom hooks
 import useSignIn from "../custom-hooks/useSignIn";
 // redux
@@ -74,6 +76,8 @@ function SignInScreen() {
   };
   return (
     <>
+      <ScrollToTop />
+      <Navbar />
       <Box
         sx={{
           display: "flex",

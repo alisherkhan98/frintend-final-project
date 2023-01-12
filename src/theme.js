@@ -5,8 +5,12 @@ import {
   createTheme,
   responsiveFontSizes,
 } from "@mui/material/styles";
+// redux
+import { useSelector } from "react-redux";
 
-function Theme({ children, isDarkMode }) {
+function Theme({ children }) {
+  const { isDarkMode } = useSelector((state) => state.darkMode);
+
   let theme = createTheme({
     typography: {
       fontFamily: [

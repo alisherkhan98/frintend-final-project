@@ -12,7 +12,9 @@ import {
   Card,
 } from "@mui/material";
 // components
+import Navbar from "../components/Navbar";
 import MyAlert from "../components/MyAlert";
+import ScrollToTop from "../components/ScrollToTop";
 // images
 import bg from "../assets/img/hero.jpg";
 // custom hooks
@@ -97,6 +99,8 @@ function SignUpScreen() {
 
   return (
     <>
+      <ScrollToTop />
+      <Navbar />
       <Box
         sx={{
           display: "flex",

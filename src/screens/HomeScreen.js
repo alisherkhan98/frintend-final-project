@@ -9,6 +9,8 @@ import DidYouKnow from "../components/DidYouKnow";
 import MyAlert from "../components/MyAlert";
 import ResultCards from "../components/ResultCards";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import ScrollToTop from "../components/ScrollToTop";
 // MUI
 import { Box } from "@mui/material";
 // image
@@ -21,6 +23,8 @@ function HomeScreen() {
 
   return (
     <>
+      <ScrollToTop />
+      <Navbar />
       <Hero
         bgUrl={bg}
         text="Estimate your next flight's carbon footprint"

@@ -25,7 +25,7 @@ import {
 } from "@mui/material";
 // icons
 import { FaBars, FaHome, FaMoneyBill } from "react-icons/fa";
-import { BsFillCircleFill, BsCart3 } from "react-icons/bs";
+import { BsCart3 } from "react-icons/bs";
 import { HiPaperAirplane } from "react-icons/hi";
 import {
   MdLogin,
@@ -36,7 +36,8 @@ import {
 // router
 import { useLocation, useNavigate } from "react-router-dom";
 // redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsDarkMode } from "../redux/features/darkModeSlice";
 // firebase
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
@@ -44,7 +45,11 @@ import { auth } from "../firebase/firebaseConfig";
 // constants
 const drawerWidth = "66vw";
 
-function Navbar({ setIsDarkMode, isDarkMode }) {
+function Navbar({}) {
+  const dispatch = useDispatch();
+  // darkmode
+  const { isDarkMode } = useSelector((state) => state.darkMode);
+
   // state of drawer on mobile
   const [mobileOpen, setMobileOpen] = React.useState(false);
   // state to show navbar
@@ -91,7 +96,7 @@ function Navbar({ setIsDarkMode, isDarkMode }) {
 
   // function to toggle dark mode
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
+    dispatch(setIsDarkMode(!isDarkMode));
   };
 
   // icon for dark mode changes if toggled

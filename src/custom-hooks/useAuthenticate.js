@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { signIn, signOut } from "../redux/features/authSlice";
 import { clearCart, setInitialCart } from "../redux/features/shopSlice";
+import { setIsLoading } from "../redux/features/loadingSlice";
 // firebase
 import { auth, db } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-function useAuthenticate(setIsLoading, setAlertMessage) {
+function useAuthenticate(setAlertMessage) {
   const dispatch = useDispatch();
 
   // listener for any change in the authentication
@@ -37,7 +38,7 @@ function useAuthenticate(setIsLoading, setAlertMessage) {
         dispatch(signOut());
       }
       setTimeout(() => {
-        setIsLoading(false);
+        dispatch(setIsLoading(false));
       }, 500);
     });
 

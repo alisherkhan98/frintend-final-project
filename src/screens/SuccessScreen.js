@@ -1,22 +1,26 @@
 // react
-import React, { useEffect } from "react";
+import React from "react";
 // MUI
 import { Box, Button, Container, Typography } from "@mui/material";
 // components
+import Navbar from "../components/Navbar";
 import MyAlert from "../components/MyAlert";
 // router
 import { useNavigate } from "react-router-dom";
 // redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../redux/features/shopSlice";
 
 function SuccessScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  // loading
+  const { isLoading } = useSelector((state) => state.loading);
+
+  if (!isLoading) {
     dispatch(clearCart());
-  }, []);
+  }
 
   return (
     <Box
@@ -27,6 +31,7 @@ function SuccessScreen() {
         boxSizing: "border-box",
       }}
     >
+      <Navbar />
       <Container>
         <Typography
           color="primary"
