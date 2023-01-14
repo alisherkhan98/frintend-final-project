@@ -4,7 +4,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 // components
 import Hero from "../components/Hero";
-import Calculator from "../components/Calculator";
 import DidYouKnow from "../components/DidYouKnow";
 import MyAlert from "../components/MyAlert";
 import ResultCards from "../components/ResultCards";
@@ -15,6 +14,8 @@ import ScrollToTop from "../components/ScrollToTop";
 import { Box } from "@mui/material";
 // image
 import bg from "../assets/img/hero.jpg";
+// router
+import { Outlet } from "react-router-dom";
 
 function HomeScreen() {
   const { footprintDetails, isFetchingFootprint, footprintError } = useSelector(
@@ -30,7 +31,8 @@ function HomeScreen() {
         text="Estimate your next flight's carbon footprint"
         buttonText="Calculate Now"
       />
-      <Calculator />
+      {/* outlet to put calculator here */}
+      <Outlet />
       {/* alert for errors */}
       {footprintError && !footprintDetails && (
         <Box sx={{ backgroundColor: "neutral.main", pb: 8 }}>

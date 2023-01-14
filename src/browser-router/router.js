@@ -11,12 +11,15 @@ import SignUpScreen from "../screens/SignUpScreen";
 import ShopScreen from "../screens/ShopScreen";
 import CartScreen from "../screens/CartScreen";
 import SuccessScreen from "../screens/SuccessScreen";
+import Calculator, { listLoader } from "../components/Calculator";
 
 // router
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<HomeScreen />} />
+      <Route path="/" element={<HomeScreen />}>
+        <Route index element={<Calculator />} loader={listLoader} />
+      </Route>
       <Route path="/signin" element={<SignInScreen />} />
       <Route path="/signup" element={<SignUpScreen />} />
       <Route path="/shop" element={<ShopScreen />} />
