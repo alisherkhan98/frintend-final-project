@@ -39,7 +39,7 @@ function SignInScreen() {
   const [signInError, setSignInError] = useState("");
 
   // custom hook to sign in
-  useSignIn(credentials, setSignInError);
+  const signIn = useSignIn(credentials, setSignInError);
   //   function to make components controlled
   function handleChange(e) {
     const target = e.target;
@@ -49,7 +49,7 @@ function SignInScreen() {
     }));
   }
   //   function to handle sign in
-  const signIn = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setSignInError("");
     // client side error handling
@@ -72,7 +72,7 @@ function SignInScreen() {
     if (isError) return;
 
     // trigger sign in
-    dispatch(setIsSigningIn(true));
+    signIn();
   };
   return (
     <>
@@ -147,7 +147,7 @@ function SignInScreen() {
           <Button
             variant="contained"
             color="primary"
-            onClick={signIn}
+            onClick={handleSubmit}
             type="submit"
             sx={{ width: "100%", my: 1 }}
           >
