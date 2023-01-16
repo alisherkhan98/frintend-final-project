@@ -19,10 +19,12 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ScrolltoTop from "../components/ScrollToTop";
 // custom hooks
-import useGetProducts from "../custom-hooks/useGetProducts";
 import useCheckOut from "../custom-hooks/useCheckOut";
 // router
-import { Navigate } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
+// firebase
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 function CartScreen() {
   const { cart, isCheckingOut } = useSelector((state) => state.shop);
@@ -30,8 +32,8 @@ function CartScreen() {
   const { isLoading } = useSelector((state) => state.loading);
   const dispatch = useDispatch();
 
-  // getting list of products from stripe extension with custom hook
-  const products = useGetProducts();
+  // load products list with loader function
+  const products = useLoaderData();
 
   // array of items with their price ID and their quantity
   let lineItems = cart.map((item) => ({
@@ -154,6 +156,25 @@ function CartScreen() {
       </>
     );
   }
+}
+
+// loader function
+export async function productsLoader() {
+  const productsRef = collection(db, "products");
+  const q = query(productsRef, where("active", "==", true));
+
+  let products = {};
+
+  let querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach(async (doc) => {
+    const priceRef = collection(doc.ref, "prices");
+    let priceSnap = await getDocs(priceRef);
+    priceSnap.forEach((price) => {
+      products[doc.data().name] = price.id;
+    });
+  });
+  return products;
 }
 
 export default CartScreen;

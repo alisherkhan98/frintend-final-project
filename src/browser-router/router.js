@@ -9,7 +9,7 @@ import HomeScreen from "../screens/HomeScreen";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import ShopScreen from "../screens/ShopScreen";
-import CartScreen from "../screens/CartScreen";
+import CartScreen, { productsLoader } from "../screens/CartScreen";
 import SuccessScreen from "../screens/SuccessScreen";
 import Calculator, { listLoader } from "../components/Calculator";
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter(
       <Route path="/signin" element={<SignInScreen />} />
       <Route path="/signup" element={<SignUpScreen />} />
       <Route path="/shop" element={<ShopScreen />} />
-      <Route path="/cart" element={<CartScreen />} />
+      <Route path="/cart" element={<CartScreen />} loader={productsLoader} />
       <Route path="/success" element={<SuccessScreen />} />
       <Route path="*" element={<Navigate to="/" />} />
     </>
