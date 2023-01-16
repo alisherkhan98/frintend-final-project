@@ -52,7 +52,7 @@ function Calculator() {
   });
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
-  // load airports list with api call
+  // load airports list with loader function
   const airportsList = useLoaderData();
 
   // fetch carbon emission data
