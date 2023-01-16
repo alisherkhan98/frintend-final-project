@@ -19,7 +19,6 @@ import ScrollToTop from "../components/ScrollToTop";
 // custom hooks
 import useSignIn from "../custom-hooks/useSignIn";
 // redux
-import { setIsSigningIn } from "../redux/features/authSlice";
 import { useDispatch } from "react-redux";
 
 const textFieldStyle = {
@@ -29,7 +28,6 @@ const textFieldStyle = {
 
 function SignInScreen() {
   const theme = useTheme();
-  const dispatch = useDispatch();
 
   const [credentials, setCredentials] = useState({
     email: "",
