@@ -4,48 +4,55 @@ import { auth, db } from "../firebase/firebaseConfig";
 import { addDoc, collection, onSnapshot } from "firebase/firestore";
 // stripe
 import { loadStripe } from "@stripe/stripe-js";
+// redux
+import { stopCheckout } from "../redux/features/shopSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-function useCheckOut() {
-  // function to handle click on checkout
-  async function handleCheckout(lineItems) {
-    let stripeError = "";
+function useCheckOut(lineItems) {
+  const { isCheckingOut } = useSelector((state) => state.shop);
+  const dispatch = useDispatch();
 
-    const currentUser = auth.currentUser.uid;
-    const checkoutSessionsRef = collection(
-      db,
-      "customers",
-      currentUser,
-      "checkout_sessions"
-    );
-    const sessionRef = await addDoc(checkoutSessionsRef, {
-      mode: "payment",
-      line_items: lineItems,
-      success_url: window.location.origin + "/success",
-      cancel_url: window.location.href,
-    });
+  useEffect(() => {
+    // function to handle click on checkout
+    async function handleCheckout() {
+      if (!isCheckingOut) return;
 
-    // listener for changes in checkout session
-    onSnapshot(sessionRef, async (snap) => {
-      const { error, sessionId } = snap.data();
+      const currentUser = auth.currentUser.uid;
+      const checkoutSessionsRef = collection(
+        db,
+        "customers",
+        currentUser,
+        "checkout_sessions"
+      );
+      const sessionRef = await addDoc(checkoutSessionsRef, {
+        mode: "payment",
+        line_items: lineItems,
+        success_url: window.location.origin + "/success",
+        cancel_url: window.location.href,
+      });
 
-      if (error) {
-        console.log(error);
-        stripeError = error;
-      }
+      // listener for changes in checkout session
+      onSnapshot(sessionRef, async (snap) => {
+        const { error, sessionId } = snap.data();
 
-      if (sessionId) {
-        // API key is publishable so it doesn't need to be set as env var
-        const stripe = await loadStripe(
-          "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
-        );
-        console.log(stripe);
-        stripe.redirectToCheckout({ sessionId });
-      }
-    });
-    return stripeError;
-  }
+        if (error) {
+          console.log(error);
+          dispatch(stopCheckout());
+        }
 
-  return handleCheckout;
+        if (sessionId) {
+          // API key is publishable so it doesn't need to be set as env var
+          const stripe = await loadStripe(
+            "pk_test_51MDr2bHmfsxl9tuhkJd7fDkvm6uTnutmiJZM00oev6TCw50ZVw2R8FxVDyCyjvfFsJfIzkB6ksyWjiHt0GJaoc4300dYyXlMck"
+          );
+          stripe.redirectToCheckout({ sessionId });
+        }
+      });
+    }
+
+    handleCheckout();
+  }, [isCheckingOut]);
+  return;
 }
 
 export default useCheckOut;

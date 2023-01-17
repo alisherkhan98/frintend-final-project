@@ -35,9 +35,6 @@ function CartScreen() {
   // load products list with loader function
   const products = useLoaderData();
 
-  // custom hook to checkout
-  const checkout = useCheckOut();
-
   // array of items with their price ID and their quantity
   let lineItems = cart.map((item) => ({
     price: products[item.name],
@@ -60,8 +57,11 @@ function CartScreen() {
 
   // function to handle checkout
   function handleCheckout() {
-    checkout(lineItems).then((err) => console.log(err));
+    dispatch(startCheckout());
   }
+
+  // custom hook to checkout
+  useCheckOut(lineItems);
 
   // if not signed in redirects to sign in screen
   if (!user && !isLoading) {
