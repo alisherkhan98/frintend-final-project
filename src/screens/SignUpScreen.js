@@ -19,9 +19,6 @@ import ScrollToTop from "../components/ScrollToTop";
 import bg from "../assets/img/hero.jpg";
 // custom hooks
 import useSignUp from "../custom-hooks/useSignUp";
-// redux
-import { setIsSigningUp } from "../redux/features/authSlice";
-import { useDispatch } from "react-redux";
 
 const textFieldStyle = {
   width: 1,
@@ -30,7 +27,6 @@ const textFieldStyle = {
 
 function SignUpScreen() {
   const theme = useTheme();
-  const dispatch = useDispatch();
 
   const [credentials, setCredentials] = useState({
     name: "",
@@ -42,7 +38,8 @@ function SignUpScreen() {
   const [formError, setFormError] = useState({});
   const [signUpError, setSignUpError] = useState("");
 
-  useSignUp(credentials, setSignUpError);
+  // signup with custom hook
+  const signUp = useSignUp();
 
   //   function to make components controlled
   function handleChange(e) {
@@ -94,7 +91,7 @@ function SignUpScreen() {
     if (isError) return;
 
     // trigger sign up hook
-    dispatch(setIsSigningUp(true));
+    signUp(credentials).then((err) => setSignUpError(err));
   }
 
   return (

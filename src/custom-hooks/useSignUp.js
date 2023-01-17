@@ -1,13 +1,9 @@
-import { useEffect } from "react";
 // firebase
 import { auth, db } from "../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 // router
 import { useNavigate } from "react-router-dom";
-// redux
-import { setIsSigningUp } from "../redux/features/authSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 // function to capitalize name
 function capitalizeWords(str) {
@@ -23,41 +19,32 @@ function authErrorFormat(text) {
   return text.slice(5).split("-").join(" ");
 }
 
-function useSignUp(credentials, setSignUpError) {
+function useSignUp() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const { isSigningUp } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (!isSigningUp) return;
-
+  async function signUp(credentials) {
+    let error = "";
     // create new user in firebase
-    createUserWithEmailAndPassword(
-      auth,
-      credentials.email,
-      credentials.password
-    )
-      .then((userCredential) => {
-        // adding new user info in a document
-        setDoc(doc(db, "users", userCredential.user.uid), {
-          email: userCredential.user.email,
-          name: capitalizeWords(credentials.name),
-          cart: [],
-        });
-      })
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        alert(error.code);
-        setSignUpError("Error: " + authErrorFormat(error.code));
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
+      // adding new user info in a document
+      setDoc(doc(db, "users", userCredential.user.uid), {
+        email: userCredential.user.email,
+        name: capitalizeWords(credentials.name),
+        cart: [],
       });
 
-    dispatch(setIsSigningUp(false));
-  }, [isSigningUp]);
-
-  return;
+      navigate("/");
+    } catch (err) {
+      error = "Error: " + authErrorFormat(err.code);
+    }
+    return error;
+  }
+  return signUp;
 }
 
 export default useSignUp;

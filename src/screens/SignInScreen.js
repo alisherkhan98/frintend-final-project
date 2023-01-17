@@ -37,7 +37,7 @@ function SignInScreen() {
   const [signInError, setSignInError] = useState("");
 
   // custom hook to sign in
-  const signIn = useSignIn(credentials, setSignInError);
+  const signIn = useSignIn();
   //   function to make components controlled
   function handleChange(e) {
     const target = e.target;
@@ -47,7 +47,7 @@ function SignInScreen() {
     }));
   }
   //   function to handle sign in
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     setSignInError("");
     // client side error handling
@@ -70,8 +70,8 @@ function SignInScreen() {
     if (isError) return;
 
     // trigger sign in
-    signIn();
-  };
+    signIn(credentials).then((err) => setSignInError(err));
+  }
   return (
     <>
       <ScrollToTop />

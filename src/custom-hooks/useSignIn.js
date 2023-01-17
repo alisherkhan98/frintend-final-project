@@ -9,19 +9,26 @@ function authErrorFormat(text) {
   return text.slice(5).split("-").join(" ");
 }
 
-function useSignIn(credentials, setSignInError) {
+function useSignIn() {
   const navigate = useNavigate();
 
-  return () => {
-    // firebase sign in
-    signInWithEmailAndPassword(auth, credentials.email, credentials.password)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        setSignInError("Error: " + authErrorFormat(error.code));
-      });
-  };
+  // sign in with firebase
+  async function signIn(credentials) {
+    let error = "";
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
+      navigate("/");
+    } catch (err) {
+      error = "Error: " + authErrorFormat(err.code);
+    }
+    return error;
+  }
+
+  return signIn;
 }
 
 export default useSignIn;
