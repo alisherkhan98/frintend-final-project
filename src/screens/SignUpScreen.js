@@ -91,7 +91,7 @@ function SignUpScreen() {
     if (isError) return;
 
     // trigger sign up hook
-    signUp(credentials).then((err) => setSignUpError(err));
+    signUp(credentials).catch((err) => setSignUpError(err.message));
   }
 
   return (

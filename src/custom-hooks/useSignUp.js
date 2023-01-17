@@ -23,7 +23,6 @@ function useSignUp() {
   const navigate = useNavigate();
 
   async function signUp(credentials) {
-    let error = "";
     // create new user in firebase
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -40,9 +39,8 @@ function useSignUp() {
 
       navigate("/");
     } catch (err) {
-      error = "Error: " + authErrorFormat(err.code);
+      throw new Error("Error: " + authErrorFormat(err.code));
     }
-    return error;
   }
   return signUp;
 }

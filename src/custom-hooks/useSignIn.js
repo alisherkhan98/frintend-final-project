@@ -14,7 +14,6 @@ function useSignIn() {
 
   // sign in with firebase
   async function signIn(credentials) {
-    let error = "";
     try {
       await signInWithEmailAndPassword(
         auth,
@@ -23,9 +22,8 @@ function useSignIn() {
       );
       navigate("/");
     } catch (err) {
-      error = "Error: " + authErrorFormat(err.code);
+      throw new Error("Error: " + authErrorFormat(err.code));
     }
-    return error;
   }
 
   return signIn;

@@ -70,7 +70,7 @@ function SignInScreen() {
     if (isError) return;
 
     // trigger sign in
-    signIn(credentials).then((err) => setSignInError(err));
+    signIn(credentials).catch((err) => setSignInError(err.message));
   }
   return (
     <>
