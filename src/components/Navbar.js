@@ -4,45 +4,32 @@ import React, { useState } from "react";
 import {
   AppBar,
   Box,
-  Divider,
-  Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Button,
   Typography,
   Toolbar,
   Container,
   useTheme,
-  ListItemIcon,
   Badge,
   SvgIcon,
 } from "@mui/material";
 // icons
-import { FaBars, FaHome, FaMoneyBill } from "react-icons/fa";
+import { FaBars, FaHome } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
 import { HiPaperAirplane } from "react-icons/hi";
-import {
-  MdLogin,
-  MdLogout,
-  MdOutlineDarkMode,
-  MdOutlineWbSunny,
-} from "react-icons/md";
+
 // router
 import { useLocation, useNavigate } from "react-router-dom";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { setIsDarkMode } from "../redux/features/darkModeSlice";
-
 // components
 import SignOutConfirm from "./SignOutConfirm";
+import MobileDrawer from "./MobileDrawer";
+// atoms
+import DarkModeIcon from "../atoms/DarkModeIcon";
 
-// constants
-const drawerWidth = "66vw";
-
-function Navbar({}) {
+function Navbar() {
   const dispatch = useDispatch();
   // darkmode
   const { isDarkMode } = useSelector((state) => state.darkMode);
@@ -96,13 +83,6 @@ function Navbar({}) {
     dispatch(setIsDarkMode(!isDarkMode));
   };
 
-  // icon for dark mode changes if toggled
-  const darkModeIcon = isDarkMode ? (
-    <MdOutlineWbSunny />
-  ) : (
-    <MdOutlineDarkMode />
-  );
-
   // function to handle click on sign out
   function openSignOutdialog() {
     setDialogOpen(true);
@@ -112,75 +92,6 @@ function Navbar({}) {
   const totalAmount = cart.reduce(
     (accumulator, currentValue) => accumulator + currentValue.amount,
     0
-  );
-  // drawer for mobiles
-  const drawer = (
-    <Box sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        IMP
-        <SvgIcon sx={{ position: "relative", top: 2, fontSize: "inherit" }}>
-          <HiPaperAirplane size="24px" />
-        </SvgIcon>
-        CT
-      </Typography>
-      <Divider />
-
-      <List onClick={handleDrawerToggle}>
-        <ListItem>
-          <ListItemButton disableRipple onClick={() => navigate("/")}>
-            <ListItemIcon>
-              <FaHome />
-            </ListItemIcon>
-            <ListItemText primary={"Home"} />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem>
-          <ListItemButton disableRipple onClick={() => navigate("/shop")}>
-            <ListItemIcon>
-              <FaMoneyBill />
-            </ListItemIcon>
-            <ListItemText primary={"Shop"} />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem>
-          <ListItemButton disableRipple onClick={() => navigate("/cart")}>
-            <ListItemIcon>
-              <BsCart3 />
-            </ListItemIcon>
-            <ListItemText primary={"Cart"} />
-          </ListItemButton>
-        </ListItem>
-
-        {user ? (
-          <ListItem>
-            <ListItemButton disableRipple onClick={openSignOutdialog}>
-              <ListItemIcon>
-                <MdLogout />
-              </ListItemIcon>
-              <ListItemText primary={"Sign Out"} />
-            </ListItemButton>
-          </ListItem>
-        ) : (
-          <ListItem>
-            <ListItemButton disableRipple onClick={() => navigate("/signin")}>
-              <ListItemIcon>
-                <MdLogin />
-              </ListItemIcon>
-              <ListItemText primary={"Sign In"} />
-            </ListItemButton>
-          </ListItem>
-        )}
-
-        <ListItem>
-          <ListItemButton disableRipple onClick={toggleDarkMode}>
-            <ListItemIcon>{darkModeIcon}</ListItemIcon>
-            <ListItemText primary={isDarkMode ? "Light mode" : "Dark mode"} />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
   );
 
   return (
@@ -221,14 +132,14 @@ function Navbar({}) {
                 aria-label="dark-mode"
                 color={show ? theme.palette.text.secondary : "hero"}
               >
-                {darkModeIcon}
+                <DarkModeIcon />
               </IconButton>
 
               <IconButton
-                sx={{ mr: 2, position: "relative" }}
+                sx={{ mr: 2 }}
                 onClick={() => navigate("/cart")}
                 edge="end"
-                aria-label="dark-mode"
+                aria-label="cart"
                 color={show ? theme.palette.text.secondary : "hero"}
               >
                 <Badge color="primary" badgeContent={totalAmount}>
@@ -236,16 +147,26 @@ function Navbar({}) {
                 </Badge>
               </IconButton>
 
+              <IconButton
+                sx={{ mr: 1 }}
+                onClick={() => navigate("/")}
+                edge="end"
+                aria-label="cart"
+                color={show ? theme.palette.text.secondary : "hero"}
+              >
+                <FaHome />
+              </IconButton>
+
               <Button
                 color={show ? "icons" : "hero"}
-                sx={{ mr: 2 }}
-                onClick={() => navigate("/")}
+                sx={{ mr: 1 }}
+                onClick={() => navigate("/shop")}
               >
-                Home
+                Shop
               </Button>
               <Button
                 color={show ? "icons" : "hero"}
-                sx={{ mr: 2 }}
+                sx={{ mr: 1 }}
                 onClick={() => navigate("/shop")}
               >
                 Shop
@@ -297,25 +218,12 @@ function Navbar({}) {
         </Container>
       </AppBar>
 
-      <Box component="nav">
-        <Drawer
-          variant="temporary"
-          ModalProps={{
-            keepMounted: true,
-          }}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
+      <MobileDrawer
+        handleDrawerToggle={handleDrawerToggle}
+        mobileOpen={mobileOpen}
+        setDialogOpen={setDialogOpen}
+        toggleDarkMode={toggleDarkMode}
+      />
 
       <SignOutConfirm dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
     </Box>
