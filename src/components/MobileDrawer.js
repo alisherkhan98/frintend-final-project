@@ -21,6 +21,8 @@ import { BsCart3 } from "react-icons/bs";
 import { useSelector } from "react-redux";
 // atoms
 import DarkModeIcon from "../atoms/DarkModeIcon";
+// router
+import { useNavigate } from "react-router-dom";
 
 function MobileDrawer({
   handleDrawerToggle,
@@ -28,6 +30,7 @@ function MobileDrawer({
   mobileOpen,
   toggleDarkMode,
 }) {
+  const navigate = useNavigate();
   // user
   const { user } = useSelector((state) => state.auth);
   // dark mode
@@ -40,41 +43,34 @@ function MobileDrawer({
       <Divider />
 
       <List onClick={handleDrawerToggle}>
-        <NavDrawerItem text="Home" navigateTo="/">
+        <NavDrawerItem text="Home" onClick={() => navigate("/")}>
           <FaHome />
         </NavDrawerItem>
 
-        <NavDrawerItem text="Shop" navigateTo="/shop">
+        <NavDrawerItem text="Shop" onClick={() => navigate("/shop")}>
           <FaMoneyBill />
         </NavDrawerItem>
 
-        <NavDrawerItem text="Cart" navigateTo="/cart">
+        <NavDrawerItem text="Cart" onClick={() => navigate("/cart")}>
           <BsCart3 />
         </NavDrawerItem>
 
         {user ? (
-          <ListItem>
-            <ListItemButton disableRipple onClick={() => setDialogOpen(true)}>
-              <ListItemIcon>
-                <MdLogout />
-              </ListItemIcon>
-              <ListItemText primary={"Sign Out"} />
-            </ListItemButton>
-          </ListItem>
+          <NavDrawerItem text="Sign Out" onClick={() => setDialogOpen(true)}>
+            <MdLogin />
+          </NavDrawerItem>
         ) : (
-          <NavDrawerItem text="Sign In" navigateTo="/signin">
+          <NavDrawerItem text="Sign In" onClick={() => navigate("/signin")}>
             <MdLogin />
           </NavDrawerItem>
         )}
 
-        <ListItem>
-          <ListItemButton disableRipple onClick={toggleDarkMode}>
-            <ListItemIcon>
-              <DarkModeIcon />
-            </ListItemIcon>
-            <ListItemText primary={isDarkMode ? "Light mode" : "Dark mode"} />
-          </ListItemButton>
-        </ListItem>
+        <NavDrawerItem
+          text={isDarkMode ? "Light mode" : "Dark mode"}
+          onClick={toggleDarkMode}
+        >
+          <DarkModeIcon />
+        </NavDrawerItem>
       </List>
     </Box>
   );

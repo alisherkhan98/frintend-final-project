@@ -9,11 +9,11 @@ import {
 // router
 import { useNavigate } from "react-router-dom";
 
-function NavDrawerItem({ children, navigateTo, text }) {
+function NavDrawerItem({ children, onClick, text }) {
   const navigate = useNavigate();
   return (
     <ListItem>
-      <ListItemButton disableRipple onClick={() => navigate(navigateTo)}>
+      <ListItemButton disableRipple onClick={onClick}>
         <ListItemIcon>{children}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItemButton>
