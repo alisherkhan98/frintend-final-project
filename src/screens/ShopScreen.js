@@ -13,16 +13,19 @@ import MyAlert from "../components/MyAlert";
 import ScrollToTop from "../components/ScrollToTop";
 // data
 import data from "../data";
+// router
+import { useLoaderData } from "react-router-dom";
 
 function ShopScreen() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const shopRef = useRef(null);
+  const bgImage = useLoaderData();
 
   return (
     <>
       <ScrollToTop />
       <Navbar />
-      <Hero bgUrl={bg} text="It's not too late" buttonText="Act Now" />
+      <Hero bgUrl={bgImage.src} text="It's not too late" buttonText="Act Now" />
       <Box ref={shopRef} sx={{ backgroundColor: "neutral.main", py: 8 }}>
         <Container>
           {/* alert */}
@@ -55,3 +58,10 @@ function ShopScreen() {
 }
 
 export default ShopScreen;
+
+// loader function
+export function shopLoader() {
+  let image = new Image();
+  image.src = bg;
+  return image;
+}

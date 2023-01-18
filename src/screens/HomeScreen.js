@@ -15,19 +15,20 @@ import { Box } from "@mui/material";
 // image
 import bg from "../assets/img/hero.jpg";
 // router
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 
 function HomeScreen() {
   const { footprintDetails, isFetchingFootprint, footprintError } = useSelector(
     (state) => state.flightData
   );
+  const bgImage = useLoaderData();
 
   return (
     <>
       <ScrollToTop />
       <Navbar />
       <Hero
-        bgUrl={bg}
+        bgUrl={bgImage.src}
         text="Estimate your next flight's carbon footprint"
         buttonText="Calculate Now"
       />
@@ -52,3 +53,10 @@ function HomeScreen() {
 }
 
 export default HomeScreen;
+
+// loader function
+export function homeLoader() {
+  let image = new Image();
+  image.src = bg;
+  return image;
+}
