@@ -18,9 +18,6 @@ import {
   useTheme,
   ListItemIcon,
   Badge,
-  Dialog,
-  DialogTitle,
-  DialogActions,
   SvgIcon,
 } from "@mui/material";
 // icons
@@ -38,9 +35,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { setIsDarkMode } from "../redux/features/darkModeSlice";
-// firebase
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
+
+// components
+import SignOutConfirm from "./SignOutConfirm";
 
 // constants
 const drawerWidth = "66vw";
@@ -109,12 +106,6 @@ function Navbar({}) {
   // function to handle click on sign out
   function openSignOutdialog() {
     setDialogOpen(true);
-  }
-
-  // function when clicked on sign out
-  function handleSignOut() {
-    setDialogOpen(false);
-    signOut(auth).then((res) => navigate("/"));
   }
 
   // calculate total amount
@@ -190,33 +181,6 @@ function Navbar({}) {
         </ListItem>
       </List>
     </Box>
-  );
-
-  // sign out dialog
-  const dialog = (
-    <Dialog
-      open={dialogOpen}
-      onClose={() => setDialogOpen(false)}
-      aria-labelledby="sign-out-confirm"
-      aria-describedby="sign-out-description"
-      sx={{
-        "& .MuiPaper-root": {
-          p: 1,
-          borderRadius: 4,
-        },
-      }}
-    >
-      <DialogTitle id="sign-out-confirm">
-        {"Are you sure you want to sign out?"}
-      </DialogTitle>
-
-      <DialogActions>
-        <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-        <Button color="error" onClick={handleSignOut} autoFocus>
-          Sign Out
-        </Button>
-      </DialogActions>
-    </Dialog>
   );
 
   return (
@@ -352,7 +316,8 @@ function Navbar({}) {
           {drawer}
         </Drawer>
       </Box>
-      {dialog}
+
+      <SignOutConfirm dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
     </Box>
   );
 }
