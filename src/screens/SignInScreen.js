@@ -85,7 +85,7 @@ function SignInScreen() {
           minHeight: "100vh",
           py: 10,
           boxSizing: "border-box",
-          backgroundColor: "background.signin",
+          backgroundColor: "neutral.main",
           backgroundImage: `url(${bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
