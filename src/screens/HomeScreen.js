@@ -55,7 +55,7 @@ function HomeScreen() {
 export default HomeScreen;
 
 // loader function
-export function homeLoader() {
+export async function homeLoader() {
   let image = new Image();
   image.src = bg;
   return image;

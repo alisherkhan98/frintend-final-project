@@ -60,7 +60,7 @@ function ShopScreen() {
 export default ShopScreen;
 
 // loader function
-export function shopLoader() {
+export async function shopLoader() {
   let image = new Image();
   image.src = bg;
   return image;
