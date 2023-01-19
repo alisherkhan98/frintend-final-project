@@ -1,5 +1,5 @@
 // react
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // MUI
 import { Box, Button, IconButton, Typography, Container } from "@mui/material";
 
@@ -8,6 +8,10 @@ import { HiChevronDown } from "react-icons/hi";
 
 function Hero({ bgUrl, text, buttonText }) {
   const heroRef = useRef(null);
+  const [opacity, setOpacity] = useState(0.9);
+  useEffect(() => {
+    setOpacity(0.65);
+  }, []);
 
   const scrollDown = () => {
     window.scrollTo({
@@ -30,7 +34,7 @@ function Hero({ bgUrl, text, buttonText }) {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundColor: "rgba(0,0,0,0.65)",
+        backgroundColor: `rgba(0,0,0, ${opacity} )`,
         backgroundBlendMode: "multiply",
         transition: "all .5s ",
       }}
