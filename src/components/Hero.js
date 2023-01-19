@@ -8,7 +8,7 @@ import { HiChevronDown } from "react-icons/hi";
 
 function Hero({ bgUrl, text, buttonText }) {
   const heroRef = useRef(null);
-  const [opacity, setOpacity] = useState(0.9);
+  const [opacity, setOpacity] = useState(0.8);
   useEffect(() => {
     setOpacity(0.65);
   }, []);
