@@ -31,8 +31,15 @@ function SignOutConfirm({ dialogOpen, setDialogOpen }) {
       </DialogTitle>
 
       <DialogActions>
-        <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-        <Button color="error" onClick={handleSignOut} autoFocus>
+        <Button color="icons" onClick={() => setDialogOpen(false)}>
+          Cancel
+        </Button>
+        <Button
+          color="error"
+          variant="contained"
+          onClick={handleSignOut}
+          autoFocus
+        >
           Sign Out
         </Button>
       </DialogActions>
