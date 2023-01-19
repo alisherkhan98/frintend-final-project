@@ -15,7 +15,7 @@ import NavbarLogo from "../atoms/NavbarLogo";
 import NavDrawerItem from "../atoms/NavDrawerItem";
 // icons
 import { FaHome, FaMoneyBill } from "react-icons/fa";
-import { MdLogin, MdLogout } from "react-icons/md";
+import { MdLogin, MdLogout, MdMailOutline } from "react-icons/md";
 import { BsCart3 } from "react-icons/bs";
 // redux
 import { useSelector } from "react-redux";
@@ -55,15 +55,9 @@ function MobileDrawer({
           <BsCart3 />
         </NavDrawerItem>
 
-        {user ? (
-          <NavDrawerItem text="Sign Out" onClick={() => setDialogOpen(true)}>
-            <MdLogin />
-          </NavDrawerItem>
-        ) : (
-          <NavDrawerItem text="Sign In" onClick={() => navigate("/signin")}>
-            <MdLogin />
-          </NavDrawerItem>
-        )}
+        <NavDrawerItem text="Contact" onClick={() => navigate("/contact")}>
+          <MdMailOutline />
+        </NavDrawerItem>
 
         <NavDrawerItem
           text={isDarkMode ? "Light mode" : "Dark mode"}
@@ -71,6 +65,16 @@ function MobileDrawer({
         >
           <DarkModeIcon />
         </NavDrawerItem>
+
+        {user ? (
+          <NavDrawerItem text="Sign Out" onClick={() => setDialogOpen(true)}>
+            <MdLogout />
+          </NavDrawerItem>
+        ) : (
+          <NavDrawerItem text="Sign In" onClick={() => navigate("/signin")}>
+            <MdLogin />
+          </NavDrawerItem>
+        )}
       </List>
     </Box>
   );

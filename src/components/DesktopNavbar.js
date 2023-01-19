@@ -57,6 +57,7 @@ function DesktopNavbar({ setDialogOpen, toggleDarkMode, handleDrawerToggle }) {
       location.pathname === "/signin" ||
       location.pathname === "/signup" ||
       location.pathname === "/success" ||
+      location.pathname === "/contact" ||
       location.pathname === "/cart"
     ) {
       setShow(true);
@@ -145,9 +146,9 @@ function DesktopNavbar({ setDialogOpen, toggleDarkMode, handleDrawerToggle }) {
             <Button
               color={show ? "icons" : "hero"}
               sx={{ mr: { sm: 1, md: 3 } }}
-              onClick={() => navigate("/shop")}
+              onClick={() => navigate("/contact")}
             >
-              Shop
+              Contact
             </Button>
             {user ? (
               <Button

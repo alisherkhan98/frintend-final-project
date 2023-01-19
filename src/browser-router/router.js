@@ -12,6 +12,7 @@ import ShopScreen, { shopLoader } from "../screens/ShopScreen";
 import CartScreen, { productsLoader } from "../screens/CartScreen";
 import SuccessScreen from "../screens/SuccessScreen";
 import Calculator, { listLoader } from "../components/Calculator";
+import ContactScreen from "../screens/ContactScreen";
 
 // router
 const router = createBrowserRouter(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<SignUpScreen />} />
       <Route path="/shop" element={<ShopScreen />} loader={shopLoader} />
       <Route path="/cart" element={<CartScreen />} loader={productsLoader} />
+      <Route path="/contact" element={<ContactScreen />} />
       <Route path="/success" element={<SuccessScreen />} />
       <Route path="*" element={<Navigate to="/" />} />
     </>
