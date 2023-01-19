@@ -28,6 +28,7 @@ import SignOutConfirm from "./SignOutConfirm";
 import MobileDrawer from "./MobileDrawer";
 // atoms
 import DarkModeIcon from "../atoms/DarkModeIcon";
+import NavbarLogo from "../atoms/NavbarLogo";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -107,26 +108,21 @@ function Navbar() {
       >
         <Container>
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-              color={show ? "primary" : "white"}
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", sm: "block" },
+                color: show ? "primary" : "white",
+              }}
             >
-              IMP
-              <SvgIcon
-                sx={{ position: "relative", top: 3, fontSize: "inherit" }}
-              >
-                <HiPaperAirplane size="24px" />
-              </SvgIcon>
-              CT
-            </Typography>
+              <NavbarLogo />
+            </Box>
 
             <Box
               sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center" }}
             >
               <IconButton
-                sx={{ mr: 2 }}
+                sx={{ mr: { sm: 1, md: 3 } }}
                 onClick={toggleDarkMode}
                 edge="end"
                 aria-label="dark-mode"
@@ -136,7 +132,7 @@ function Navbar() {
               </IconButton>
 
               <IconButton
-                sx={{ mr: 2 }}
+                sx={{ mr: { sm: 1, md: 3 } }}
                 onClick={() => navigate("/cart")}
                 edge="end"
                 aria-label="cart"
@@ -148,7 +144,7 @@ function Navbar() {
               </IconButton>
 
               <IconButton
-                sx={{ mr: 1 }}
+                sx={{ mr: { sm: 1, md: 3 } }}
                 onClick={() => navigate("/")}
                 edge="end"
                 aria-label="cart"
@@ -159,14 +155,14 @@ function Navbar() {
 
               <Button
                 color={show ? "icons" : "hero"}
-                sx={{ mr: 1 }}
+                sx={{ mr: { sm: 1, md: 3 } }}
                 onClick={() => navigate("/shop")}
               >
                 Shop
               </Button>
               <Button
                 color={show ? "icons" : "hero"}
-                sx={{ mr: 1 }}
+                sx={{ mr: { sm: 1, md: 3 } }}
                 onClick={() => navigate("/shop")}
               >
                 Shop
