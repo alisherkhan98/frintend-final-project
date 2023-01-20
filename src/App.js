@@ -24,7 +24,7 @@ function App() {
 
   // user
   const { user } = useSelector((state) => state.auth);
-
+  console.log(user);
   // everytime the there's a change in the authentication, redux reducers are dispatched to sign in or sign out
   useAuthenticate(setAlertMessage);
 
@@ -34,7 +34,8 @@ function App() {
   return (
     <Theme>
       {/* loading */}
-      {isLoading && <LoadingScreen />}
+      {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
+
       {/* alert in case of error */}
       {alertMessage && (
         <Box
@@ -50,8 +51,6 @@ function App() {
           <MyAlert severity="error">{alertMessage}</MyAlert>
         </Box>
       )}
-
-      <RouterProvider router={router} />
     </Theme>
   );
 }
