@@ -18,8 +18,6 @@ import MyAlert from "../components/MyAlert";
 import ScrollToTop from "../components/ScrollToTop";
 // custom hooks
 import useSignIn from "../custom-hooks/useSignIn";
-// redux
-import { useDispatch } from "react-redux";
 
 const textFieldStyle = {
   width: 1,
