@@ -17,11 +17,17 @@ function useAuthenticate(setAlertMessage) {
     const unsubscribe = onAuthStateChanged(auth, (newUser) => {
       // in case a user signed in
       if (newUser) {
-        dispatch(signIn({ email: newUser.email, uid: newUser.uid }));
         // grab signed in user's cart from firestore
         getDoc(doc(db, "users", newUser.uid))
           .then((docsnap) => {
             dispatch(setInitialCart(docsnap.data().cart));
+            dispatch(
+              signIn({
+                email: newUser.email,
+                uid: newUser.uid,
+                name: docsnap.data().name,
+              })
+            );
           })
           .catch((error) => {
             setAlertMessage(
