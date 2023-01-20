@@ -24,7 +24,7 @@ function App() {
 
   // user
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+
   // everytime the there's a change in the authentication, redux reducers are dispatched to sign in or sign out
   useAuthenticate(setAlertMessage);
 
