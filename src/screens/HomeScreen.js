@@ -12,8 +12,7 @@ import Navbar from "../components/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
 // MUI
 import { Box } from "@mui/material";
-// image
-import bg from "../assets/img/hero.jpg";
+
 // router
 import { Outlet, useLoaderData } from "react-router-dom";
 
@@ -53,10 +52,3 @@ function HomeScreen() {
 }
 
 export default HomeScreen;
-
-// loader function
-export async function homeLoader() {
-  let image = new Image();
-  image.src = bg;
-  return image;
-}

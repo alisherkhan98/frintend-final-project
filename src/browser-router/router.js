@@ -5,15 +5,20 @@ import {
   Navigate,
 } from "react-router-dom";
 // screens
-import HomeScreen, { homeLoader } from "../screens/HomeScreen";
+import HomeScreen from "../screens/HomeScreen";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import ShopScreen, { shopLoader } from "../screens/ShopScreen";
-import CartScreen, { productsLoader } from "../screens/CartScreen";
+import ShopScreen from "../screens/ShopScreen";
+import CartScreen from "../screens/CartScreen";
 import SuccessScreen from "../screens/SuccessScreen";
-import Calculator, { listLoader } from "../components/Calculator";
+import Calculator from "../components/Calculator";
 import ContactScreen from "../screens/ContactScreen";
-import ContactForm, { contactAction } from "../components/ContactForm";
+// loaders and actions
+import contactAction from "./contactAction";
+import homeLoader from "./homeLoader";
+import listLoader from "./listLoader";
+import shopLoader from "./shopLoader";
+import productsLoader from "./productsLoader";
 
 // router
 const router = createBrowserRouter(

@@ -2,8 +2,7 @@
 import React, { useState, useRef } from "react";
 // MUI
 import { Box, Container, Grid, Typography } from "@mui/material";
-// images
-import bg from "../assets/img/hero2.jpg";
+
 // components
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -58,10 +57,3 @@ function ShopScreen() {
 }
 
 export default ShopScreen;
-
-// loader function
-export async function shopLoader() {
-  let image = new Image();
-  image.src = bg;
-  return image;
-}
