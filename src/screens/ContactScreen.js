@@ -2,17 +2,27 @@ import React from "react";
 // router
 import { useActionData } from "react-router-dom";
 // components
+import FixedAlert from "../atoms/FixedAlert";
 import ContactForm from "../components/ContactForm";
-import ContactSuccess from "../components/ContactSuccess";
 import Navbar from "../components/Navbar";
 
 function ContactScreen() {
-  const data = useActionData();
-  const isSuccess = data?.success;
+  let data = useActionData();
+  console.log(data);
   return (
     <>
       <Navbar />
-      {isSuccess ? <ContactSuccess /> : <ContactForm data={data} />}
+      <ContactForm data={data} />
+      {data?.success && (
+        <FixedAlert severity="success">
+          Your message was successfully sent
+        </FixedAlert>
+      )}
+      {data?.serviceError && (
+        <FixedAlert severity="error">
+          There was an error while sending the message
+        </FixedAlert>
+      )}
     </>
   );
 }

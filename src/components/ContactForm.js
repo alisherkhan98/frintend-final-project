@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Typography, TextField, Button, Card } from "@mui/material";
 
 // router
-import { Form, useActionData } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const textFieldStyle = {
@@ -61,6 +61,7 @@ function ContactForm({ data }) {
             mb={2}
             error={Boolean(data?.emailError)}
             helperText={data?.emailError && data.emailError}
+            value={user ? user.email : ""}
           />
           <TextField
             sx={textFieldStyle}
