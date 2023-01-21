@@ -1,13 +1,11 @@
 // react
 import React, { useState } from "react";
-// MUI
-import { Box } from "@mui/material";
 // router
 import { RouterProvider } from "react-router-dom";
 import router from "./browser-router/router";
 // components
 import Theme from "./theme";
-import MyAlert from "./components/MyAlert";
+import FixedAlert from "./atoms/FixedAlert";
 // screens
 import LoadingScreen from "./screens/LoadingScreen";
 // custom hooks
@@ -37,20 +35,7 @@ function App() {
       {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
 
       {/* alert in case of error */}
-      {alertMessage && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: 100,
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-            zIndex: 9999,
-          }}
-        >
-          <MyAlert severity="error">{alertMessage}</MyAlert>
-        </Box>
-      )}
+      {alertMessage && <FixedAlert>{alertMessage}</FixedAlert>}
     </Theme>
   );
 }
