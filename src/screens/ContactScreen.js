@@ -1,13 +1,18 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+// router
+import { useActionData } from "react-router-dom";
+// components
 import ContactForm from "../components/ContactForm";
+import ContactSuccess from "../components/ContactSuccess";
 import Navbar from "../components/Navbar";
 
 function ContactScreen() {
+  const data = useActionData();
+  const isSuccess = data?.success;
   return (
     <>
       <Navbar />
-      <ContactForm />
+      {isSuccess ? <ContactSuccess /> : <ContactForm data={data} />}
     </>
   );
 }
