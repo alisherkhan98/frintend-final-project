@@ -1,6 +1,7 @@
 import React from "react";
 // MUI
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -14,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart, startCheckout } from "../redux/features/shopSlice";
 // components
 import CartRow from "../components/CartRow";
-import MyAlert from "../components/MyAlert";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ScrolltoTop from "../components/ScrollToTop";
@@ -148,7 +148,7 @@ function CartScreen() {
                 </Stack>
               </Paper>
             ) : (
-              <MyAlert severity="warning">Your cart is empty</MyAlert>
+              <Alert severity="warning">Your cart is empty</Alert>
             )}
           </Container>
         </Box>
