@@ -49,6 +49,7 @@ function ContactForm({ data }) {
           mb={2}
           error={Boolean(data?.emailError)}
           helperText={data?.emailError && data.emailError}
+          // if user is logged in already fills in email
           value={user ? user.email : ""}
         />
         <TextField
