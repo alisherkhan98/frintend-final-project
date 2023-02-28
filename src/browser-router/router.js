@@ -24,12 +24,12 @@ import productsLoader from "./productsLoader";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<HomeScreen />} loader={homeLoader}>
+      <Route path="/" element={<HomeScreen />}>
         <Route index element={<Calculator />} loader={listLoader} />
       </Route>
       <Route path="/signin" element={<SignInScreen />} />
       <Route path="/signup" element={<SignUpScreen />} />
-      <Route path="/shop" element={<ShopScreen />} loader={shopLoader} />
+      <Route path="/shop" element={<ShopScreen />} />
       <Route path="/cart" element={<CartScreen />} loader={productsLoader} />
       <Route
         path="/contact"
