@@ -1,21 +1,50 @@
-import React from "react";
-// redux
-import { useDispatch, useSelector } from "react-redux";
-import { setAreImagesLoaded } from "../redux/features/loadingSlice";
-// images
-import hero from "../assets/img/hero.jpg";
-import hero2 from "../assets/img/hero2.jpg";
-function usePreloadImages() {
-  const imagesArray = [hero, hero2];
-  const { areImagesLoaded } = useSelector((state) => state.loading);
-  const dispatch = useDispatch();
-  imagesArray.forEach((imageSrc) => {
-    let imageObj = new Image();
-    imageObj.src = imageSrc;
-  });
+import React, { useEffect, useState } from "react";
 
-  dispatch(setAreImagesLoaded(true));
-  return areImagesLoaded;
+function preloadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = function () {
+      resolve(img);
+    };
+    img.onerror = img.onabort = function () {
+      reject(src);
+    };
+    img.src = src;
+  });
 }
 
-export default usePreloadImages;
+export default function usePreloadImages(imageList) {
+  const [imagesPreloaded, setImagesPreloaded] = useState(false);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    async function effect() {
+      console.log("PRELOAD");
+
+      if (isCancelled) {
+        return;
+      }
+
+      const imagesPromiseList = [];
+      for (const i of imageList) {
+        imagesPromiseList.push(preloadImage(i));
+      }
+
+      await Promise.all(imagesPromiseList);
+      if (isCancelled) {
+        return;
+      }
+
+      setImagesPreloaded(true);
+    }
+
+    effect();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [imageList]);
+
+  return { imagesPreloaded };
+}

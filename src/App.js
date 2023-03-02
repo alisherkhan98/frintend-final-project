@@ -13,11 +13,14 @@ import useAuthenticate from "./custom-hooks/useAuthenticate";
 import { useSelector } from "react-redux";
 import useUpdateCart from "./custom-hooks/useUpdateCart";
 import usePreloadImages from "./custom-hooks/usePreloadImages";
+// imgs
+import hero from "./assets/img/hero.jpg";
+import hero2 from "./assets/img/hero2.jpg";
 
 function App() {
   // loading
   const { isLoading } = useSelector((state) => state.loading);
-  const areImagesLoaded = usePreloadImages();
+  const { imagesPreloaded } = usePreloadImages([hero, hero2]);
   // alert
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -33,7 +36,7 @@ function App() {
   return (
     <Theme>
       {/* loading */}
-      {isLoading || !areImagesLoaded ? (
+      {isLoading || !imagesPreloaded ? (
         <LoadingScreen />
       ) : (
         <RouterProvider router={router} />
